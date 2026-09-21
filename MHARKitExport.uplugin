@@ -1,0 +1,21 @@
+{
+	"FileVersion": 3,
+	"Version": 2,
+	"VersionName": "0.2.0",
+	"EngineVersion": "5.7",
+	"FriendlyName": "MH ARKit Export",
+	"Description": "Export MetaHuman face meshes with ARKit blend shape morph targets as GLB. Single-function bake: evaluates all 52 expressions through the full animation pipeline (ControlRig + RigLogic) and writes a GLB with morph targets.",
+	"Category": "Editor",
+	"CreatedBy": "Holotype Pte Ltd",
+	"EnabledByDefault": true,
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"Modules": [
+		{
+			"Name": "MHARKitExport",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [ "Win64", "Mac", "Linux" ]
+		}
+	]
+}

@@ -1,0 +1,16 @@
+# AI assistant session data
+.tina/
+
+# Unreal Engine build artifacts (regenerated on build)
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+*.dll
+
+# OS junk
+.DS_Store
+
+# Python bytecode
+__pycache__/
+*.pyc
