@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/EpicGames/OpenRigLogic.git",
+  "commit": "d3d329bbd6992ac38adc1c1b24203ceb998f75c0",
+  "version": "13.2.9",
+  "binding_modules": ["_py3dna13_2_9", "_py3riglogic13_2_9"]
+}

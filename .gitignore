@@ -1,16 +1,20 @@
-# AI assistant session data
-.tina/
-
-# Unreal Engine build artifacts (regenerated on build)
+# Unreal Engine build products
 Binaries/
 Intermediate/
 DerivedDataCache/
 Saved/
 *.dll
 
-# OS junk
+# OS and Python generated files
 .DS_Store
-
-# Python bytecode
 __pycache__/
 *.pyc
+
+# Product build outputs and tool caches
+/build/
+/dist/
+/cli/build/
+/cli/dist/
+/cli/build_tools/.venv/
+/cli/build_tools/.cache/
+/plugins/ue/dist/

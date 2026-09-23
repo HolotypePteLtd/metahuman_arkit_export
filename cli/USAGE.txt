@@ -1,0 +1,33 @@
+MH ARKit Export - standalone DNA baker
+
+Extract the entire download, then open a terminal in its directory.
+Python, Unreal Engine, Blender and compiler installations are not required.
+
+Linux / macOS:
+  ./mh-arkit-export head.dna --body-dna body.dna -o character.glb
+
+Windows PowerShell:
+  .\mh-arkit-export.exe head.dna --body-dna body.dna -o character.glb
+
+Quote paths containing spaces. Omit --body-dna for a head-only export.
+The body is included in its neutral pose, without a skeleton or body animation.
+The output includes geometry, UVs, and 52 facial morph targets. Textures and
+materials are not included. Use head and body DNA from the same character.
+
+Diagnostics:
+  mh-arkit-export --version
+  mh-arkit-export --build-info
+  mh-arkit-export --self-test
+
+The self-test generates a tiny synthetic rig and verifies DNA loading,
+RigLogic, joint skinning, corrective shapes, and GLB output. It needs no
+download or character files and does not alter your DNA.
+
+Use --help to see mesh selection and custom expression-mapping options.
+Exact parity with Unreal's AS_MetaHuman_ARKit_Mapping is not yet verified.
+Combining individually baked shapes approximates nonlinear rig interactions.
+
+Keep the executable and its _internal directory together. MANIFEST.json
+records the build inputs, dependency versions, compatibility, and file hashes.
+Verify the archive checksum before distributing it. For signed/notarized
+releases, follow the publisher's platform-specific installation instructions.

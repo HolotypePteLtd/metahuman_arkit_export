@@ -1,0 +1,5 @@
+*
+!run.py
+!pyproject.toml
+!uv.lock
+!toolchain.json

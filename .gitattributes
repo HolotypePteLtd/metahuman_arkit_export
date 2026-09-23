@@ -1,0 +1,6 @@
+/cli/** text eol=lf
+/Makefile text eol=lf
+/.github/workflows/** text eol=lf
+/plugins/ue/python/** text eol=lf
+/plugins/ue/tools/** text eol=lf
+/plugins/ue/tests/** text eol=lf

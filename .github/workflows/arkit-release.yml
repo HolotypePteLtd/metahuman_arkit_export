@@ -1,0 +1,155 @@
+name: Standalone ARKit CLI
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/arkit-release.yml'
+      - '.gitattributes'
+      - 'Makefile'
+      - 'cli/**'
+  push:
+    tags: ['arkit-v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (blank uses cli/VERSION)'
+        required: false
+        type: string
+      draft_release:
+        description: 'Create a draft GitHub release; the matching arkit-v tag must already exist'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: arkit-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.plan.outputs.version }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Validate the workflow with pinned actionlint
+        run: |
+          python3 - <<'PY'
+          import hashlib, os, pathlib, subprocess, tarfile, urllib.request
+          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'actionlint'
+          root.mkdir()
+          url = 'https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz'
+          archive = root / 'actionlint.tar.gz'
+          urllib.request.urlretrieve(url, archive)
+          if hashlib.sha256(archive.read_bytes()).hexdigest() != '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8':
+              raise SystemExit('Workflow validator checksum mismatch')
+          with tarfile.open(archive) as stream:
+              stream.extract('actionlint', root, filter='data')
+          subprocess.run([str(root / 'actionlint'), '-shellcheck='], check=True)
+          PY
+      - id: plan
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, re
+          root = pathlib.Path('cli')
+          version = os.environ.get('REQUESTED_VERSION') or (root / 'VERSION').read_text().strip()
+          ref = os.environ['GITHUB_REF']
+          if ref.startswith('refs/tags/arkit-v'):
+              tagged = ref.removeprefix('refs/tags/arkit-v')
+              if tagged != version:
+                  raise SystemExit('Tag and application version must match')
+          if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)', version):
+              raise SystemExit('Invalid release version')
+          rows = [{'platform': p, **spec} for p, spec in json.loads((root/'platforms.json').read_text()).items()]
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('version=' + version + '\n')
+              output.write('matrix=' + json.dumps({'include': rows}, separators=(',', ':')) + '\n')
+          PY
+
+  build:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13.9'
+          architecture: ${{ endsWith(matrix.platform, 'arm64') && 'arm64' || 'x64' }}
+      - name: Linux baseline build and native bake verification
+        if: startsWith(matrix.platform, 'linux-')
+        env:
+          ARKIT_VERSION: ${{ needs.plan.outputs.version }}
+          ARKIT_PLATFORM: ${{ matrix.platform }}
+        run: make cli-docker PYTHON=python PLATFORM="$ARKIT_PLATFORM" VERSION="$ARKIT_VERSION" JOBS=4
+      - name: Native Windows or macOS build and bake verification
+        if: ${{ !startsWith(matrix.platform, 'linux-') }}
+        env:
+          ARKIT_VERSION: ${{ needs.plan.outputs.version }}
+          ARKIT_PLATFORM: ${{ matrix.platform }}
+        shell: bash
+        run: python cli/build_tools/run.py python cli/build_tools/build.py --platform "$ARKIT_PLATFORM" --version "$ARKIT_VERSION" --jobs 4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: arkit-${{ matrix.platform }}
+          path: cli/dist/arkit/*
+          if-no-files-found: error
+          retention-days: 14
+
+  assemble:
+    needs: [plan, build]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          pattern: arkit-*
+          path: cli/build/artifacts
+      - name: Require all six verified platforms with identical source pins
+        env:
+          ARKIT_VERSION: ${{ needs.plan.outputs.version }}
+        run: python3 cli/build_tools/release.py --artifacts cli/build/artifacts --output cli/dist/release --version "$ARKIT_VERSION"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: arkit-release-${{ needs.plan.outputs.version }}
+          path: cli/dist/release/*
+          if-no-files-found: error
+
+  draft:
+    if: startsWith(github.ref, 'refs/tags/arkit-v') || inputs.draft_release == true
+    needs: [plan, assemble]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: arkit-release-${{ needs.plan.outputs.version }}
+          path: release
+      - name: Stage a draft release for review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ARKIT_VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          tag="arkit-v$ARKIT_VERSION"
+          if gh release view "$tag" --json isDraft > state.json 2>/dev/null; then
+            python3 -c 'import json,sys; sys.exit(0 if json.load(open("state.json"))["isDraft"] else "Refusing to overwrite a published release")'
+          else
+            gh release create "$tag" --draft --verify-tag --title "MH ARKit Export $ARKIT_VERSION" --notes-file release/RELEASE_NOTES.md
+          fi
+          gh release upload "$tag" release/* --clobber

@@ -1,0 +1,20 @@
+[project]
+name = "mh-arkit-release-tools"
+version = "0.1.0"
+requires-python = "==3.13.9"
+dependencies = [
+    "cmake==3.31.6",
+    "numpy==2.3.4",
+    "pyinstaller==6.22.3",
+    "swig==4.4.1",
+    "uv==0.11.4",
+]
+
+[tool.uv]
+package = false
+required-version = "==0.11.4"
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
