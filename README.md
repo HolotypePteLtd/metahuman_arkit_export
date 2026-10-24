@@ -82,6 +82,28 @@ body is neutral geometry without a skeleton; materials and textures are not
 exported. The CLI's GUI expression recipes have not been numerically matched
 against Unreal's animation mapping assets.
 
+### Baking a Poly Hammer export
+
+[Poly Hammer](https://www.polyhammer.com) publishes the free
+[Poly Hammer Interchange](https://docs.polyhammer.com/poly-hammer-interchange/getting-started/)
+Unreal plugin, which exports a MetaHuman as a single folder containing its
+DNA, grooms, clothing, props, textures, and an export manifest. The DNA files
+in that folder are standard MetaHuman DNA, so the CLI can bake them directly.
+Unreal, Blender, and the rest of the bundle are not required. Verified against
+a real Interchange export: the folder held `head.dna`, `body.dna`, textures,
+and `ExportManifest.json`, and the command below baked all 52 ARKit morph
+targets plus the neutral body.
+
+```bash
+mh-arkit-export /path/to/bundle/head.dna --body-dna /path/to/bundle/body.dna -o character.glb
+```
+
+Use the actual DNA file names found in the bundle (typically `head.dna` and
+`body.dna`); the manifest, grooms, clothing, and textures are not CLI inputs
+and are not exported. If the character was customized in Blender with Poly
+Hammer's Character DNA addon, bake the DNA file exported from that addon
+instead.
+
 Build a native CLI from source, using its isolated toolchain:
 
 ```bash
@@ -113,7 +135,7 @@ make plugin-test
 make cli-test
 ```
 
-The relevant Git history was extracted from `unreal_metahuman_scripts` at
-`12c421d4590a060a667f6072c5f3c3d11c3ca492`. Filtered commit IDs differ because
-unrelated toolkit files were omitted. Character DNA, baked models, Unreal
-build products, and other toolkit modules are not included.
+The relevant Git history was extracted from an internal toolkit repository.
+Filtered commit IDs differ because unrelated toolkit files were omitted.
+Character DNA, baked models, Unreal build products, and other toolkit modules
+are not included.
