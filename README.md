@@ -1,6 +1,27 @@
-# MH ARKit Export
+# Export Unreal Engine MetaHuman with ARKit Blendshapes
 
-Two exporters for MetaHuman facial geometry with 52 ARKit morph targets:
+A MetaHuman is described by its DNA (`head.dna`, `body.dna`), which is an Epic format that contains values for:
+
+- **Geometry** — face and body meshes per LOD (nine LOD0 head parts on a
+  typical character: face skin, teeth, eyeballs, eyelashes, ...)
+- **Skeleton** — a joint hierarchy (870 joints on the validated head)
+- **Controls and rig logic** — 174 GUI controls and 263 raw controls mapped by
+  the rig-logic graph onto joints and 782 blendshape channels, including
+  nonlinear correctives
+- **Corrective shapes** — pose-space fixes that are applied before linear blend
+  skinning
+
+At runtime (either inside or outside Unreal Engine), Epic's open source **Rig Logic** library can be used to evaluate the graph efficiently for facial animation.
+
+Notably, the DNA format does not specify ARKit-compatible blendshapes. 
+
+This repository contains two tools to "bake" a set of ARKit blendshapes a MetaHumans from Unreal Engine with ARKit blendshapes/shape keys.
+
+Two exporters bake MetaHuman facial geometry with 52 ARKit morph targets:
+
+Because the evaluation is a standalone library, these exporters can bake fully offline — the CLI evaluates
+a head DNA with no Unreal or Blender installation.
+
 
 | Product | Input | Runtime | Documentation |
 | --- | --- | --- | --- |
@@ -35,6 +56,7 @@ is required for these shortcuts; the Python entry points also work directly.
 | `make cli-docker PLATFORM=linux-x64` | Linux CLI publication artifact |
 | `make test` | Both products' tests |
 | `make plugin-test` / `make cli-test` | One product's tests |
+
 
 ## Unreal plugin
 
@@ -139,3 +161,23 @@ The relevant Git history was extracted from an internal toolkit repository.
 Filtered commit IDs differ because unrelated toolkit files were omitted.
 Character DNA, baked models, Unreal build products, and other toolkit modules
 are not included.
+
+## License
+
+This repository's code — the exporters in `cli/` and `plugins/ue/` and their
+build tools — is released under the MIT License: see [LICENSE](LICENSE).
+
+That license covers only this repository's own code. It does not and cannot
+relicense the third-party parts:
+
+| Component | License | Notes |
+| --- | --- | --- |
+| OpenRigLogic + DNA libraries | [MIT](https://github.com/EpicGames/OpenRigLogic) (Epic Games) | Rig evaluation engine and DNA format tooling; pinned source revision in [cli/runtime.json](cli/runtime.json) |
+| MetaHuman character assets and DNA files derived from them | [Epic's MetaHuman content terms](https://www.unrealengine.com/eula/metahuman) — not open source | Characters, textures, grooms, clothing, and exported DNA are governed by Epic's MetaHuman EULA, not MIT |
+| CPython | [PSF License](https://docs.python.org/3/license.html) | Bundled in the standalone CLI runtime |
+| NumPy | [BSD 3-Clause](https://numpy.org/doc/stable/license.html) | Bundled in the standalone CLI runtime |
+| PyInstaller bootloader | [GPL with bootloader distribution exception](https://pyinstaller.org/en/stable/license.html) | Bundled in the standalone CLI executable |
+
+Third-party attribution lives in [cli/THIRD_PARTY_NOTICES.txt](cli/THIRD_PARTY_NOTICES.txt),
+and every standalone CLI download ships the complete license text of each
+bundled component in its `LICENSES/` directory.
