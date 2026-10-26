@@ -78,6 +78,13 @@ def compiler_identity():
     raise ValueError('No native C++ compiler found')
 
 
+def native_inventory(directory):
+    # Importing a --native-only runtime with ordinary Python creates bytecode.
+    # Verify installed inputs while allowing this disposable interpreter cache.
+    return {name: record for name, record in file_inventory(directory).items()
+            if '__pycache__' not in Path(name).parts}
+
+
 def native_runtime(args, source, pin, tool_identity):
     env = clean_environment()
     target_info = PLATFORMS[args.platform]
@@ -86,7 +93,7 @@ def native_runtime(args, source, pin, tool_identity):
     identity = dict(openriglogic=pin, platform=args.platform, python=platform.python_version(),
                     tools=tool_identity, compiler=compiler_identity(),
                     native_recipe_sha256=hashlib.sha256(''.join(inspect.getsource(function) for function in
-                        (native_runtime, compiler_identity, clean_environment)).encode()).hexdigest(),
+                        (native_runtime, native_inventory, compiler_identity, clean_environment)).encode()).hexdigest(),
                     python_base=sys.base_prefix, deployment_target=env.get('MACOSX_DEPLOYMENT_TARGET'))
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     cache = args.build_dir / 'native' / key
@@ -96,7 +103,7 @@ def native_runtime(args, source, pin, tool_identity):
     with tools['cache_lock'](args.build_dir / 'native-locks' / key):
         if marker.is_file():
             record = read_json(marker)
-            if record.get('identity') == identity and record.get('files') == file_inventory(cache / 'install'):
+            if record.get('identity') == identity and record.get('files') == native_inventory(cache / 'install'):
                 print('Reusing verified native runtime: ' + key[:16], flush=True)
                 return cache / 'install/lib', identity
             raise ValueError('Native cache is modified; remove this generated cache and rebuild: ' + str(cache))
@@ -118,17 +125,25 @@ def native_runtime(args, source, pin, tool_identity):
                         '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded']
         elif args.platform.startswith('macos-'):
             options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('arm64' if args.platform.endswith('arm64') else 'x86_64'),
-                        '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + target_info['deployment_target']]
+                        '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + target_info['deployment_target'],
+                        '-DCMAKE_INSTALL_RPATH=@loader_path']
         run(['cmake', '-S', source, '-B', cache / 'objects', *options], env=env)
         run(['cmake', '--build', cache / 'objects', '--config', 'Release', '--parallel', args.jobs], env=env)
         run(['cmake', '--install', cache / 'objects', '--config', 'Release'], env=env)
+        if args.platform.startswith('macos-'):
+            # The pinned upstream SWIG targets use TYPE SHARED and install
+            # .dylib files. Python imports extensions only with a .so suffix.
+            # Keep the dylibs too: RigLogic links against the versioned DNA one.
+            for module in pin['binding_modules']:
+                shutil.copy2(cache / 'install/lib' / (module + '.dylib'),
+                             cache / 'install/lib' / (module + '.so'))
         env['PYTHONPATH'] = str(cache / 'install/lib')
         probe = subprocess.check_output([
             sys.executable, '-c', 'import dna,riglogic; print(riglogic.VersionInfo.getVersionString())'],
             env=env, text=True).strip()
         if probe != pin['version']:
             raise ValueError('Compiled runtime version differs from its pin')
-        write_json(marker, {'identity': identity, 'files': file_inventory(cache / 'install')})
+        write_json(marker, {'identity': identity, 'files': native_inventory(cache / 'install')})
     return cache / 'install/lib', identity
 
 
@@ -251,10 +266,12 @@ def build(args):
     if args.native_only:
         print(native)
         return
+    test_env = clean_environment()
+    test_env['PYTHONPATH'] = str(native)
     for suite in ('tests',):
-        run([sys.executable, '-m', 'unittest', 'discover', '-s', ROOT / suite, '-v'], cwd=ROOT)
+        run([sys.executable, '-m', 'unittest', 'discover', '-s', ROOT / suite, '-v'], cwd=ROOT, env=test_env)
     args.dist_dir.mkdir(parents=True, exist_ok=True)
-    code_paths = ['src/bake_arkit_dna.py', 'src/arkit_controls.py',
+    code_paths = ['src/bake_arkit_dna.py', 'src/baked_dna.py', 'src/arkit_controls.py',
                   'src/cli.py', 'src/smoke_fixture.py', 'build_tools/cli.spec']
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     dirty = bool(subprocess.check_output(['git', '-C', str(ROOT), 'status', '--porcelain'], text=True).strip())

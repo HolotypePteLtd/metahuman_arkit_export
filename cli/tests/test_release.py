@@ -60,6 +60,18 @@ class ReleaseTest(unittest.TestCase):
                 'sha256': common.sha256(path), 'release_eligible': True,
                 'manifest': self.record}
 
+    def test_native_inventory_allows_import_bytecode_but_tracks_installed_sources(self):
+        library = self.root / 'native'
+        library.mkdir()
+        (library / 'dna.py').write_text('original source')
+        original = build.native_inventory(library)
+        bytecode = library / '__pycache__'
+        bytecode.mkdir()
+        (bytecode / 'dna.cpython-313.pyc').write_bytes(b'generated cache')
+        self.assertEqual(build.native_inventory(library), original)
+        (library / 'dna.py').write_text('modified source')
+        self.assertNotEqual(build.native_inventory(library), original)
+
     def test_relocated_archive_is_verified_without_execution_when_requested(self):
         path = self.archive()
         with patch.object(verify, 'verify_execution', side_effect=AssertionError('No foreign execution')):

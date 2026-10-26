@@ -16,6 +16,23 @@ UV seams are preserved by expanding DNA vertex layouts. Coordinate conversion
 and winding conversion use the native DNA reader; the GLB uses metres and
 right/up/back axes.
 
+The output extension selects GLB or baked DNA. DNA output keeps the neutral
+head skeleton, skin weights, original polygon topology, normals, and UV
+layouts at LOD0. It replaces the source expression solvers with 52 independent
+blendshape channels named exactly as `TARGET_NAMES`, from `EyeBlinkLeft` to
+`MouthClose`. GUI controls use those same names; raw controls use
+`CTRL_expressions.eyeBlinkLeft`, etc. Each control passes directly to its
+matching blendshape channel. There are no animated joint groups: source
+joint motion is already included in the baked vertex deltas.
+
+The writer reloads every baked DNA through RigLogic and checks the neutral
+pose, all 52 controls individually, and three deterministic mixed poses
+against the evaluated bake, with a maximum allowed vertex error of 0.002 mm.
+It installs the output file only after verification passes. The report's
+`baked_dna.verification` records the measured error. This validates the baked
+linear morph model, including skinning; it does not establish parity with
+Unreal's mapping assets or nonlinear combinations of the original live rig.
+
 The GLB contains geometry and UVs. Materials, textures, and wrinkle maps are
 not included. Use `--body-dna` to include the complete LOD0 body geometry in
 its evaluated neutral pose. The body is a static mesh; skeletal animation
@@ -25,6 +42,18 @@ an eyeball; the report identifies targets that are zero across all selected
 parts.
 
 ## Build the runtime
+
+The repository's pinned builder prepares Python, NumPy, CMake, and SWIG and
+prints the installed bindings directory:
+
+```bash
+python3 cli/build_tools/run.py python cli/build_tools/build.py \
+  --native-only --build-dir /tmp/mh-arkit-native --jobs 8
+```
+
+For a manual upstream build, use the commands below. On macOS, the pinned
+builder also handles the upstream SWIG library suffix and runtime search path
+needed for Python imports.
 
 Install a C++ compiler, CMake, SWIG, NumPy, and Python development headers.
 The Python major/minor version used to build the bindings must match the
@@ -66,6 +95,40 @@ their native libraries. Existing compatible bindings on `PYTHONPATH` work too.
 `--mesh head_lod0_mesh` selects just the face skin; repeat `--mesh` to select
 multiple parts. The default includes the teeth, eyeballs, eyelashes, and other
 LOD0 head parts so jaw, gaze, and tongue motion are captured.
+
+Write a baked DNA instead:
+
+```bash
+python3 cli/src/bake_arkit_dna.py /path/to/Scott/head.dna \
+  --bindings /tmp/OpenRigLogic-runtime/lib \
+  --output /tmp/Scott_arkit.dna
+```
+
+`--mesh` works for both output formats. Baked DNA is head-only and has one
+LOD; `--body-dna` requires GLB. Source DNA files cannot be used as the output
+path. Choose different stems when keeping both formats and their reports,
+since each report uses the output stem followed by `.report.json`.
+
+The pinned macOS builder supplies importable `.so` copies of upstream's SWIG
+`.dylib` modules and sets their runtime search path to `@loader_path`. Use
+`cli/build_tools/build.py --native-only` through the pinned tool launcher to
+obtain a directly importable runtime on macOS.
+
+With that runtime's matching Python and bindings on `PYTHONPATH`, reproduce
+the writer fidelity check and compare the two output formats:
+
+```bash
+python cli/build_tools/roundtrip_dna.py /path/to/Scott/head.dna
+python cli/build_tools/compare_dna_glb.py /tmp/Scott_arkit.dna /tmp/Scott_reference.glb
+```
+
+The round-trip uses the unmodified reader configuration and the native
+`BinaryStreamWriter.setFrom(reader)` overload, preserving all LODs, behavior,
+and source coordinate conventions. Scott's format 2.5 input round-trips byte
+for byte (SHA-256 `378fbcc29daf795bd38283675d299fca6fc178be6f79df4d25e81f3ce10b4276`).
+The bake uses the transformed LOD0 reader and copies geometry/definition
+layers before replacing controls and behavior. DNA's neutral joint rotation
+getter exposes Euler angles; RigLogic's quaternion output is a different API.
 
 Include the body from the same character export:
 
@@ -150,6 +213,11 @@ the reader's 2.8 representation.
 - 52 nonzero ARKit targets across the full head; a roughly 22 MiB GLB.
 - Blender import verified 52 named shape keys plus Basis on every mesh,
   along with the expected vertex counts and UV layers.
+- macOS ARM64 baked DNA: nine LOD0 meshes, 870 neutral joints, 52 GUI/raw
+  pass-through controls, and 52 blendshape channels; approximately 11.5 MiB.
+- All 56 baked-DNA verification poses passed, with maximum vertex error
+  `2.48e-9` metres against the evaluated bake and `5.93e-8` metres against the
+  serialized GLB (which stores metre positions as float32).
 
 With Scott's body included, the output has ten meshes and adds 30,455 body
 positions and 60,816 triangles. The head and body each have 92 vertices at
@@ -165,3 +233,10 @@ the body as geometry without facial morph targets:
 ```bash
 python3 -m unittest discover -s cli/tests -p test_bake_arkit_dna.py -v
 ```
+
+The full `cli/tests` suite additionally exercises native round-trip fidelity,
+nonzero neutral joint rotations, multiple source LODs, mesh selection and
+index remapping, UV/topology/skin preservation, zero targets, pass-through
+controls, GLB comparison, and preservation of existing output when validation
+fails. Native tests require the built bindings on `PYTHONPATH`; standalone
+builds supply them automatically.

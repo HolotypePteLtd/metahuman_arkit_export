@@ -85,6 +85,11 @@ def self_test():
         with contextlib.redirect_stdout(io.StringIO()):
             main([str(root / "head.dna"), "--body-dna", str(root / "body.dna"),
                   "--mapping", str(root / "mapping.json"), "-o", str(root / "bake.glb")])
+            main([str(root / "head.dna"), "--mapping", str(root / "mapping.json"),
+                  "-o", str(root / "baked.dna")])
+        dna_report = json.loads((root / "baked.report.json").read_text())
+        if not dna_report["baked_dna"]["verification"]["verified"]:
+            raise ValueError("Synthetic baked DNA failed RigLogic verification")
         report = json.loads((root / "bake.report.json").read_text())
         if report["zero_targets"] or len(report["target_names"]) != 52:
             raise ValueError("Synthetic bake did not produce 52 nonzero targets")
@@ -108,6 +113,6 @@ def self_test():
             # centimetre of pre-skin corrective displacement for vertex 1.
             if not np.allclose(values, [[-.01, 0, 0], [-.01, 0, -.01], [-.01, 0, 0]], atol=1e-7):
                 raise ValueError('Synthetic joint or corrective deformation is incorrect')
-    return {"ok": True, "test": "synthetic-DNA/RigLogic/skinning/GLB",
-            "targets": 52, "body": True,
+    return {"ok": True, "test": "synthetic-DNA/RigLogic/skinning/GLB/baked-DNA",
+            "targets": 52, "body": True, "baked_dna": True,
             "openriglogic_version": riglogic.VersionInfo.getVersionString()}

@@ -8,12 +8,15 @@ NumPy installations, and compilers are not required on their machines.
 
 ```text
 mh-arkit-export head.dna --body-dna body.dna -o character.glb
+mh-arkit-export head.dna -o character_arkit.dna
 mh-arkit-export --self-test
 ```
 
-The output includes 52 facial morph targets and optional neutral body geometry.
-The body is unrigged. Materials, textures, wrinkle maps, and skeletal animation
-are not exported. Exact parity with Unreal's expression mapping remains
+Both formats include 52 baked facial morph targets. GLB can include optional
+unrigged neutral body geometry. DNA retains the neutral head skeleton, skin
+weights, UVs, and topology at LOD0, with 52 pass-through controls replacing the
+original facial solvers. Joint motion is baked into the targets. Materials,
+textures, and wrinkle maps are not exported. Exact parity with Unreal's expression mapping remains
 unverified. See [the baker documentation](docs/BAKING.md).
 
 ## Release matrix
@@ -112,7 +115,7 @@ release assembly. Do not publish it as the glibc 2.28 download.
 Every package build runs the Python tests and build-system tests, then freezes
 the tested baker with the pinned native runtime. The runtime self-test creates
 a tiny synthetic DNA with a bone and corrective shape, bakes all 52 targets,
-adds a neutral body, and checks the numerical GLB output. No Scott files or
+adds a neutral body, and checks the numerical GLB and baked DNA output. No Scott files or
 other character assets are included in the test or release artifacts.
 
 The builder verifies CPU architecture for all collected native files, records

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bake a MetaHuman head DNA to an ARKit GLB using standalone OpenRigLogic.
+"""Bake a MetaHuman head DNA to ARKit GLB or DNA using standalone OpenRigLogic.
 
 Requires NumPy and Epic's matching ``dna`` / ``riglogic`` Python bindings.
 See cli/docs/BAKING.md for building the bindings and mapping limits.
@@ -313,13 +313,13 @@ def write_glb(path, meshes, neutral, targets, static_meshes=()):
 
 
 def main(argv=None, *, standalone=False):
-    description = ("Bake 52 ARKit facial shapes from head DNA into a GLB. "
+    description = ("Bake 52 ARKit facial shapes from head DNA into GLB or DNA. "
                    "Optionally include the matching body in its neutral pose.") if standalone else __doc__
     parser = argparse.ArgumentParser(description=description,
                                      epilog="Diagnostics: --version, --build-info, --self-test" if standalone else None)
     parser.add_argument("dna", type=Path, help="Complete head DNA file")
     parser.add_argument("--body-dna", type=Path, help="Include LOD0 body geometry in its neutral pose")
-    parser.add_argument("-o", "--output", type=Path, required=True, help="Output .glb")
+    parser.add_argument("-o", "--output", type=Path, required=True, help="Output .glb or .dna (LOD0)")
     if standalone:
         parser.set_defaults(bindings=None)
     else:
@@ -327,8 +327,13 @@ def main(argv=None, *, standalone=False):
     parser.add_argument("--mapping", type=Path, help="JSON GUI/raw recipes overriding the built-in mapping")
     parser.add_argument("--mesh", action="append", help="Export only this LOD0 mesh name (repeatable)")
     args = parser.parse_args(argv)
-    if args.output.suffix.lower() != ".glb":
-        parser.error("output must have a .glb extension")
+    if args.output.suffix.lower() not in (".glb", ".dna"):
+        parser.error("output must have a .glb or .dna extension")
+    dna_output = args.output.suffix.lower() == ".dna"
+    if dna_output and args.body_dna:
+        parser.error("--body-dna is supported for GLB output only")
+    if args.output.resolve() == args.dna.resolve():
+        parser.error("output must differ from the source DNA")
     if args.bindings:
         sys.path.insert(0, str(args.bindings.resolve()))
     try:
@@ -415,7 +420,17 @@ def main(argv=None, *, standalone=False):
             "dna_corrective_targets": len(mesh.correctives), "morph_target_count": 0,
         } for mesh, _positions in static_meshes)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    write_glb(args.output, meshes, neutral, targets, static_meshes)
+    if dna_output:
+        from baked_dna import control_names, write_baked_dna
+        report["baked_dna"] = {
+            "lod_count": 1, "skeleton_pose": "neutral; expression motion baked into blendshapes",
+            "gui_control_names": list(TARGET_NAMES), "raw_control_names": control_names(TARGET_NAMES),
+            "blend_shape_channel_count": len(TARGET_NAMES),
+            "verification": write_baked_dna(args.output, rig, indices, meshes, neutral,
+                                             targets, TARGET_NAMES, dna, riglogic),
+        }
+    else:
+        write_glb(args.output, meshes, neutral, targets, static_meshes)
     report_path = args.output.with_suffix(".report.json")
     report_path.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     print(f"Wrote {args.output} ({args.output.stat().st_size / 1024**2:.1f} MiB)")

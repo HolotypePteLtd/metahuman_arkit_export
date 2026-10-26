@@ -5,11 +5,17 @@ Python, Unreal Engine, Blender and compiler installations are not required.
 
 Linux / macOS:
   ./mh-arkit-export head.dna --body-dna body.dna -o character.glb
+  ./mh-arkit-export head.dna -o character_arkit.dna
 
 Windows PowerShell:
   .\mh-arkit-export.exe head.dna --body-dna body.dna -o character.glb
+  .\mh-arkit-export.exe head.dna -o character_arkit.dna
 
 Quote paths containing spaces. Omit --body-dna for a head-only export.
+DNA output supports LOD0 head meshes, retaining the neutral skeleton and skin
+weights. Its 52 raw controls are named CTRL_expressions.eyeBlinkLeft, etc.,
+with channel and GUI names EyeBlinkLeft, etc. All expression motion is baked
+into blendshapes; the skeleton stays neutral. --body-dna requires GLB output.
 The body is included in its neutral pose, without a skeleton or body animation.
 The output includes geometry, UVs, and 52 facial morph targets. Textures and
 materials are not included. Use head and body DNA from the same character.
@@ -20,7 +26,7 @@ Diagnostics:
   mh-arkit-export --self-test
 
 The self-test generates a tiny synthetic rig and verifies DNA loading,
-RigLogic, joint skinning, corrective shapes, and GLB output. It needs no
+RigLogic, joint skinning, corrective shapes, GLB, and baked DNA output. It needs no
 download or character files and does not alter your DNA.
 
 Use --help to see mesh selection and custom expression-mapping options.
