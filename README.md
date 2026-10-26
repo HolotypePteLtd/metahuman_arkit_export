@@ -139,7 +139,8 @@ make cli-docker PLATFORM=linux-x64 JOBS=4
 ```
 
 CLI artifacts are written to `cli/dist/arkit`. Its release workflow builds
-Linux, Windows, and macOS on x64 and ARM64, verifies the complete matrix,
+Linux, Windows, and macOS on x64 and ARM64 on every push to `main` and pull
+request touching CLI inputs, verifies the complete matrix,
 and stages a draft release for `arkit-v*` tags. The CLI version lives in
 `cli/VERSION`; the plugin version lives in `plugins/ue/MHARKitExport.uplugin`.
 `JOBS`, `PLATFORM`, and `VERSION` are forwarded to the CLI build. `BUILD_ARGS`

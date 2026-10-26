@@ -137,14 +137,15 @@ validation.
 ## Publishing
 
 The `Standalone ARKit CLI` GitHub Actions workflow builds all six targets on
-pull requests, manual dispatch, and `arkit-v*` tags. Actions and Linux images
-are pinned by immutable revisions/digests. A pinned actionlint validates the
-workflow before starting the matrix. A failed platform prevents release assembly.
+pushes to `main` that touch CLI inputs, on pull requests, manual dispatch, and
+`arkit-v*` tags. Actions and Linux images are pinned by immutable
+revisions/digests. A pinned actionlint validates the workflow before starting
+the matrix. A failed platform prevents release assembly.
 
 1. Update `cli/VERSION` and commit the application, tests, build tools, lock, and
    workflow. Release assembly requires a clean checkout.
-2. Run the workflow manually to inspect all six platform archives, checksums,
-   and manifests.
+2. Push to `main` to build and test all six platform archives continuously;
+   inspect the workflow artifacts for checksums, manifests, and verification logs.
 3. Push a matching tag, for example `arkit-v0.1.0`. The workflow builds and
    verifies the complete matrix, then creates a **draft** GitHub release.
 4. Review the draft downloads and publish it when ready.

@@ -8,7 +8,13 @@ on:
       - 'Makefile'
       - 'cli/**'
   push:
+    branches: [main]
     tags: ['arkit-v*']
+    paths:
+      - '.github/workflows/arkit-release.yml'
+      - '.gitattributes'
+      - 'Makefile'
+      - 'cli/**'
   workflow_dispatch:
     inputs:
       version:

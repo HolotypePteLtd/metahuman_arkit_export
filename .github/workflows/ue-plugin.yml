@@ -8,7 +8,13 @@ on:
       - '.gitattributes'
       - 'Makefile'
   push:
+    branches: [main]
     tags: ['ue-v*']
+    paths:
+      - 'plugins/ue/**'
+      - '.github/workflows/ue-plugin.yml'
+      - '.gitattributes'
+      - 'Makefile'
   workflow_dispatch:
 
 permissions:
