@@ -1,6 +1,6 @@
 # Export Unreal Engine MetaHuman with ARKit Blendshapes
 
-A MetaHuman is described by its DNA (`head.dna`, `body.dna`), which is an Epic format that contains values for:
+A MetaHuman instance is described by its DNA file(s) `head.dna`, `body.dna`, etc. This is an Epic format containing values for:
 
 - **Geometry** — face and body meshes per LOD (nine LOD0 head parts on a
   typical character: face skin, teeth, eyeballs, eyelashes, ...)
@@ -11,17 +11,11 @@ A MetaHuman is described by its DNA (`head.dna`, `body.dna`), which is an Epic f
 - **Corrective shapes** — pose-space fixes that are applied before linear blend
   skinning
 
-At runtime (either inside or outside Unreal Engine), Epic's open source **Rig Logic** library can be used to evaluate the graph efficiently for facial animation.
+At runtime (either inside or outside Unreal Engine), Epic's open source Rig Logic library can be used to evaluate the graph efficiently for facial animation.
 
-Notably, the DNA format does not specify ARKit-compatible blendshapes. 
+However, Unreal Engine (and other related plugins like Polyhammer) do not automatically export MetaHumans with ARKit-compatible blendshapes in their DNA descriptions.
 
-This repository contains two tools to "bake" a set of ARKit blendshapes a MetaHumans from Unreal Engine with ARKit blendshapes/shape keys.
-
-Two exporters bake MetaHuman facial geometry with 52 ARKit morph targets:
-
-Because the evaluation is a standalone library, these exporters can bake fully offline — the CLI evaluates
-a head DNA with no Unreal or Blender installation.
-
+This repository exists to fill this gap with two tools, both to "bake" a set of ARKit blendshapes onto an exported MetaHuman. The first is a UE plugin to export a glTF file from within UE itself, the second is to bake the blendshapes directly from/to the exported .dna files.  
 
 | Product | Input | Runtime | Documentation |
 | --- | --- | --- | --- |
