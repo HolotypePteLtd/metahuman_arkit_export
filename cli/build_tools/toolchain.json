@@ -1,5 +1,6 @@
 {
   "schema": 1,
   "python": "3.13.9",
+  "python_windows_aarch64": "cpython-3.13.9-windows-aarch64-none",
   "uv": "0.11.4"
 }

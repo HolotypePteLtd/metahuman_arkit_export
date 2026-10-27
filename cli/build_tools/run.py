@@ -159,8 +159,10 @@ def ensure(*, check=False, offline=False):
                    TMPDIR=str(temporary), TEMP=str(temporary), TMP=str(temporary))
         uv = uv_executable(cache, env, pins['uv'])
         print('Preparing pinned MHARKIT release tools (Python ' + pins['python'] + ')', file=sys.stderr, flush=True)
+        request = pins.get('python_windows_aarch64') if (os.name == 'nt'
+                                                         and platform.machine().lower() in ('arm64', 'aarch64')) else pins['python']
         subprocess.run([str(uv), 'sync', '--project', str(ROOT), '--no-config', '--locked',
-                        '--no-dev', '--no-install-project', '--managed-python', '--python', pins['python'],
+                        '--no-dev', '--no-install-project', '--managed-python', '--python', request,
                         '--link-mode', 'copy'], check=True, env=env)
         installed = probe(environment)
         if installed['python'] != pins['python'] or installed['packages'].get('uv') != pins['uv']:

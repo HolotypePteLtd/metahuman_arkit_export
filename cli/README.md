@@ -36,7 +36,9 @@ macOS CI currently runs on macOS 15 while targeting 14; Mach-O deployment
 versions and library references are checked before packaging. Windows ARM64 CI
 runs on the `windows-11-arm` image's preinstalled interpreter, because
 `actions/setup-python` cannot force-install 3.13.9 there; the bootstrap
-installs the pinned interpreter regardless. Linux builds
+installs the pinned interpreter regardless and selects uv's native
+`windows-aarch64` build, so the frozen executable is ARM64 rather than
+emulated x64. Linux builds
 inspect the actual GLIBC requirements of every bundled ELF file and reject
 artifacts exceeding 2.28. A successful build on a newer workstation alone
 does not establish the Linux compatibility target.
