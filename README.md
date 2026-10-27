@@ -1,6 +1,6 @@
 # Export Unreal Engine MetaHuman with ARKit Blendshapes
 
-A MetaHuman instance is described by its DNA file(s) `head.dna`, `body.dna`, etc. This is an Epic format containing values for:
+A MetaHuman instance is described by DNA file(s) (`head.dna`, `body.dna`, etc), which is an Epic file format that specifies values for:
 
 - **Geometry** — face and body meshes per LOD (nine LOD0 head parts on a
   typical character: face skin, teeth, eyeballs, eyelashes, ...)
