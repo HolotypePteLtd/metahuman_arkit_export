@@ -33,7 +33,10 @@ unverified. See [the baker documentation](docs/BAKING.md).
 `platforms.json` records runner labels and immutable Linux image digests.
 Every platform runs the extracted executable on its matching architecture.
 macOS CI currently runs on macOS 15 while targeting 14; Mach-O deployment
-versions and library references are checked before packaging. Linux builds
+versions and library references are checked before packaging. Windows ARM64 CI
+runs on the `windows-11-arm` image's preinstalled interpreter, because
+`actions/setup-python` cannot force-install 3.13.9 there; the bootstrap
+installs the pinned interpreter regardless. Linux builds
 inspect the actual GLIBC requirements of every bundled ELF file and reject
 artifacts exceeding 2.28. A successful build on a newer workstation alone
 does not establish the Linux compatibility target.

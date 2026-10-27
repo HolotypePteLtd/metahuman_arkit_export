@@ -19,8 +19,12 @@ class EnvironmentTest(unittest.TestCase):
         self.addCleanup(self.directory.cleanup)
         self.root = Path(self.directory.name).resolve()
         self.environment = self.root / 'environment'
+        # Pin the offline marker off so container builds that export
+        # MHARKIT_TOOLS_OFFLINE=1 exercise the same branch as local runs;
+        # individual tests re-enable offline behavior explicitly.
         self.context = patch.dict(os.environ, MHARKIT_TOOLS_CACHE=str(self.root / 'cache'),
-                                  MHARKIT_TOOLS_ENV=str(self.environment))
+                                  MHARKIT_TOOLS_ENV=str(self.environment),
+                                  MHARKIT_TOOLS_OFFLINE='0')
         self.context.start()
         self.addCleanup(self.context.stop)
 
