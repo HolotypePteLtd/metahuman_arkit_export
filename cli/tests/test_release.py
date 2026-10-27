@@ -60,18 +60,6 @@ class ReleaseTest(unittest.TestCase):
                 'sha256': common.sha256(path), 'release_eligible': True,
                 'manifest': self.record}
 
-    def test_native_inventory_allows_import_bytecode_but_tracks_installed_sources(self):
-        library = self.root / 'native'
-        library.mkdir()
-        (library / 'dna.py').write_text('original source')
-        original = build.native_inventory(library)
-        bytecode = library / '__pycache__'
-        bytecode.mkdir()
-        (bytecode / 'dna.cpython-313.pyc').write_bytes(b'generated cache')
-        self.assertEqual(build.native_inventory(library), original)
-        (library / 'dna.py').write_text('modified source')
-        self.assertNotEqual(build.native_inventory(library), original)
-
     def test_relocated_archive_is_verified_without_execution_when_requested(self):
         path = self.archive()
         with patch.object(verify, 'verify_execution', side_effect=AssertionError('No foreign execution')):
@@ -139,8 +127,8 @@ class ReleaseTest(unittest.TestCase):
         revision = subprocess.check_output(['git', '-C', str(common.ROOT), 'rev-parse', 'HEAD'], text=True).strip()
         runtime = json.loads((common.ROOT / 'runtime.json').read_text())
         info = {'source_dirty': False, 'source_revision': revision,
-                'sources': {'src/bake_arkit_dna.py': common.sha256(common.ROOT / 'src/bake_arkit_dna.py')},
-                'toolchain_sha256': 'locked-tools', 'python': '3.13.9', 'packages': {'numpy': '2.3.4'}}
+                'sources': {'CMakeLists.txt': common.sha256(common.ROOT / 'CMakeLists.txt')},
+                'toolchain_sha256': 'locked-tools', 'tools': {'cmake': '4.2.3'}}
         artifact_root = self.root / 'all-platforms'
         artifact_root.mkdir()
         sidecars = []

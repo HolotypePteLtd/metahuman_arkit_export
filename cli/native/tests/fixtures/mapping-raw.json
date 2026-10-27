@@ -1,0 +1,271 @@
+{
+  "control_space": "raw",
+  "targets": {
+    "EyeBlinkLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.019230769230769232
+      }
+    },
+    "EyeLookDownLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.038461538461538464
+      }
+    },
+    "EyeLookInLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.057692307692307696
+      }
+    },
+    "EyeLookOutLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.07692307692307693
+      }
+    },
+    "EyeLookUpLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.09615384615384616
+      }
+    },
+    "EyeSquintLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.11538461538461539
+      }
+    },
+    "EyeWideLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.1346153846153846
+      }
+    },
+    "EyeBlinkRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.15384615384615385
+      }
+    },
+    "EyeLookDownRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.17307692307692307
+      }
+    },
+    "EyeLookInRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.19230769230769232
+      }
+    },
+    "EyeLookOutRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.21153846153846154
+      }
+    },
+    "EyeLookUpRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.23076923076923078
+      }
+    },
+    "EyeSquintRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.25
+      }
+    },
+    "EyeWideRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.2692307692307692
+      }
+    },
+    "JawForward": {
+      "controls": {
+        "CTRL_expressions.test": 0.28846153846153844
+      }
+    },
+    "JawLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.3076923076923077
+      }
+    },
+    "JawRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.3269230769230769
+      }
+    },
+    "JawOpen": {
+      "controls": {
+        "CTRL_expressions.test": 0.34615384615384615
+      }
+    },
+    "MouthFunnel": {
+      "controls": {
+        "CTRL_expressions.test": 0.36538461538461536
+      }
+    },
+    "MouthPucker": {
+      "controls": {
+        "CTRL_expressions.test": 0.38461538461538464
+      }
+    },
+    "MouthLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.40384615384615385
+      }
+    },
+    "MouthRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.4230769230769231
+      }
+    },
+    "MouthSmileLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.4423076923076923
+      }
+    },
+    "MouthSmileRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.46153846153846156
+      }
+    },
+    "MouthFrownLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.4807692307692308
+      }
+    },
+    "MouthFrownRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.5
+      }
+    },
+    "MouthDimpleLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.5192307692307693
+      }
+    },
+    "MouthDimpleRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.5384615384615384
+      }
+    },
+    "MouthStretchLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.5576923076923077
+      }
+    },
+    "MouthStretchRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.5769230769230769
+      }
+    },
+    "MouthRollLower": {
+      "controls": {
+        "CTRL_expressions.test": 0.5961538461538461
+      }
+    },
+    "MouthRollUpper": {
+      "controls": {
+        "CTRL_expressions.test": 0.6153846153846154
+      }
+    },
+    "MouthShrugLower": {
+      "controls": {
+        "CTRL_expressions.test": 0.6346153846153846
+      }
+    },
+    "MouthShrugUpper": {
+      "controls": {
+        "CTRL_expressions.test": 0.6538461538461539
+      }
+    },
+    "MouthPressLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.6730769230769231
+      }
+    },
+    "MouthPressRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.6923076923076923
+      }
+    },
+    "MouthLowerDownLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.7115384615384616
+      }
+    },
+    "MouthLowerDownRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.7307692307692307
+      }
+    },
+    "MouthUpperUpLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.75
+      }
+    },
+    "MouthUpperUpRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.7692307692307693
+      }
+    },
+    "BrowDownLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.7884615384615384
+      }
+    },
+    "BrowDownRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.8076923076923077
+      }
+    },
+    "BrowInnerUp": {
+      "controls": {
+        "CTRL_expressions.test": 0.8269230769230769
+      }
+    },
+    "BrowOuterUpLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.8461538461538461
+      }
+    },
+    "BrowOuterUpRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.8653846153846154
+      }
+    },
+    "CheekPuff": {
+      "controls": {
+        "CTRL_expressions.test": 0.8846153846153846
+      }
+    },
+    "CheekSquintLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.9038461538461539
+      }
+    },
+    "CheekSquintRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.9230769230769231
+      }
+    },
+    "NoseSneerLeft": {
+      "controls": {
+        "CTRL_expressions.test": 0.9423076923076923
+      }
+    },
+    "NoseSneerRight": {
+      "controls": {
+        "CTRL_expressions.test": 0.9615384615384616
+      }
+    },
+    "TongueOut": {
+      "controls": {
+        "CTRL_expressions.test": 0.9807692307692307
+      },
+      "subtract": {
+        "CTRL_expressions.test": 0.9807692307692307
+      }
+    },
+    "MouthClose": {
+      "controls": {
+        "CTRL_expressions.test": 1.0
+      },
+      "subtract": {
+        "CTRL_expressions.test": 1.0
+      }
+    }
+  }
+}

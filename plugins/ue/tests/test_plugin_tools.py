@@ -25,7 +25,7 @@ class PluginToolsTest(unittest.TestCase):
                 (root / name).mkdir()
                 (root / name / 'included.txt').write_text(name)
             for name in ('Source/Intermediate/generated.cpp', 'Source/__pycache__/x.pyc',
-                         'cli/src/bake_arkit_dna.py', 'cli/private.dna', 'build/runtime.so'):
+                         'cli/native/baker.cpp', 'cli/private.dna', 'build/runtime.so'):
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('excluded')

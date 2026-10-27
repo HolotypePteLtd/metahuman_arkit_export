@@ -110,8 +110,7 @@ plugins/ue/                 Unreal plugin and its own tooling
   tools/  tests/  marketplace/
 cli/                       Standalone DNA baker
   native/                  C++ baker, exporters, expression recipes, CLI
-  src/                     Python reference implementation for parity tests
-  tests/                   Baker and release-system tests
+  tests/                   Standard-library build and release tests
   build_tools/             Pinned tools, native builds, packaging, verification
   docs/
   VERSION  runtime.json  platforms.json  Makefile

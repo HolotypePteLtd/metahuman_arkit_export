@@ -44,12 +44,12 @@ SDK must be installed. The Python equivalent is
 
 The product is a C++17 executable with statically linked OpenRigLogic and DNA
 libraries. It does not embed or launch Python. The release driver uses Python
-to build the native product, compare it against the Python reference baker,
-and create verified archives.
+standard-library tooling to build, sign, package, and verify the native
+product. Baking tests run entirely in C++ against saved reference outputs.
 
 ### Build directly with CMake
 
-For a native executable without the Python reference test environment, install
+For the native executable and its C++ tests, install
 CMake 3.24+ (4.2+ for Visual Studio 2026), Git, and the platform C++ toolchain.
 Check out the pinned OpenRigLogic revision from `cli/runtime.json`:
 
@@ -57,7 +57,7 @@ Check out the pinned OpenRigLogic revision from `cli/runtime.json`:
 git clone https://github.com/EpicGames/OpenRigLogic.git /path/to/OpenRigLogic
 git -C /path/to/OpenRigLogic checkout d3d329bbd6992ac38adc1c1b24203ceb998f75c0
 cmake -S cli -B /tmp/mh-arkit-cpp -DOPENRIGLOGIC_SOURCE=/path/to/OpenRigLogic -DCMAKE_BUILD_TYPE=Release
-cmake --build /tmp/mh-arkit-cpp --config Release --target bake-arkit-dna --parallel 4
+cmake --build /tmp/mh-arkit-cpp --config Release --target bake-arkit-dna bake-arkit-dna-tests --parallel 4
 ctest --test-dir /tmp/mh-arkit-cpp -C Release --output-on-failure
 ```
 
@@ -95,24 +95,24 @@ The Linux publication build uses `make cli-docker` to enforce glibc 2.28.
 
 ### Local builds
 
-The build configuration lives under `cli/` and uses a pinned, isolated
-release environment in a shared user cache. See [pinned release tools](cli/build_tools/README.md)
-for cache locations and dependency pins. Run these commands from the repository root. The bootstrap needs
-Python 3.9+ with venv/pip, then selects its own exact Python and package versions.
+The build driver needs Python 3.10+ and its standard library. It uses CMake
+4.2.3, locating a matching installation or downloading the native distribution
+with the SHA-256 pin in `cli/build_tools/toolchain.json`. There is no Python
+environment, package installation, or interpreter bootstrap. See
+[build tool details](cli/build_tools/README.md).
 
 Windows needs Visual Studio 2022 or 2026 Build Tools with the matching x64 or ARM64
 C++ toolset and Windows SDK. macOS needs Xcode command-line tools. Git is
 required to fetch and verify the pinned OpenRigLogic source.
 
 ```bash
-python3 cli/build_tools/run.py --prepare
-python3 cli/build_tools/run.py python cli/build_tools/build.py --version 0.1.1
+python3 cli/build_tools/toolchain.py
+python3 cli/build_tools/build.py --version 0.1.1
 ```
 
 On Windows, use `python` if `python3` is not available. The platform is detected
 from the actual Python architecture; selecting a foreign target fails before
-building. The CLI requires no end-user Python ABI selection because Python
-is bundled.
+building. Python is used only for build and release tooling; it is not bundled.
 
 Make aliases are available:
 `make -C cli tools`, `test`, `build`, `native`, `docker`, and
@@ -125,9 +125,10 @@ python3 cli/build_tools/docker_build.py --platform linux-x64 --version 0.1.1
 python3 cli/build_tools/docker_build.py --platform linux-arm64 --version 0.1.1
 ```
 
-The container contains the same locked release tools as local builds. Its
-Docker context includes only `cli/build_tools`, so character files and other
-workspace assets cannot be baked into the builder image. The source checkout
+The container contains the same pinned CMake distribution as local builds.
+Its generated Docker context includes only the tool bootstrap and platform
+metadata, so character files and generated workspace assets cannot enter the
+builder image. The source checkout
 is mounted read-only when compiling. Cache and artifact directories are
 separate writable mounts. Building the foreign Linux architecture locally
 requires Docker's binfmt/QEMU support; CI uses native runners for both.
@@ -142,21 +143,22 @@ bake-arkit-dna-0.1.1-linux-x64.tar.gz.sha256
 
 `--build-dir` selects a native compilation cache; `--dist-dir` selects the
 artifact directory. Keep these distinct from your DNA inputs. Native cache
-identity includes the runtime revision, native build recipe, compiler,
-platform, Python installation, deployment target, and locked tools. The
-installed-file inventory is checked before a cached runtime is reused.
+identity includes the application sources, runtime revision, compiler,
+platform and pinned tools. CMake downloads and cached tool contents are
+verified against their recorded hashes. `CMAKE=/path/to/cmake` selects an
+existing installation, which must match the pinned version.
 `--source /path/to/OpenRigLogic` accepts an existing clean checkout only if
 its revision exactly matches `runtime.json`.
 
 After online preparation, require cached inputs:
 
 ```bash
-python3 cli/build_tools/run.py --offline python cli/build_tools/build.py --offline
+python3 cli/build_tools/build.py --offline
 python3 cli/build_tools/docker_build.py --platform linux-x64 --offline
 ```
 
 The Docker offline command requires an already prepared builder image and
-cached source/runtime; it disables the container network. Local compilation
+cached CMake and source; it disables the container network. Local compilation
 on a newer Linux system can be tested using `--allow-newer-linux`. Such an
 archive records its actual GLIBC requirement and is marked ineligible for
 release assembly. Do not publish it as the glibc 2.28 download.
@@ -164,7 +166,7 @@ release assembly. Do not publish it as the glibc 2.28 download.
 ### Verification
 
 Every package build compiles the C++ executable, runs its native self-test,
-and compares its output with the Python reference baker. Tests cover geometry,
+and runs native regression tests against frozen reference outputs. Tests cover geometry,
 UVs, all 52 targets, custom GUI/raw mappings, baked DNA, and independent
 execution without a runtime directory. The runtime self-test creates
 a tiny synthetic DNA with a bone and corrective shape, bakes all 52 targets,
@@ -195,7 +197,7 @@ pushes to `main` that touch CLI inputs, on pull requests, manual dispatch, and
 revisions/digests. A pinned actionlint validates the workflow before starting
 the matrix. A failed platform prevents release assembly.
 
-1. Update `cli/VERSION` and commit the application, tests, build tools, lock, and
+1. Update `cli/VERSION` and commit the application, tests, build tools, toolchain pins, and
    workflow. Release assembly requires a clean checkout.
 2. Push to `main` to build and test all six platform archives continuously;
    inspect the workflow artifacts for checksums, manifests, and verification logs.
@@ -264,7 +266,7 @@ certificate in your keychain and export the `NOTARY_API_KEY`, `NOTARY_KEY_ID`,
 and `NOTARY_ISSUER_ID` environment variables, then run:
 
 ```bash
-python3 cli/build_tools/run.py python cli/build_tools/build.py \
+python3 cli/build_tools/build.py \
   --codesign-identity "Developer ID Application: Company (TEAMID)" --notarize
 ```
 
@@ -286,3 +288,8 @@ make test
 make plugin-test
 make cli-test
 ```
+
+`make cli-test` runs standard-library tooling tests, builds the C++ executable
+and test program, then runs CTest. The fixtures are synthetic and include
+frozen outputs from the retired reference baker. No bindings or Python
+packages are needed.

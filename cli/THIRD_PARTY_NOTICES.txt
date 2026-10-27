@@ -8,4 +8,4 @@ The native executable includes:
   nlohmann/json v3.12.0 - Niels Lohmann and contributors, MIT License
 
 The complete license texts supplied by these dependencies are in LICENSES/.
-Python, NumPy, SWIG and CMake are build/test tools only and are not bundled.
+Python and CMake are build/test tools only and are not bundled.

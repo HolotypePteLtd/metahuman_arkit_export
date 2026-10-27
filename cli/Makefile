@@ -1,6 +1,5 @@
 PYTHON ?= python3
 ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-TOOLS = $(PYTHON) "$(ROOT)/build_tools/run.py"
 VERSION ?= $(shell cat "$(ROOT)/VERSION")
 JOBS ?= 2
 PLATFORM ?=
@@ -11,15 +10,16 @@ RELEASE_DIR ?= $(ROOT)/dist/release-$(VERSION)
 
 .PHONY: tools check test native build docker assemble
 tools:
-	$(TOOLS) --prepare
+	$(PYTHON) "$(ROOT)/build_tools/toolchain.py"
 check:
-	$(TOOLS) --check
+	$(PYTHON) "$(ROOT)/build_tools/toolchain.py" --check
 test:
-	$(TOOLS) python -m unittest discover -s "$(ROOT)/tests" -v
+	$(PYTHON) -m unittest discover -s "$(ROOT)/tests" -v
+	$(MAKE) native PYTHON="$(PYTHON)" JOBS="$(JOBS)"
 native:
-	$(TOOLS) python "$(ROOT)/build_tools/build.py" --native-only --jobs "$(JOBS)" $(if $(PLATFORM),--platform "$(PLATFORM)")
+	$(PYTHON) "$(ROOT)/build_tools/build.py" --native-only --jobs "$(JOBS)" $(if $(PLATFORM),--platform "$(PLATFORM)") $(BUILD_ARGS)
 build:
-	$(TOOLS) python "$(ROOT)/build_tools/build.py" --version "$(VERSION)" --jobs "$(JOBS)" $(if $(PLATFORM),--platform "$(PLATFORM)") $(BUILD_ARGS)
+	$(PYTHON) "$(ROOT)/build_tools/build.py" --version "$(VERSION)" --jobs "$(JOBS)" $(if $(PLATFORM),--platform "$(PLATFORM)") $(BUILD_ARGS)
 docker:
 	$(PYTHON) "$(ROOT)/build_tools/docker_build.py" --platform "$(if $(PLATFORM),$(PLATFORM),all)" --version "$(VERSION)" --jobs "$(JOBS)"
 assemble:

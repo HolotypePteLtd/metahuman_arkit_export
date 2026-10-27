@@ -3,14 +3,11 @@
 import argparse
 import gzip
 import hashlib
-import importlib.metadata
-import inspect
 import json
 import os
 from pathlib import Path
 import platform
 import re
-import runpy
 import shutil
 import subprocess
 import sys
@@ -20,6 +17,7 @@ import zipfile
 
 from release_utils import (ROOT, PRODUCT, PLATFORMS, binary_target, file_inventory,
                            host_platform, sha256, verify_execution, version)
+import toolchain
 
 
 def run(command, **kwargs):
@@ -142,75 +140,6 @@ def windows_cmake_options(compiler, target):
     return options
 
 
-def native_inventory(directory):
-    # Importing a --native-only runtime with ordinary Python creates bytecode.
-    # Verify installed inputs while allowing this disposable interpreter cache.
-    return {name: record for name, record in file_inventory(directory).items()
-            if '__pycache__' not in Path(name).parts}
-
-
-def native_runtime(args, source, pin, tool_identity):
-    env = clean_environment()
-    target_info = PLATFORMS[args.platform]
-    if args.platform.startswith('macos-'):
-        env['MACOSX_DEPLOYMENT_TARGET'] = target_info['deployment_target']
-    identity = dict(openriglogic=pin, platform=args.platform, python=platform.python_version(),
-                    tools=tool_identity, compiler=compiler_identity(),
-                    native_recipe_sha256=hashlib.sha256(''.join(inspect.getsource(function) for function in
-                        (native_runtime, native_inventory, compiler_identity, app_paths_vswhere,
-                         msvc_tree_identity, windows_cmake_options, clean_environment)).encode()).hexdigest(),
-                    python_base=sys.base_prefix, deployment_target=env.get('MACOSX_DEPLOYMENT_TARGET'))
-    key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
-    cache = args.build_dir / 'native' / key
-    marker = cache / 'native.json'
-    # The same lock implementation as the tool bootstrap serializes shared caches.
-    tools = runpy.run_path(str(ROOT / 'build_tools/run.py'))
-    with tools['cache_lock'](args.build_dir / 'native-locks' / key):
-        if marker.is_file():
-            record = read_json(marker)
-            if record.get('identity') == identity and record.get('files') == native_inventory(cache / 'install'):
-                print('Reusing verified native runtime: ' + key[:16], flush=True)
-                return cache / 'install/lib', identity
-            raise ValueError('Native cache is modified; remove this generated cache and rebuild: ' + str(cache))
-        cache.mkdir(parents=True, exist_ok=True)
-        options = [
-            '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_STANDARD=17',
-            '-DCMAKE_INSTALL_PREFIX=' + str(cache / 'install'), '-DCMAKE_INSTALL_LIBDIR=lib',
-            '-DCMAKE_EXPORT_PACKAGE_REGISTRY=OFF', '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF',
-            '-DREAD_ONLY_SOURCE_TREE=ON', '-DBUILD_SHARED_LIBS=OFF', '-DRL_LIBRARY_TYPE=STATIC',
-            '-DRL_BUILD_PIC=ON', '-DRL_BUILD_TESTS=OFF', '-DRL_BUILD_BENCHMARKS=OFF',
-            '-DRL_BUILD_EXAMPLES=OFF', '-DRL_BUILD_WITH_AVX=OFF', '-DRL_BUILD_WITH_SSE=OFF',
-            '-DRL_BUILD_WITH_NEON=OFF', '-DRL_BUILD_WITH_HALF_FLOATS=OFF',
-            '-DRL_BUILD_PYTHON_WRAPPER=' + platform.python_version(),
-            '-DPython3_EXECUTABLE=' + sys.executable, '-DPython3_ROOT_DIR=' + sys.base_prefix,
-            '-DSWIG_EXECUTABLE=' + str(Path(sys.executable).parent / ('swig.exe' if os.name == 'nt' else 'swig')),
-        ]
-        if os.name == 'nt':
-            options += windows_cmake_options(identity['compiler'], args.platform)
-        elif args.platform.startswith('macos-'):
-            options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('arm64' if args.platform.endswith('arm64') else 'x86_64'),
-                        '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + target_info['deployment_target'],
-                        '-DCMAKE_INSTALL_RPATH=@loader_path']
-        run(['cmake', '-S', source, '-B', cache / 'objects', *options], env=env)
-        run(['cmake', '--build', cache / 'objects', '--config', 'Release', '--parallel', args.jobs], env=env)
-        run(['cmake', '--install', cache / 'objects', '--config', 'Release'], env=env)
-        if args.platform.startswith('macos-'):
-            # The pinned upstream SWIG targets use TYPE SHARED and install
-            # .dylib files. Python imports extensions only with a .so suffix.
-            # Keep the dylibs too: RigLogic links against the versioned DNA one.
-            for module in pin['binding_modules']:
-                shutil.copy2(cache / 'install/lib' / (module + '.dylib'),
-                             cache / 'install/lib' / (module + '.so'))
-        env['PYTHONPATH'] = str(cache / 'install/lib')
-        probe = subprocess.check_output([
-            sys.executable, '-c', 'import dna,riglogic; print(riglogic.VersionInfo.getVersionString())'],
-            env=env, text=True).strip()
-        if probe != pin['version']:
-            raise ValueError('Compiled runtime version differs from its pin')
-        write_json(marker, {'identity': identity, 'files': native_inventory(cache / 'install')})
-    return cache / 'install/lib', identity
-
-
 def licenses(bundle, source):
     destination = bundle / 'LICENSES'
     destination.mkdir()
@@ -234,14 +163,14 @@ def cpp_executable(args, source, info):
         options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('arm64' if args.platform.endswith('arm64') else 'x86_64'),
                     '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + PLATFORMS[args.platform]['deployment_target']]
     env = clean_environment()
-    tools = runpy.run_path(str(ROOT / 'build_tools/run.py'))
-    with tools['cache_lock'](args.build_dir / 'cpp-locks' / key):
+    with toolchain.cache_lock(args.build_dir / 'cpp-locks' / key):
         write_json(provenance, info)
-        run(['cmake', '-S', ROOT, '-B', objects, *options], env=env)
-        run(['cmake', '--build', objects, '--config', 'Release', '--target', PRODUCT,
+        run([args.cmake, '-S', ROOT, '-B', objects, *options], env=env)
+        run([args.cmake, '--build', objects, '--config', 'Release', '--target', PRODUCT, PRODUCT + '-tests',
              '--parallel', args.jobs], env=env)
     executable = objects / ('Release/' + PRODUCT + '.exe' if args.platform.startswith('windows-') else PRODUCT)
-    run([executable, '--self-test'], env=env)
+    ctest = args.cmake.with_name('ctest.exe' if os.name == 'nt' else 'ctest')
+    run([ctest, '--test-dir', objects, '-C', 'Release', '--output-on-failure'], env=env)
     return executable
 
 
@@ -334,14 +263,12 @@ def build(args):
         raise ValueError('--notarize requires macOS and --codesign-identity')
     if args.codesign_identity and not args.platform.startswith('macos-'):
         raise ValueError('--codesign-identity requires macOS')
-    tools = runpy.run_path(str(ROOT / 'build_tools/run.py'))
-    tool_identity = tools['fingerprint']()
+    args.cmake = toolchain.ensure(Path(os.environ.get('ARKIT_CMAKE_CACHE', args.build_dir / 'tools')), offline=args.offline)
+    tool_identity = toolchain.fingerprint()
     pin = read_json(ROOT / 'runtime.json')
     source = source_tree(args, pin)
-    native, native_identity = native_runtime(args, source, pin, tool_identity)
-    if args.native_only:
-        print(native)
-        return
+    native_identity = {'platform': args.platform, 'compiler': compiler_identity(),
+                       'openriglogic': pin, 'cmake': toolchain.configuration()['cmake']}
     args.dist_dir.mkdir(parents=True, exist_ok=True)
     code_paths = ['CMakeLists.txt'] + [p.relative_to(ROOT).as_posix()
                                      for p in sorted((ROOT / 'native').rglob('*')) if p.is_file()]
@@ -350,12 +277,14 @@ def build(args):
     info = {'schema': 1, 'application': PRODUCT, 'version': args.version, 'platform': args.platform,
             'implementation': 'c++', 'source_revision': revision, 'source_dirty': dirty,
             'sources': {p: sha256(ROOT / p) for p in code_paths},
-            'openriglogic': pin, 'python': platform.python_version(), 'toolchain_sha256': tool_identity,
-            'packages': {name: importlib.metadata.version(name) for name in ('numpy', 'cmake', 'swig')}}
+            'openriglogic': pin, 'builder_python': platform.python_version(), 'toolchain_sha256': tool_identity,
+            'tools': {'cmake': toolchain.configuration()['cmake']}}
     executable = cpp_executable(args, source, info)
-    # Python and its bindings are a test oracle only; none are packaged.
+    if args.native_only:
+        print(executable)
+        return
+    # Packaging/signing tests use only the Python standard library.
     test_env = clean_environment()
-    test_env.update(PYTHONPATH=str(native), MHARKIT_CPP_BINARY=str(executable))
     run([sys.executable, '-m', 'unittest', 'discover', '-s', ROOT / 'tests', '-v'], cwd=ROOT, env=test_env)
     with tempfile.TemporaryDirectory(prefix='package-', dir=args.build_dir) as temporary:
         work = Path(temporary)
@@ -429,7 +358,7 @@ def main():
     parser.add_argument('--source', type=Path, help='Existing clean checkout of the pinned OpenRigLogic commit')
     parser.add_argument('--jobs', type=int, default=2)
     parser.add_argument('--offline', action='store_true')
-    parser.add_argument('--native-only', action='store_true')
+    parser.add_argument('--native-only', action='store_true', help='Build and test the native executable without packaging')
     parser.add_argument('--allow-newer-linux', action='store_true', help='Permit a local test artifact that release assembly will reject')
     parser.add_argument('--codesign-identity', help='macOS Developer ID signing identity')
     parser.add_argument('--notarize', action='store_true',
@@ -445,5 +374,4 @@ def main():
 
 
 if __name__ == '__main__':
-    runpy.run_path(str(ROOT / 'build_tools/run.py'))['enter']()
     main()

@@ -5,7 +5,9 @@ import hashlib
 from pathlib import Path
 import os
 import platform
+import shutil
 import subprocess
+import tempfile
 
 from release_utils import ROOT, PLATFORMS, version
 
@@ -26,24 +28,34 @@ def build(args):
     for target in targets:
         image = PLATFORMS[target]['container']
         digest = hashlib.sha256(image.encode())
-        for filename in ('run.py', 'toolchain.json', 'pyproject.toml', 'uv.lock'):
+        for filename in ('toolchain.py', 'toolchain.json', 'release_utils.py'):
             digest.update((ROOT / 'build_tools' / filename).read_bytes())
         digest.update((ROOT / 'build_tools/Dockerfile').read_bytes())
+        digest.update((ROOT / 'platforms.json').read_bytes())
         tag = f'mh-arkit-builder:{target}-{digest.hexdigest()[:20]}'
         docker_platform = 'linux/amd64' if target == 'linux-x64' else 'linux/arm64'
         if args.offline:
             command(['docker', 'image', 'inspect', tag])
         else:
-            command(['docker', 'build', '--platform', docker_platform, '--progress=plain',
-                     '--build-arg', 'MANYLINUX_IMAGE=' + image, '--tag', tag,
-                     '--file', ROOT / 'build_tools/Dockerfile', ROOT / 'build_tools'])
+            # Send only tool sources and platform metadata to Docker. Character
+            # DNA and generated workspace files never enter the image context.
+            with tempfile.TemporaryDirectory(prefix='bake-arkit-builder-') as temporary:
+                context = Path(temporary)
+                tools = context / 'cli/build_tools'
+                tools.mkdir(parents=True)
+                for name in ('toolchain.py', 'toolchain.json', 'release_utils.py'):
+                    shutil.copy2(ROOT / 'build_tools' / name, tools / name)
+                shutil.copy2(ROOT / 'platforms.json', context / 'cli/platforms.json')
+                command(['docker', 'build', '--platform', docker_platform, '--progress=plain',
+                         '--build-arg', 'MANYLINUX_IMAGE=' + image, '--tag', tag,
+                         '--file', ROOT / 'build_tools/Dockerfile', context])
         command(['docker', 'run', '--rm', '--platform', docker_platform,
                  '--user', f'{os.getuid()}:{os.getgid()}', '--env', 'HOME=/tmp',
                  *( ['--network=none'] if args.offline else [] ),
                  '--mount', f'type=bind,src={ROOT.parent},dst=/work,readonly',
                  '--mount', f'type=bind,src={args.cache},dst=/cache',
                  '--mount', f'type=bind,src={args.output},dst=/out',
-                 tag, 'python', '/work/cli/build_tools/build.py', '--version', args.version,
+                 tag, '--version', args.version,
                  '--platform', target, '--build-dir', '/cache/' + target,
                  '--dist-dir', '/out', '--jobs', args.jobs,
                  *( ['--offline'] if args.offline else [] )])

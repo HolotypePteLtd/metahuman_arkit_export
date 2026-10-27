@@ -67,7 +67,7 @@ def assemble(directory, destination, release_version, targets):
         info = manifest['build_info']
         if info['source_revision'] != source_revision or manifest['openriglogic'] != runtime_pin:
             raise ValueError('Release inputs differ from the checked-out source and runtime pin')
-        for key in ('sources', 'toolchain_sha256', 'python', 'packages'):
+        for key in ('sources', 'toolchain_sha256', 'tools'):
             if info[key] != first[key]:
                 raise ValueError('Platform artifacts use different ' + key)
         if any(sha256(ROOT / path) != digest for path, digest in info['sources'].items()):

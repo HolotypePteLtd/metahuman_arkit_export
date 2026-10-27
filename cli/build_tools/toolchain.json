@@ -1,6 +1,30 @@
 {
-  "schema": 1,
-  "python": "3.13.9",
-  "python_windows_aarch64": "cpython-3.13.9-windows-aarch64-none",
-  "uv": "0.11.4"
+  "schema": 2,
+  "cmake": "4.2.3",
+  "downloads": {
+    "macos-arm64": {
+      "url": "https://files.pythonhosted.org/packages/80/5f/965d2caf7b05e15853974eb36cdc3a8029c09bac886f7448d3f6ad4a8c5d/cmake-4.2.3-py3-none-macosx_10_10_universal2.whl",
+      "sha256": "8604578dd087631b1c829315e78e6c81d9549708df2085c89722d5be6174a71f"
+    },
+    "macos-x64": {
+      "url": "https://files.pythonhosted.org/packages/80/5f/965d2caf7b05e15853974eb36cdc3a8029c09bac886f7448d3f6ad4a8c5d/cmake-4.2.3-py3-none-macosx_10_10_universal2.whl",
+      "sha256": "8604578dd087631b1c829315e78e6c81d9549708df2085c89722d5be6174a71f"
+    },
+    "linux-x64": {
+      "url": "https://files.pythonhosted.org/packages/a7/c2/7ecd2aec927262ff2898d371f44ccb15884b6172407326e9388df07f9642/cmake-4.2.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "8e91b381aaea3c47110583dccc52f4562333d1accdbb806939f953c16e74ec0a"
+    },
+    "linux-arm64": {
+      "url": "https://files.pythonhosted.org/packages/29/92/c8895ffc12c5241111282340c56450707dd8d2f8d1f26c715087e21e3b01/cmake-4.2.3-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl",
+      "sha256": "a7e63d254ef3df90299779f5b41bf84cef02fa864255c567356089ea7c382c65"
+    },
+    "windows-x64": {
+      "url": "https://files.pythonhosted.org/packages/7f/d9/f1693ab5e403ae010df8c7ec12c77b2671080ec5c158b37f8db78814be96/cmake-4.2.3-py3-none-win_amd64.whl",
+      "sha256": "0c55af0e1b2db232a94a7c34e89f25f3dbf410a4669b11134d07de0bd7aad03e"
+    },
+    "windows-arm64": {
+      "url": "https://files.pythonhosted.org/packages/9b/4b/6b246acb4be50867dc9237d55a0bc1ec0c8fbd47db2c868f1f2b4b690e76/cmake-4.2.3-py3-none-win_arm64.whl",
+      "sha256": "e9d3761edc558b89321283c258f3bc036d2cda4c22ecfa181a25bb84e96afd4a"
+    }
+  }
 }

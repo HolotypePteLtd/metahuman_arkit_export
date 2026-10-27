@@ -1,13 +1,10 @@
 # Offline ARKit baking from head DNA
 
-`cli/src/bake_arkit_dna.py` evaluates a complete MetaHuman head DNA using Epic's
-standalone OpenRigLogic Python bindings. Unreal Engine and Blender are not
-required to run the baker.
-
-For standalone executable downloads and cross-platform publication, see the
-[release build system](../../BUILD.md#standalone-cli). Those bundles contain a single C++ executable with statically linked
-OpenRigLogic libraries. Python, NumPy, and the bindings described below are
-needed only to run this reference implementation and its parity tests.
+`bake-arkit-dna` evaluates a complete MetaHuman head DNA using statically
+linked OpenRigLogic C++ libraries. Python, Unreal Engine and Blender are not
+required to run it. Download a matching native executable from
+[Releases](https://github.com/HolotypePteLtd/metahuman_arkit_export/releases),
+or follow [BUILD.md](../../BUILD.md#standalone-cli) to build from source.
 
 The baker loads LOD0, evaluates joints and corrective blendshape weights,
 applies the corrective deltas before linear blend skinning, and writes the
@@ -42,57 +39,15 @@ exported face mesh node. Zero targets on individual face parts are expected, suc
 an eyeball; the report identifies targets that are zero across all selected
 parts.
 
-## Build the Python reference runtime
-
-The repository's pinned builder prepares Python, NumPy, CMake, and SWIG and
-prints the installed bindings directory:
-
-```bash
-python3 cli/build_tools/run.py python cli/build_tools/build.py \
-  --native-only --build-dir /tmp/mh-arkit-native --jobs 8
-```
-
-For a manual upstream build, use the commands below. On macOS, the pinned
-builder also handles the upstream SWIG library suffix and runtime search path
-needed for Python imports.
-
-Install a C++ compiler, CMake, SWIG, NumPy, and Python development headers.
-The Python major/minor version used to build the bindings must match the
-interpreter running the baker. The example below uses Python 3.13.
-
-```bash
-git clone --branch 5.8 https://github.com/EpicGames/OpenRigLogic.git /tmp/OpenRigLogic
-cmake -S /tmp/OpenRigLogic -B /tmp/OpenRigLogic-build \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DRL_BUILD_PYTHON_WRAPPER=3.13 \
-  -DRL_BUILD_TESTS=OFF \
-  -DRL_BUILD_BENCHMARKS=OFF \
-  -DRL_BUILD_EXAMPLES=OFF \
-  -DCMAKE_INSTALL_LIBDIR=lib \
-  -DCMAKE_INSTALL_PREFIX=/tmp/OpenRigLogic-runtime
-cmake --build /tmp/OpenRigLogic-build --parallel 4
-cmake --install /tmp/OpenRigLogic-build
-```
-
-This also works without Blender on macOS. Compile the bindings for the Mac's
-architecture and Python version; Linux `.so` files cannot be used on macOS.
-The Scott validation used OpenRigLogic commit
-`d3d329bbd6992ac38adc1c1b24203ceb998f75c0` (runtime version 13.2.9), built for
-Linux x86_64 / Python 3.13. Set the checkout to that commit to reproduce the
-same runtime source.
-
 ## Bake
 
 From the repository root:
 
 ```bash
-python3 cli/src/bake_arkit_dna.py /path/to/Scott/head.dna \
-  --bindings /tmp/OpenRigLogic-runtime/lib \
+bake-arkit-dna /path/to/Scott/head.dna \
   --output /tmp/Scott_arkit.glb
 ```
 
-`--bindings` points at the directory containing `dna.py`, `riglogic.py`, and
-their native libraries. Existing compatible bindings on `PYTHONPATH` work too.
 `--mesh head_lod0_mesh` selects just the face skin; repeat `--mesh` to select
 multiple parts. The default includes the teeth, eyeballs, eyelashes, and other
 LOD0 head parts so jaw, gaze, and tongue motion are captured.
@@ -100,8 +55,7 @@ LOD0 head parts so jaw, gaze, and tongue motion are captured.
 Write a baked DNA instead:
 
 ```bash
-python3 cli/src/bake_arkit_dna.py /path/to/Scott/head.dna \
-  --bindings /tmp/OpenRigLogic-runtime/lib \
+bake-arkit-dna /path/to/Scott/head.dna \
   --output /tmp/Scott_arkit.dna
 ```
 
@@ -110,33 +64,11 @@ LOD; `--body-dna` requires GLB. Source DNA files cannot be used as the output
 path. Choose different stems when keeping both formats and their reports,
 since each report uses the output stem followed by `.report.json`.
 
-The pinned macOS builder supplies importable `.so` copies of upstream's SWIG
-`.dylib` modules and sets their runtime search path to `@loader_path`. Use
-`cli/build_tools/build.py --native-only` through the pinned tool launcher to
-obtain a directly importable runtime on macOS.
-
-With that runtime's matching Python and bindings on `PYTHONPATH`, reproduce
-the writer fidelity check and compare the two output formats:
-
-```bash
-python cli/build_tools/roundtrip_dna.py /path/to/Scott/head.dna
-python cli/build_tools/compare_dna_glb.py /tmp/Scott_arkit.dna /tmp/Scott_reference.glb
-```
-
-The round-trip uses the unmodified reader configuration and the native
-`BinaryStreamWriter.setFrom(reader)` overload, preserving all LODs, behavior,
-and source coordinate conventions. Scott's format 2.5 input round-trips byte
-for byte (SHA-256 `378fbcc29daf795bd38283675d299fca6fc178be6f79df4d25e81f3ce10b4276`).
-The bake uses the transformed LOD0 reader and copies geometry/definition
-layers before replacing controls and behavior. DNA's neutral joint rotation
-getter exposes Euler angles; RigLogic's quaternion output is a different API.
-
 Include the body from the same character export:
 
 ```bash
-python3 cli/src/bake_arkit_dna.py /path/to/Scott/head.dna \
+bake-arkit-dna /path/to/Scott/head.dna \
   --body-dna /path/to/Scott/body.dna \
-  --bindings /tmp/OpenRigLogic-runtime/lib \
   --output /tmp/Scott_arkit_full_body.glb
 ```
 
@@ -151,7 +83,7 @@ format in memory; this does not modify the input file.
 
 ## Expression mapping and Unreal parity
 
-The default recipes use the dedicated DNA GUI control mapping in `cli/src/arkit_controls.py`,
+The default recipes use the dedicated DNA GUI control mapping in `cli/native/default_mapping.json`,
 with two local corrections:
 
 - `MouthClose` is the evaluated jaw-open-with-lips-together pose minus the
@@ -226,18 +158,17 @@ their shared boundary; the maximum distance between matching boundary
 vertices is approximately 0.000154 mm. The body is exported in its neutral
 pose, and the facial targets remain on the nine head parts.
 
-The host tests cover joint hierarchy traversal, parent-space translation,
-correctives applied before skinning, the mouth-close difference, mapping
-validation, UV-seam expansion with all 52 targets retained, and inclusion of
-the body as geometry without facial morph targets:
+The native CTest suite covers hierarchy traversal, parent-space translation,
+corrective deformation, frozen expression recipes, all 52 evaluated targets,
+UV seams, body geometry, serialized GLB, baked DNA, all 56 verification poses,
+roundtrip fidelity, topology/skin preservation, mesh remapping, failed-output
+atomicity, Unicode paths and standalone execution.
 
 ```bash
-python3 -m unittest discover -s cli/tests -p test_bake_arkit_dna.py -v
+ctest --test-dir /path/to/cmake-build -C Release --output-on-failure
 ```
 
-The full `cli/tests` suite additionally exercises native round-trip fidelity,
-nonzero neutral joint rotations, multiple source LODs, mesh selection and
-index remapping, UV/topology/skin preservation, zero targets, pass-through
-controls, GLB comparison, and preservation of existing output when validation
-fails. Native tests require the built bindings on `PYTHONPATH`; standalone
-builds supply them automatically.
+The small synthetic DNA fixtures and saved expected arrays are checked in
+under `cli/native/tests/fixtures`. Their provenance identifies the retired
+reference implementation used to capture the expected results. No Python
+baker or runtime bindings are needed to execute the tests.

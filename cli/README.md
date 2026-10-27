@@ -5,7 +5,7 @@ Each download contains `bake-arkit-dna` (or `.exe`), usage instructions,
 dependency licenses, and a manifest. The executable runs on its own, without
 an `_internal` directory or temporary extraction of runtime libraries. Users
 extract the complete archive and run the executable; Python, Unreal, Blender,
-NumPy installations, and compilers are not required on their machines.
+and compilers are not required on their machines.
 
 ```text
 bake-arkit-dna head.dna --body-dna body.dna -o character.glb

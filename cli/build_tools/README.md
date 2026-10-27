@@ -1,40 +1,33 @@
-# Pinned standalone release tools
+# Native build and release tools
 
-A standard-library launcher prepares a separate uv environment, pins the
-exact Python/tool versions, uses a checked-in dependency lock, and verifies
-installed versions before reusing a cache. All build configuration is in this
-repository; no other project checkout or environment is required.
+These Python scripts use only the standard library (Python 3.10+). They build,
+sign, package and verify the native C++ CLI. No Python environment, pip
+installation, NumPy, SWIG, or runtime bindings are needed.
 
 ```bash
-python3 cli/build_tools/run.py --prepare
-python3 cli/build_tools/run.py --check
-python3 cli/build_tools/run.py python cli/build_tools/build.py --help
+python3 cli/build_tools/toolchain.py
+python3 cli/build_tools/build.py --jobs 4
 ```
 
-The bootstrap host needs Python 3.9+ with venv/pip. It downloads the exact
-Python 3.13.9 runtime selected in `toolchain.json`; recipients of the final
-CLI do not need Python. `pyproject.toml` and `uv.lock` pin CMake 4.2.3,
-SWIG 4.4.1, NumPy 2.3.4, and uv 0.11.4, including platform wheel hashes.
-CMake builds the C++ product. Python, NumPy, and SWIG build and run the
-reference baker only for parity tests; they are not included in downloads.
+`toolchain.json` pins CMake 4.2.3 and the distribution SHA-256 hashes for all
+six targets. `toolchain.py` uses a matching CMake installation on PATH, or
+downloads and verifies the native binaries into `cli/build/tools`. The wheel
+files are used as ZIP containers for CMake; no Python packages are installed.
+`CMAKE=/path/to/cmake` selects an existing matching installation.
 
-Environment caches are keyed by OS, CPU architecture, and the toolchain/lock
-fingerprint. Default locations are `~/.cache/mh-arkit-export/release-tools/`
-on Linux, `~/Library/Caches/mh-arkit-export/release-tools/` on macOS, and
-`%LOCALAPPDATA%/mh-arkit-export/release-tools/` on Windows.
-`MHARKIT_TOOLS_CACHE` overrides the cache root; `MHARKIT_TOOLS_ENV` selects
-an explicitly managed environment. Unmanaged environments are preserved.
-macOS compilation caches should live on APFS rather than exFAT drives.
+The build driver caches its CMake download under its `--build-dir`. Use
+`--offline` to require existing CMake and OpenRigLogic source; missing or
+modified caches fail without downloading. `--source` accepts a clean checkout
+of the pinned OpenRigLogic revision. On macOS, prefer an APFS build directory.
 
-`--offline` or `MHARKIT_TOOLS_OFFLINE=1` requires a matching prepared
-environment. The launcher never installs or repairs dependencies in this mode.
-It removes inherited Python, pip, uv, and active-environment overrides before
-invoking managed tools. Git, compilers, SDKs, Docker, and signing tools remain
-host dependencies.
+`build.py --native-only` compiles the CLI and native tests and runs CTest,
+without creating a distribution archive. Full builds additionally run the
+standard-library packaging/signing tests and verify the relocated archive.
+All baking regression coverage is in `cli/native/tests`, including saved
+synthetic expectations from the retired reference implementation.
 
-To update dependencies, edit the pins and regenerate the lock using the
-pinned uv version. Ordinary builds run `uv sync --locked` and cannot update it.
-If changing Python, update both declarations in `toolchain.json` and
-`pyproject.toml`, then review the native CI matrix and Docker bootstrap path.
+Linux publication containers prepare only CMake and use the image's Python
+for standard-library release scripts. Their generated image context contains
+only tooling and platform metadata; application sources are mounted read-only.
 
-See [standalone release instructions](../../BUILD.md#standalone-cli).
+See [BUILD.md](../../BUILD.md) for builds, offline use, signing and releases.
