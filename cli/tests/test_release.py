@@ -248,7 +248,10 @@ class ReleaseTest(unittest.TestCase):
         compiler = installation / 'VC/Tools/MSVC/14.50.12345/bin/Hostarm64/arm64/cl.exe'
         compiler.parent.mkdir(parents=True)
         compiler.touch()
-        with (patch.dict(build.os.environ, ProgramFiles=str(self.root)),
+        # Isolate both installer roots: Windows runners have a real vswhere
+        # under ProgramFiles(x86), even when PATH discovery is disabled.
+        with (patch.dict(build.os.environ, {'ProgramFiles': str(self.root),
+                                          'ProgramFiles(x86)': str(self.root / 'x86')}),
               patch.object(build.platform, 'system', return_value='Windows'),
               patch.object(build.platform, 'machine', return_value='ARM64'),
               patch.object(build.shutil, 'which', return_value=None),
