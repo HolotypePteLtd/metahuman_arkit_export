@@ -1,0 +1,3 @@
+#pragma once
+inline constexpr const char* build_info_text = R"mharkit(@build_info@)mharkit";
+inline constexpr const char* default_mapping_text = R"mharkit(@default_mapping@)mharkit";

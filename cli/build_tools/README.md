@@ -14,8 +14,9 @@ python3 cli/build_tools/run.py python cli/build_tools/build.py --help
 The bootstrap host needs Python 3.9+ with venv/pip. It downloads the exact
 Python 3.13.9 runtime selected in `toolchain.json`; recipients of the final
 CLI do not need Python. `pyproject.toml` and `uv.lock` pin CMake 4.2.3,
-SWIG 4.4.1, NumPy 2.3.4, PyInstaller 6.22.3, uv 0.11.4, and transitive
-dependencies, including platform wheel hashes.
+SWIG 4.4.1, NumPy 2.3.4, and uv 0.11.4, including platform wheel hashes.
+CMake builds the C++ product. Python, NumPy, and SWIG build and run the
+reference baker only for parity tests; they are not included in downloads.
 
 Environment caches are keyed by OS, CPU architecture, and the toolchain/lock
 fingerprint. Default locations are `~/.cache/mh-arkit-export/release-tools/`
@@ -36,4 +37,4 @@ pinned uv version. Ordinary builds run `uv sync --locked` and cannot update it.
 If changing Python, update both declarations in `toolchain.json` and
 `pyproject.toml`, then review the native CI matrix and Docker bootstrap path.
 
-See [standalone release instructions](../README.md).
+See [standalone release instructions](../../BUILD.md#standalone-cli).

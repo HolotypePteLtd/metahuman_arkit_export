@@ -14,7 +14,6 @@ import runpy
 import shutil
 import subprocess
 import sys
-import sysconfig
 import tarfile
 import tempfile
 import zipfile
@@ -216,24 +215,34 @@ def licenses(bundle, source):
     destination = bundle / 'LICENSES'
     destination.mkdir()
     shutil.copy2(source / 'LICENSE', destination / 'OpenRigLogic-MIT.txt')
-    python_license = Path(sysconfig.get_path('stdlib')) / 'LICENSE.txt'
-    if not python_license.is_file():
-        candidates = [Path(sys.base_prefix) / 'LICENSE.txt', Path(sys.base_prefix) / 'LICENSE']
-        python_license = next((p for p in candidates if p.is_file()), python_license)
-    if not python_license.is_file():
-        raise ValueError('Cannot locate the bundled Python license')
-    shutil.copy2(python_license, destination / 'Python-LICENSE.txt')
-    for name in ('numpy', 'pyinstaller', 'packaging'):
-        distribution = importlib.metadata.distribution(name)
-        files = [p for p in distribution.files
-                 if '.dist-info/' in str(p) and ('license' in str(p).lower() or 'copying' in str(p).lower())]
-        if not files:
-            raise ValueError('Missing dependency license: ' + name)
-        for file in files:
-            relative = str(file).split('.dist-info/', 1)[1]
-            target = destination / name / relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(distribution.locate_file(file), target)
+    shutil.copy2(ROOT / 'native/vendor/json.LICENSE.MIT', destination / 'nlohmann-json-MIT.txt')
+
+
+def cpp_executable(args, source, info):
+    """Compile the product and all RigLogic dependencies into one native executable."""
+    compiler = compiler_identity()
+    identity = dict(info, compiler=compiler)
+    key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+    objects = args.build_dir / 'cpp' / key
+    objects.mkdir(parents=True, exist_ok=True)
+    provenance = objects / 'BUILD_INFO.json'
+    options = ['-DCMAKE_BUILD_TYPE=Release', '-DOPENRIGLOGIC_SOURCE=' + str(source),
+               '-DMHARKIT_BUILD_INFO=' + str(provenance), '-DCMAKE_INSTALL_LIBDIR=lib']
+    if args.platform.startswith('windows-'):
+        options += windows_cmake_options(compiler, args.platform)
+    elif args.platform.startswith('macos-'):
+        options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('arm64' if args.platform.endswith('arm64') else 'x86_64'),
+                    '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + PLATFORMS[args.platform]['deployment_target']]
+    env = clean_environment()
+    tools = runpy.run_path(str(ROOT / 'build_tools/run.py'))
+    with tools['cache_lock'](args.build_dir / 'cpp-locks' / key):
+        write_json(provenance, info)
+        run(['cmake', '-S', ROOT, '-B', objects, *options], env=env)
+        run(['cmake', '--build', objects, '--config', 'Release', '--target', PRODUCT,
+             '--parallel', args.jobs], env=env)
+    executable = objects / ('Release/' + PRODUCT + '.exe' if args.platform.startswith('windows-') else PRODUCT)
+    run([executable, '--self-test'], env=env)
+    return executable
 
 
 def required_glibc(bundle):
@@ -311,8 +320,6 @@ def make_archive(bundle, destination, target):
                         info.uid = info.gid = info.mtime = 0
                         info.uname = info.gname = ''
                         info.mode = 0o755 if os.access(path, os.X_OK) else 0o644
-                        # Dereference PyInstaller's internal shared-library links;
-                        # every platform archive can be extracted without links.
                         info.type, info.linkname, info.size = tarfile.REGTYPE, '', path.stat().st_size
                         with path.open('rb') as stream:
                             archive.addfile(info, stream)
@@ -331,42 +338,26 @@ def build(args):
     if args.native_only:
         print(native)
         return
-    test_env = clean_environment()
-    test_env['PYTHONPATH'] = str(native)
-    for suite in ('tests',):
-        run([sys.executable, '-m', 'unittest', 'discover', '-s', ROOT / suite, '-v'], cwd=ROOT, env=test_env)
     args.dist_dir.mkdir(parents=True, exist_ok=True)
-    code_paths = ['src/bake_arkit_dna.py', 'src/baked_dna.py', 'src/arkit_controls.py',
-                  'src/cli.py', 'src/smoke_fixture.py', 'build_tools/cli.spec']
+    code_paths = ['CMakeLists.txt'] + [p.relative_to(ROOT).as_posix()
+                                     for p in sorted((ROOT / 'native').rglob('*')) if p.is_file()]
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     dirty = bool(subprocess.check_output(['git', '-C', str(ROOT), 'status', '--porcelain'], text=True).strip())
     info = {'schema': 1, 'application': PRODUCT, 'version': args.version, 'platform': args.platform,
-            'source_revision': revision, 'source_dirty': dirty,
+            'implementation': 'c++', 'source_revision': revision, 'source_dirty': dirty,
             'sources': {p: sha256(ROOT / p) for p in code_paths},
             'openriglogic': pin, 'python': platform.python_version(), 'toolchain_sha256': tool_identity,
-            'packages': {name: importlib.metadata.version(name) for name in ('numpy', 'pyinstaller', 'cmake', 'swig')}}
+            'packages': {name: importlib.metadata.version(name) for name in ('numpy', 'cmake', 'swig')}}
+    executable = cpp_executable(args, source, info)
+    # Python and its bindings are a test oracle only; none are packaged.
+    test_env = clean_environment()
+    test_env.update(PYTHONPATH=str(native), MHARKIT_CPP_BINARY=str(executable))
+    run([sys.executable, '-m', 'unittest', 'discover', '-s', ROOT / 'tests', '-v'], cwd=ROOT, env=test_env)
     with tempfile.TemporaryDirectory(prefix='package-', dir=args.build_dir) as temporary:
         work = Path(temporary)
-        write_json(work / 'BUILD_INFO.json', info)
-        env = clean_environment()
-        env.update(MHARKIT_NATIVE_LIB=str(native), MHARKIT_BUILD_INFO=str(work / 'BUILD_INFO.json'),
-                   PYINSTALLER_CONFIG_DIR=str(work / 'pyinstaller-cache'))
-        if args.platform.startswith('linux-'):
-            # Let dependency analysis resolve the versioned DNA library that
-            # the RigLogic extension links against, as well as its Python import.
-            env['LD_LIBRARY_PATH'] = str(native)
-        if args.platform.startswith('macos-'):
-            env.update(MHARKIT_MACOS_ARCH='arm64' if args.platform.endswith('arm64') else 'x86_64',
-                       MACOSX_DEPLOYMENT_TARGET=PLATFORMS[args.platform]['deployment_target'])
-            if args.codesign_identity:
-                env['MHARKIT_CODESIGN_IDENTITY'] = args.codesign_identity
-        run([sys.executable, '-m', 'PyInstaller', '--noconfirm', '--clean',
-             '--distpath', work / 'frozen', '--workpath', work / 'freeze-work',
-             ROOT / 'build_tools/cli.spec'], env=env)
-        # Copy with dereferencing to make the distributable independent of
-        # symlink support (Windows, external drives, and zip extractors).
         bundle = work / f'{PRODUCT}-{args.version}-{args.platform}'
-        shutil.copytree(work / 'frozen' / PRODUCT, bundle, symlinks=False)
+        bundle.mkdir()
+        shutil.copy2(executable, bundle / executable.name)
         shutil.copy2(ROOT / 'USAGE.txt', bundle / 'README.txt')
         shutil.copy2(ROOT / 'THIRD_PARTY_NOTICES.txt', bundle / 'THIRD_PARTY_NOTICES.txt')
         licenses(bundle, source)
@@ -392,6 +383,8 @@ def build(args):
                     run(['signtool', 'sign', '/sha1', args.windows_certificate, '/fd', 'SHA256',
                          '/tr', 'http://timestamp.digicert.com', '/td', 'SHA256', path])
                     run(['signtool', 'verify', '/pa', path])
+        if args.platform.startswith('macos-'):
+            run(['codesign', '--force', '--sign', args.codesign_identity or '-', bundle / PRODUCT])
         if args.codesign_identity:
             if not args.platform.startswith('macos-'):
                 raise ValueError('--codesign-identity requires macOS')

@@ -1,12 +1,13 @@
-"""Standalone entry point for mh-arkit-export."""
+"""Development entry point for the Python reference implementation.
+
+The distributed product is built from cli/native/ and does not use this module.
+"""
 import json
 from pathlib import Path
 import sys
 
 
 def build_info():
-    if getattr(sys, "frozen", False):
-        return json.loads((Path(sys._MEIPASS) / "BUILD_INFO.json").read_text())
     root = Path(__file__).resolve().parents[1]
     return {"schema": 1, "application": "mh-arkit-export",
             "version": (root / "VERSION").read_text().strip(),

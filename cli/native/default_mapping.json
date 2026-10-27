@@ -1,0 +1,288 @@
+{
+  "control_space": "gui",
+  "targets": {
+    "EyeBlinkLeft": {
+      "controls": {
+        "CTRL_L_eye_blink.ty": 1.0
+      }
+    },
+    "EyeLookDownLeft": {
+      "controls": {
+        "CTRL_L_eye.ty": -1.0
+      }
+    },
+    "EyeLookInLeft": {
+      "controls": {
+        "CTRL_L_eye.tx": 1.0
+      }
+    },
+    "EyeLookOutLeft": {
+      "controls": {
+        "CTRL_L_eye.tx": -1.0
+      }
+    },
+    "EyeLookUpLeft": {
+      "controls": {
+        "CTRL_L_eye.ty": 1.0
+      }
+    },
+    "EyeSquintLeft": {
+      "controls": {
+        "CTRL_L_eye_squintInner.ty": 1.0
+      }
+    },
+    "EyeWideLeft": {
+      "controls": {
+        "CTRL_L_eye_eyelidU.ty": -1.0
+      }
+    },
+    "EyeBlinkRight": {
+      "controls": {
+        "CTRL_R_eye_blink.ty": 1.0
+      }
+    },
+    "EyeLookDownRight": {
+      "controls": {
+        "CTRL_R_eye.ty": -1.0
+      }
+    },
+    "EyeLookInRight": {
+      "controls": {
+        "CTRL_R_eye.tx": -1.0
+      }
+    },
+    "EyeLookOutRight": {
+      "controls": {
+        "CTRL_R_eye.tx": 1.0
+      }
+    },
+    "EyeLookUpRight": {
+      "controls": {
+        "CTRL_R_eye.ty": 1.0
+      }
+    },
+    "EyeSquintRight": {
+      "controls": {
+        "CTRL_R_eye_squintInner.ty": 1.0
+      }
+    },
+    "EyeWideRight": {
+      "controls": {
+        "CTRL_R_eye_eyelidU.ty": -1.0
+      }
+    },
+    "JawForward": {
+      "controls": {
+        "CTRL_C_jaw_fwdBack.ty": 1.0
+      }
+    },
+    "JawLeft": {
+      "controls": {
+        "CTRL_C_jaw.tx": 1.0
+      }
+    },
+    "JawRight": {
+      "controls": {
+        "CTRL_C_jaw.tx": -1.0
+      }
+    },
+    "JawOpen": {
+      "controls": {
+        "CTRL_C_jaw.ty": 1.0
+      }
+    },
+    "MouthFunnel": {
+      "controls": {
+        "CTRL_L_mouth_funnelD.ty": 1.0,
+        "CTRL_R_mouth_funnelD.ty": 1.0,
+        "CTRL_L_mouth_funnelU.ty": 1.0,
+        "CTRL_R_mouth_funnelU.ty": 1.0
+      }
+    },
+    "MouthPucker": {
+      "controls": {
+        "CTRL_L_mouth_purseD.ty": 1.0,
+        "CTRL_R_mouth_purseD.ty": 1.0,
+        "CTRL_L_mouth_purseU.ty": 1.0,
+        "CTRL_R_mouth_purseU.ty": 1.0
+      }
+    },
+    "MouthLeft": {
+      "controls": {
+        "CTRL_C_mouth.tx": 1.0
+      }
+    },
+    "MouthRight": {
+      "controls": {
+        "CTRL_C_mouth.tx": -1.0
+      }
+    },
+    "MouthSmileLeft": {
+      "controls": {
+        "CTRL_L_mouth_cornerPull.ty": 1.0
+      }
+    },
+    "MouthSmileRight": {
+      "controls": {
+        "CTRL_R_mouth_cornerPull.ty": 1.0
+      }
+    },
+    "MouthFrownLeft": {
+      "controls": {
+        "CTRL_L_mouth_cornerDepress.ty": 1.0
+      }
+    },
+    "MouthFrownRight": {
+      "controls": {
+        "CTRL_R_mouth_cornerDepress.ty": 1.0
+      }
+    },
+    "MouthDimpleLeft": {
+      "controls": {
+        "CTRL_L_mouth_dimple.ty": 1.0
+      }
+    },
+    "MouthDimpleRight": {
+      "controls": {
+        "CTRL_R_mouth_dimple.ty": 1.0
+      }
+    },
+    "MouthStretchLeft": {
+      "controls": {
+        "CTRL_L_mouth_stretch.ty": 1.0
+      }
+    },
+    "MouthStretchRight": {
+      "controls": {
+        "CTRL_R_mouth_stretch.ty": 1.0
+      }
+    },
+    "MouthRollLower": {
+      "controls": {
+        "CTRL_L_mouth_lipsRollD.ty": 1.0,
+        "CTRL_R_mouth_lipsRollD.ty": 1.0
+      }
+    },
+    "MouthRollUpper": {
+      "controls": {
+        "CTRL_L_mouth_lipsRollU.ty": 1.0,
+        "CTRL_R_mouth_lipsRollU.ty": 1.0
+      }
+    },
+    "MouthShrugLower": {
+      "controls": {
+        "CTRL_L_jaw_ChinRaiseD.ty": 1.0,
+        "CTRL_R_jaw_ChinRaiseD.ty": 1.0
+      }
+    },
+    "MouthShrugUpper": {
+      "controls": {
+        "CTRL_L_jaw_ChinRaiseU.ty": 1.0,
+        "CTRL_R_jaw_ChinRaiseU.ty": 1.0
+      }
+    },
+    "MouthPressLeft": {
+      "controls": {
+        "CTRL_L_mouth_pressD.ty": 1.0,
+        "CTRL_L_mouth_pressU.ty": 1.0
+      }
+    },
+    "MouthPressRight": {
+      "controls": {
+        "CTRL_R_mouth_pressD.ty": 1.0,
+        "CTRL_R_mouth_pressU.ty": 1.0
+      }
+    },
+    "MouthLowerDownLeft": {
+      "controls": {
+        "CTRL_L_mouth_lowerLipDepress.ty": 1.0
+      }
+    },
+    "MouthLowerDownRight": {
+      "controls": {
+        "CTRL_R_mouth_lowerLipDepress.ty": 1.0
+      }
+    },
+    "MouthUpperUpLeft": {
+      "controls": {
+        "CTRL_L_mouth_upperLipRaise.ty": 1.0
+      }
+    },
+    "MouthUpperUpRight": {
+      "controls": {
+        "CTRL_R_mouth_upperLipRaise.ty": 1.0
+      }
+    },
+    "BrowDownLeft": {
+      "controls": {
+        "CTRL_L_brow_down.ty": 1.0
+      }
+    },
+    "BrowDownRight": {
+      "controls": {
+        "CTRL_R_brow_down.ty": 1.0
+      }
+    },
+    "BrowInnerUp": {
+      "controls": {
+        "CTRL_L_brow_raiseIn.ty": 1.0,
+        "CTRL_R_brow_raiseIn.ty": 1.0,
+        "CTRL_L_brow_lateral.ty": 1.0,
+        "CTRL_R_brow_lateral.ty": 1.0
+      }
+    },
+    "BrowOuterUpLeft": {
+      "controls": {
+        "CTRL_L_brow_raiseOut.ty": 1.0
+      }
+    },
+    "BrowOuterUpRight": {
+      "controls": {
+        "CTRL_R_brow_raiseOut.ty": 1.0
+      }
+    },
+    "CheekPuff": {
+      "controls": {
+        "CTRL_L_mouth_lipsBlow.ty": 1.0,
+        "CTRL_R_mouth_lipsBlow.ty": 1.0
+      }
+    },
+    "CheekSquintLeft": {
+      "controls": {
+        "CTRL_L_eye_cheekRaise.ty": 1.0
+      }
+    },
+    "CheekSquintRight": {
+      "controls": {
+        "CTRL_R_eye_cheekRaise.ty": 1.0
+      }
+    },
+    "NoseSneerLeft": {
+      "controls": {
+        "CTRL_L_nose.ty": 1.0
+      }
+    },
+    "NoseSneerRight": {
+      "controls": {
+        "CTRL_R_nose.ty": 1.0
+      }
+    },
+    "TongueOut": {
+      "controls": {
+        "CTRL_C_tongue_inOut.ty": 1.0
+      }
+    },
+    "MouthClose": {
+      "controls": {
+        "CTRL_L_mouth_lipsTogetherD.ty": 1.0,
+        "CTRL_R_mouth_lipsTogetherD.ty": 1.0,
+        "CTRL_L_mouth_lipsTogetherU.ty": 1.0,
+        "CTRL_R_mouth_lipsTogetherU.ty": 1.0,
+        "CTRL_C_jaw.ty": 1.0
+      },
+      "subtract": {
+        "CTRL_C_jaw.ty": 1.0
+      }
+    }
+  }
+}

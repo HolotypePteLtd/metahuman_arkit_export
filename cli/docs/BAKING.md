@@ -5,8 +5,9 @@ standalone OpenRigLogic Python bindings. Unreal Engine and Blender are not
 required to run the baker.
 
 For standalone executable downloads and cross-platform publication, see the
-[release build system](../README.md). Those bundles include Python,
-NumPy, and the compiled bindings, so recipients need none of these installed.
+[release build system](../../BUILD.md#standalone-cli). Those bundles contain a single C++ executable with statically linked
+OpenRigLogic libraries. Python, NumPy, and the bindings described below are
+needed only to run this reference implementation and its parity tests.
 
 The baker loads LOD0, evaluates joints and corrective blendshape weights,
 applies the corrective deltas before linear blend skinning, and writes the
@@ -41,7 +42,7 @@ exported face mesh node. Zero targets on individual face parts are expected, suc
 an eyeball; the report identifies targets that are zero across all selected
 parts.
 
-## Build the runtime
+## Build the Python reference runtime
 
 The repository's pinned builder prepares Python, NumPy, CMake, and SWIG and
 prints the installed bindings directory:

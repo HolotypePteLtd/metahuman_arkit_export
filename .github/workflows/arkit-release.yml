@@ -105,13 +105,13 @@ jobs:
         run: |
           (Get-Command python).Source
           python -c "import platform, sys; assert 'ARM64' in platform.machine().upper(), platform.machine(); print(sys.version)"
-      - name: Linux baseline build and native bake verification
+      - name: Linux C++ build, Python parity tests, and archive verification
         if: startsWith(matrix.platform, 'linux-')
         env:
           ARKIT_VERSION: ${{ needs.plan.outputs.version }}
           ARKIT_PLATFORM: ${{ matrix.platform }}
         run: make cli-docker PYTHON=python PLATFORM="$ARKIT_PLATFORM" VERSION="$ARKIT_VERSION" JOBS=4
-      - name: Native Windows or macOS build and bake verification
+      - name: Windows or macOS C++ build, Python parity tests, and archive verification
         if: ${{ !startsWith(matrix.platform, 'linux-') }}
         env:
           ARKIT_VERSION: ${{ needs.plan.outputs.version }}

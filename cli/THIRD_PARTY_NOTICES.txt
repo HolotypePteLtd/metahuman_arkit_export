@@ -1,14 +1,11 @@
 MH ARKit Export standalone baker
 
-Application code: Copyright 2026 Holotype Pte Ltd. All rights reserved.
+Application code: Copyright 2026 Holotype Pte Ltd. MIT License.
 This bundle does not grant rights to third-party DNA files or character assets.
 
-The runtime includes:
+The native executable includes:
   OpenRigLogic / DNA libraries - Epic Games, MIT License
-  CPython - Python Software Foundation License and included third-party notices
-  NumPy - BSD license and notices for libraries included in its platform wheel
-  PyInstaller bootloader - GPL with the bootloader distribution exception
-  Packaging (if collected) - Apache 2.0 / BSD licenses
+  nlohmann/json v3.12.0 - Niels Lohmann and contributors, MIT License
 
 The complete license texts supplied by these dependencies are in LICENSES/.
-Build tools are pinned separately and are not required by recipients.
+Python, NumPy, SWIG and CMake are build/test tools only and are not bundled.

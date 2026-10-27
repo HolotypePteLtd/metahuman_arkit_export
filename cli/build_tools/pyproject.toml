@@ -5,7 +5,6 @@ requires-python = "==3.13.9"
 dependencies = [
     "cmake==4.2.3",
     "numpy==2.3.4",
-    "pyinstaller==6.22.3",
     "swig==4.4.1",
     "uv==0.11.4",
 ]

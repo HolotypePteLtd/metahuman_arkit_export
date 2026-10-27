@@ -1,6 +1,7 @@
 MH ARKit Export - standalone DNA baker
 
-Extract the entire download, then open a terminal in its directory.
+Extract the download, then open a terminal in its directory.
+The native executable can also be moved and run on its own.
 Python, Unreal Engine, Blender and compiler installations are not required.
 
 Linux / macOS:
@@ -33,7 +34,6 @@ Use --help to see mesh selection and custom expression-mapping options.
 Exact parity with Unreal's AS_MetaHuman_ARKit_Mapping is not yet verified.
 Combining individually baked shapes approximates nonlinear rig interactions.
 
-Keep the executable and its _internal directory together. MANIFEST.json
-records the build inputs, dependency versions, compatibility, and file hashes.
+MANIFEST.json records the build inputs, dependency versions, compatibility, and file hashes.
 Verify the archive checksum before distributing it. For signed/notarized
 releases, follow the publisher's platform-specific installation instructions.
