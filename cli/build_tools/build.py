@@ -167,6 +167,7 @@ def cpp_executable(args, source, info):
         write_json(provenance, info)
         run([args.cmake, '-S', ROOT, '-B', objects, *options], env=env)
         run([args.cmake, '--build', objects, '--config', 'Release', '--target', PRODUCT, PRODUCT + '-tests',
+             PRODUCT + '-safety-tests',
              '--parallel', args.jobs], env=env)
     executable = objects / ('Release/' + PRODUCT + '.exe' if args.platform.startswith('windows-') else PRODUCT)
     ctest = args.cmake.with_name('ctest.exe' if os.name == 'nt' else 'ctest')

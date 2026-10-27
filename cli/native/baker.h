@@ -9,6 +9,7 @@
 #include <limits>
 #include <riglogic/RigLogic.h>
 #include <string>
+#include <utility>
 #include <vector>
 namespace arkit {
 namespace fs = std::filesystem;
@@ -48,6 +49,7 @@ struct Rig {
 };
 Mesh read_mesh(const dna::Reader &reader, std::uint16_t index);
 void check_status(const std::string &context);
+void validate_behavior(const dna::Reader &reader);
 void validate_mapping(const Json &mapping,
                       const std::vector<std::string> &controls);
 void write_glb(const fs::path &path, const std::vector<Mesh> &meshes,
@@ -73,6 +75,11 @@ struct TemporaryDirectory {
   fs::path path;
   explicit TemporaryDirectory(const fs::path &parent);
   ~TemporaryDirectory();
+  TemporaryDirectory(const TemporaryDirectory &) = delete;
+  TemporaryDirectory &operator=(const TemporaryDirectory &) = delete;
 };
+void check_output_path(const fs::path &path);
+void install_outputs(TemporaryDirectory &staging,
+                     const std::vector<std::pair<fs::path, fs::path>> &files);
 void replace_file(const fs::path &temporary, const fs::path &destination);
 } // namespace arkit

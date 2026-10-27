@@ -71,6 +71,7 @@ Rig::Rig(const fs::path &path)
       logic(nullptr) {
   reader->read();
   check_status("Cannot read DNA");
+  validate_behavior(*reader);
   rl4::Configuration cfg;
   cfg.rotationType = rl4::RotationType::Quaternions;
   cfg.floatingPointType = rl4::FloatingPointType::Float;
@@ -94,6 +95,8 @@ Mesh read_mesh(const dna::Reader &r, std::uint16_t index) {
     throw std::runtime_error(m.name + ": missing geometry or skin weights");
   auto xs = r.getVertexPositionXs(index), ys = r.getVertexPositionYs(index),
        zs = r.getVertexPositionZs(index);
+  if (xs.size() != count || ys.size() != count || zs.size() != count)
+    throw std::runtime_error(m.name + ": invalid position array lengths");
   auto maximum = r.getMaximumInfluencePerVertex(index);
   for (std::uint32_t v = 0; v < count; ++v) {
     m.positions.push_back({xs[v], ys[v], zs[v]});
@@ -118,6 +121,13 @@ Mesh read_mesh(const dna::Reader &r, std::uint16_t index) {
        uvs = r.getVertexLayoutTextureCoordinateIndices(index);
   auto us = r.getVertexTextureCoordinateUs(index),
        vs = r.getVertexTextureCoordinateVs(index);
+  if (layouts.size() != uvs.size() ||
+      layouts.size() != r.getVertexLayoutNormalIndices(index).size() ||
+      us.size() != vs.size() ||
+      r.getVertexNormalXs(index).size() != r.getVertexNormalYs(index).size() ||
+      r.getVertexNormalXs(index).size() != r.getVertexNormalZs(index).size())
+    throw std::runtime_error(m.name +
+                             ": invalid vertex attribute array lengths");
   for (std::size_t i = 0; i < layouts.size(); ++i) {
     if (layouts[i] >= count || uvs[i] >= us.size())
       throw std::runtime_error("Invalid vertex layout");
@@ -142,6 +152,10 @@ Mesh read_mesh(const dna::Reader &r, std::uint16_t index) {
     auto dx = r.getBlendShapeTargetDeltaXs(index, t),
          dy = r.getBlendShapeTargetDeltaYs(index, t),
          dz = r.getBlendShapeTargetDeltaZs(index, t);
+    if (c.channel >= r.getBlendShapeChannelCount() ||
+        dx.size() != vertices.size() || dy.size() != vertices.size() ||
+        dz.size() != vertices.size())
+      throw std::runtime_error(m.name + ": invalid corrective arrays");
     for (std::size_t i = 0; i < vertices.size(); ++i) {
       if (vertices[i] >= count)
         throw std::runtime_error("Invalid corrective vertex");
@@ -234,10 +248,22 @@ Json bake(const Options &o, bool quiet) {
     throw std::runtime_error("output must have a .glb or .dna extension");
   if (dna_output && !o.body.empty())
     throw std::runtime_error("--body-dna is supported for GLB output only");
-  if (fs::weakly_canonical(o.input) == fs::weakly_canonical(o.output) ||
-      (!o.body.empty() &&
-       fs::weakly_canonical(o.body) == fs::weakly_canonical(o.output)))
-    throw std::runtime_error("output must differ from the source DNA");
+  auto report_path = o.output;
+  report_path.replace_extension(".report.json");
+  for (const auto &destination : {o.output, report_path}) {
+    check_output_path(destination);
+    for (const auto &source : {o.input, o.body, o.mapping}) {
+      if (source.empty())
+        continue;
+      std::error_code ec;
+      if (fs::weakly_canonical(source) == fs::weakly_canonical(destination) ||
+          fs::equivalent(source, destination, ec))
+        throw std::runtime_error(
+            "output must differ from source DNA and mapping "
+            "files; report must also differ: " +
+            destination.u8string());
+    }
+  }
   Rig rig(o.input);
   auto &r = *rig.reader;
   Json mapping = o.mapping.empty() ? Json::parse(default_mapping_text)
@@ -356,9 +382,13 @@ Json bake(const Options &o, bool quiet) {
   if (parent.empty())
     parent = ".";
   fs::create_directories(parent);
+  TemporaryDirectory staging(parent);
+  auto staged_output =
+      staging.path / (dna_output ? "output.dna" : "output.glb");
+  auto staged_report = staging.path / "report.json";
   if (dna_output) {
     auto verification =
-        write_dna(o.output, rig, indices, meshes, neutral, targets);
+        write_dna(staged_output, rig, indices, meshes, neutral, targets);
     Json raw = Json::array();
     for (auto name : target_names) {
       name[0] = char(std::tolower(static_cast<unsigned char>(name[0])));
@@ -372,14 +402,11 @@ Json bake(const Options &o, bool quiet) {
         {"blend_shape_channel_count", 52},
         {"verification", verification}};
   } else {
-    TemporaryDirectory tmp(parent);
-    auto file = tmp.path / "bake.glb";
-    write_glb(file, meshes, neutral, targets, body, body_neutral);
-    replace_file(file, o.output);
+    write_glb(staged_output, meshes, neutral, targets, body, body_neutral);
   }
-  auto report_path = o.output;
-  report_path.replace_extension(".report.json");
-  write_json(report_path, report);
+  write_json(staged_report, report);
+  install_outputs(staging,
+                  {{staged_output, o.output}, {staged_report, report_path}});
   if (!quiet)
     std::cout << "Wrote " << o.output.u8string()
               << "\nReport: " << report_path.u8string() << "\n";

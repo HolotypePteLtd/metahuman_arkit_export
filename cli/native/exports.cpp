@@ -1,7 +1,9 @@
 #include "baker.h"
 #include <algorithm>
+#include <cerrno>
 #include <chrono>
 #include <cstring>
+#include <exception>
 #include <fstream>
 #include <iomanip>
 #include <numeric>
@@ -10,6 +12,8 @@
 #ifdef _WIN32
 #define NOMINMAX
 #include <windows.h>
+#else
+#include <sys/stat.h>
 #endif
 namespace arkit {
 Json read_json(const fs::path &path) {
@@ -21,10 +25,12 @@ Json read_json(const fs::path &path) {
   return j;
 }
 void write_json(const fs::path &path, const Json &j) {
-  std::ofstream f(path);
   // Match the reference report encoding, including Windows readers whose
   // default text encoding may not be UTF-8.
-  f << j.dump(2, ' ', true) << '\n';
+  auto encoded = j.dump(2, ' ', true);
+  std::ofstream f(path);
+  f << encoded << '\n';
+  f.close();
   if (!f)
     throw std::runtime_error("Cannot write " + path.u8string());
 }
@@ -33,7 +39,17 @@ TemporaryDirectory::TemporaryDirectory(const fs::path &parent) {
   for (int i = 0; i < 100; ++i) {
     auto candidate = parent / (".arkit-" + std::to_string(rng()) + "-" +
                                std::to_string(rng()));
-    if (fs::create_directory(candidate)) {
+#ifdef _WIN32
+    bool created = fs::create_directory(candidate);
+#else
+    // Create with owner-only access atomically, regardless of the user's umask.
+    bool created = ::mkdir(candidate.c_str(), 0700) == 0;
+    if (!created && errno != EEXIST)
+      throw fs::filesystem_error(
+          "Cannot create private temporary directory", candidate,
+          std::error_code(errno, std::generic_category()));
+#endif
+    if (created) {
       path = candidate;
       return;
     }
@@ -42,7 +58,19 @@ TemporaryDirectory::TemporaryDirectory(const fs::path &parent) {
 }
 TemporaryDirectory::~TemporaryDirectory() {
   std::error_code ec;
-  fs::remove_all(path, ec);
+  if (!path.empty())
+    fs::remove_all(path, ec);
+}
+void check_output_path(const fs::path &path) {
+  std::error_code ec;
+  auto status = fs::symlink_status(path, ec);
+  if (ec && ec != std::errc::no_such_file_or_directory)
+    throw fs::filesystem_error("Cannot inspect output path", path, ec);
+  if (status.type() != fs::file_type::not_found && !fs::is_regular_file(status))
+    throw std::runtime_error(
+        "Output path must be a regular file, not a symlink "
+        "or directory: " +
+        path.u8string());
 }
 void replace_file(const fs::path &source, const fs::path &destination) {
 #ifdef _WIN32
@@ -52,6 +80,58 @@ void replace_file(const fs::path &source, const fs::path &destination) {
 #else
   fs::rename(source, destination);
 #endif
+}
+void install_outputs(TemporaryDirectory &staging,
+                     const std::vector<std::pair<fs::path, fs::path>> &files) {
+  struct Previous {
+    fs::path backup;
+    bool saved = false, installed = false;
+  };
+  std::vector<Previous> previous(files.size());
+  // Reject invalid destinations before touching any existing output.
+  for (const auto &file : files)
+    check_output_path(file.second);
+  try {
+    for (std::size_t i = 0; i < files.size(); ++i) {
+      auto &p = previous[i];
+      p.backup = staging.path / ("previous-" + std::to_string(i));
+      // Rename backups instead of copying them: this preserves metadata and
+      // works on filesystems without hard-link support.
+      if (fs::exists(files[i].second)) {
+        fs::rename(files[i].second, p.backup);
+        p.saved = true;
+      }
+    }
+    for (std::size_t i = 0; i < files.size(); ++i) {
+      replace_file(files[i].first, files[i].second);
+      previous[i].installed = true;
+    }
+  } catch (...) {
+    auto failure = std::current_exception();
+    // Retain backups by default during recovery, including if allocating an
+    // error message itself fails. Re-enable cleanup only after restoration.
+    auto retained = std::move(staging.path);
+    staging.path.clear();
+    std::string restore_error;
+    for (std::size_t i = files.size(); i-- > 0;) {
+      try {
+        if (previous[i].saved)
+          replace_file(previous[i].backup, files[i].second);
+        else if (previous[i].installed)
+          fs::remove(files[i].second);
+      } catch (const std::exception &e) {
+        restore_error += std::string(e.what()) + "\n";
+      }
+    }
+    if (!restore_error.empty()) {
+      // Never let cleanup delete the user's backups if restoration failed.
+      throw std::runtime_error("Cannot restore previous outputs; backups kept "
+                               "at " +
+                               retained.u8string() + ":\n" + restore_error);
+    }
+    staging.path = std::move(retained);
+    std::rethrow_exception(failure);
+  }
 }
 static void u32(std::vector<unsigned char> &b, std::uint32_t x) {
   for (int i = 0; i < 4; ++i)
@@ -165,6 +245,7 @@ void write_glb(const fs::path &path, const std::vector<Mesh> &meshes,
   u32(header, 0x004e4942);
   f.write(reinterpret_cast<const char *>(header.data()), header.size());
   f.write(reinterpret_cast<const char *>(blob.data()), blob.size());
+  f.close();
   if (!f)
     throw std::runtime_error("Cannot write GLB");
 }
