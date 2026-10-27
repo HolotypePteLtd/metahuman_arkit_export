@@ -161,8 +161,9 @@ class CppParityTest(unittest.TestCase):
         source = directory / 'tête.dna'
         shutil.copy2(self.root / 'source.dna', source)
         output = directory / '烘焙.glb'
-        subprocess.run([BINARY, str(source), '--mapping', str(self.root / 'mapping.json'),
-                        '-o', str(output)], capture_output=True, text=True, check=True)
+        result = subprocess.run([BINARY, str(source), '--mapping', str(self.root / 'mapping.json'),
+                                 '-o', str(output)], capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(output.exists())
         report = json.loads(output.with_suffix('.report.json').read_text())
         self.assertEqual(Path(report['source_dna']), source.resolve())

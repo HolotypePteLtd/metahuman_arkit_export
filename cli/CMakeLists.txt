@@ -3,6 +3,11 @@ project(MHARKitExport LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
+if(WIN32)
+  # Trio's FileStream selects its UTF-8-to-wide path conversion with UNICODE.
+  # Apply this to the static upstream libraries as well as the executable.
+  add_compile_definitions(UNICODE _UNICODE)
+endif()
 set(OPENRIGLOGIC_SOURCE "" CACHE PATH "Clean checkout of cli/runtime.json's pinned OpenRigLogic revision")
 if(NOT EXISTS "${OPENRIGLOGIC_SOURCE}/CMakeLists.txt")
   message(FATAL_ERROR "Set OPENRIGLOGIC_SOURCE to the pinned OpenRigLogic checkout")
