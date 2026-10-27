@@ -229,7 +229,46 @@ class ReleaseTest(unittest.TestCase):
               patch.object(build.shutil, 'which', side_effect=locate),
               patch.object(build.subprocess, 'check_output', return_value='[{"installationVersion":"17.14"}]') as query):
             self.assertIn('17.14', build.compiler_identity())
-        self.assertIn('[17.0,18.0)', query.call_args.args[0])
+        self.assertIn('[17.0,19.0)', query.call_args.args[0])
+
+    def test_windows_generator_matches_discovered_compiler(self):
+        for major, year, target, arch in (('17', '2022', 'windows-x64', 'x64'),
+                                          ('18', '2026', 'windows-arm64', 'ARM64')):
+            with self.subTest(year=year):
+                installation = str(self.root / year / 'Enterprise')
+                compiler = json.dumps([{'installationVersion': major + '.14',
+                                        'installationPath': installation}])
+                options = build.windows_cmake_options(compiler, target)
+                self.assertEqual(options[:4], ['-G', f'Visual Studio {major} {year}', '-A', arch])
+                self.assertIn('-DCMAKE_GENERATOR_INSTANCE=' + installation, options)
+                self.assertIn('-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded', options)
+
+    def test_windows_arm64_discovers_vs2026_when_vswhere_is_unavailable(self):
+        installation = self.root / 'Microsoft Visual Studio/18/Enterprise'
+        compiler = installation / 'VC/Tools/MSVC/14.50.12345/bin/Hostarm64/arm64/cl.exe'
+        compiler.parent.mkdir(parents=True)
+        compiler.touch()
+        with (patch.dict(build.os.environ, ProgramFiles=str(self.root)),
+              patch.object(build.platform, 'system', return_value='Windows'),
+              patch.object(build.platform, 'machine', return_value='ARM64'),
+              patch.object(build.shutil, 'which', return_value=None),
+              patch.object(build, 'app_paths_vswhere', return_value=[]),
+              patch.object(build.subprocess, 'check_output', side_effect=AssertionError('No vswhere'))):
+            identity = build.compiler_identity()
+        record = json.loads(identity)[0]
+        self.assertEqual(record['installationPath'], str(installation))
+        self.assertEqual(record['tools'], '14.50.12345')
+        self.assertEqual(build.windows_cmake_options(identity, 'windows-arm64')[:4],
+                         ['-G', 'Visual Studio 18 2026', '-A', 'ARM64'])
+
+    def test_windows_vswhere_discovers_vs2026(self):
+        compiler = '[{"installationVersion":"18.0","installationPath":"C:/VS/18"}]'
+        with (patch.object(build.platform, 'system', return_value='Windows'),
+              patch.object(build.Path, 'is_file', return_value=True),
+              patch.object(build.shutil, 'which', return_value='vswhere.exe'),
+              patch.object(build.subprocess, 'check_output', return_value=compiler) as query):
+            self.assertEqual(build.compiler_identity(), compiler)
+        self.assertIn('[17.0,19.0)', query.call_args.args[0])
 
     def test_manifest_versions_cannot_traverse_paths(self):
         for value in ['../1.0.0', '1.0', '1.0.0/path', '01.0.0', '1.0.0\n']:

@@ -63,11 +63,47 @@ def clean_environment():
     return env
 
 
+def app_paths_vswhere():
+    """vswhere as registered under the Windows App Paths keys, if any."""
+    try:
+        import winreg
+    except ImportError:
+        return []
+    candidates = []
+    views = [0]
+    views += [getattr(winreg, name) for name in ('KEY_WOW64_32KEY', 'KEY_WOW64_64KEY')
+              if hasattr(winreg, name)]
+    for view in views:
+        for hive in (winreg.HKEY_LOCAL_MACHINE, winreg.HKEY_CURRENT_USER):
+            try:
+                with winreg.OpenKey(hive, r'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\vswhere.exe',
+                                    0, winreg.KEY_READ | view) as key:
+                    value = winreg.QueryValueEx(key, None)[0]
+            except OSError:
+                continue
+            if value:
+                candidates.append(Path(os.path.expandvars(value)))
+    return candidates
+
+
+def msvc_tree_identity():
+    """Last-resort Visual Studio discovery by walking the installation tree."""
+    base = Path(os.environ.get('ProgramFiles', r'C:\Program Files')) / 'Microsoft Visual Studio'
+    arch = 'ARM64' if platform.machine().lower() in ('arm64', 'aarch64') else 'x64'
+    for directory, major in (('18', '18'), ('2022', '17')):
+        for cl in sorted((base / directory).glob('*/VC/Tools/MSVC/*/bin/Host*/*/cl.exe'), reverse=True):
+            if cl.parent.name.lower() != arch.lower():
+                continue
+            return json.dumps([{'family': 'MSVC', 'arch': arch, 'tools': cl.parents[3].name,
+                                'installationVersion': major + '.0',
+                                'installationPath': str(cl.parents[7])}])
+    return None
+
+
 def compiler_identity():
     if platform.system() == 'Windows':
-        # GitHub's windows-11-arm image exposes vswhere on PATH (Chocolatey
-        # shim) but not under the 32-bit installer directory, so query the
-        # PATH copy first and keep the classic locations as fallbacks.
+        # Discover both VS 2022 and VS 2026 (used by windows-11-arm).
+        # Check PATH, installer directories and App Paths before the tree fallback.
         candidates = []
         found = shutil.which('vswhere')
         if found:
@@ -75,17 +111,36 @@ def compiler_identity():
         for base in (os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'),
                      os.environ.get('ProgramFiles', r'C:\Program Files')):
             candidates.append(Path(base) / 'Microsoft Visual Studio/Installer/vswhere.exe')
+        candidates += app_paths_vswhere()
+        seen = set()
         for vswhere in candidates:
-            if vswhere.is_file():
-                result = subprocess.check_output([str(vswhere), '-version', '[17.0,18.0)',
-                                                   '-latest', '-products', '*', '-format', 'json'], text=True)
-                if json.loads(result):
-                    return result
-        raise ValueError('Visual Studio 2022 C++ Build Tools are required')
+            key = str(vswhere).lower()
+            if key in seen or not vswhere.is_file():
+                continue
+            seen.add(key)
+            result = subprocess.check_output([str(vswhere), '-version', '[17.0,19.0)',
+                                               '-latest', '-products', '*', '-format', 'json'], text=True)
+            if json.loads(result):
+                return result
+        fallback = msvc_tree_identity()
+        if fallback:
+            return fallback
+        raise ValueError('Visual Studio 2022 or 2026 C++ Build Tools are required')
     compiler = shutil.which(os.environ.get('CXX', 'c++'))
     if compiler:
         return subprocess.check_output([compiler, '--version'], text=True).strip()
     raise ValueError('No native C++ compiler found')
+
+
+def windows_cmake_options(compiler, target):
+    installation = json.loads(compiler)[0]
+    major = installation['installationVersion'].split('.')[0]
+    generators = {'17': 'Visual Studio 17 2022', '18': 'Visual Studio 18 2026'}
+    options = ['-G', generators[major], '-A', 'ARM64' if target.endswith('arm64') else 'x64',
+               '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded']
+    # Use the same installation for compilation and the cache identity.
+    options += ['-DCMAKE_GENERATOR_INSTANCE=' + installation['installationPath']]
+    return options
 
 
 def native_inventory(directory):
@@ -103,7 +158,8 @@ def native_runtime(args, source, pin, tool_identity):
     identity = dict(openriglogic=pin, platform=args.platform, python=platform.python_version(),
                     tools=tool_identity, compiler=compiler_identity(),
                     native_recipe_sha256=hashlib.sha256(''.join(inspect.getsource(function) for function in
-                        (native_runtime, native_inventory, compiler_identity, clean_environment)).encode()).hexdigest(),
+                        (native_runtime, native_inventory, compiler_identity, app_paths_vswhere,
+                         msvc_tree_identity, windows_cmake_options, clean_environment)).encode()).hexdigest(),
                     python_base=sys.base_prefix, deployment_target=env.get('MACOSX_DEPLOYMENT_TARGET'))
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     cache = args.build_dir / 'native' / key
@@ -131,8 +187,7 @@ def native_runtime(args, source, pin, tool_identity):
             '-DSWIG_EXECUTABLE=' + str(Path(sys.executable).parent / ('swig.exe' if os.name == 'nt' else 'swig')),
         ]
         if os.name == 'nt':
-            options += ['-G', 'Visual Studio 17 2022', '-A', 'ARM64' if args.platform.endswith('arm64') else 'x64',
-                        '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded']
+            options += windows_cmake_options(identity['compiler'], args.platform)
         elif args.platform.startswith('macos-'):
             options += ['-DCMAKE_OSX_ARCHITECTURES=' + ('arm64' if args.platform.endswith('arm64') else 'x86_64'),
                         '-DCMAKE_OSX_DEPLOYMENT_TARGET=' + target_info['deployment_target'],

@@ -54,7 +54,7 @@ The build tools use a pinned, isolated release environment contained entirely
 under `cli/`. Run these commands from the repository root. The bootstrap needs
 Python 3.9+ with venv/pip, then selects its own exact Python and package versions.
 
-Windows needs Visual Studio 2022 Build Tools with the matching x64 or ARM64
+Windows needs Visual Studio 2022 or 2026 Build Tools with the matching x64 or ARM64
 C++ toolset and Windows SDK. macOS needs Xcode command-line tools. Git is
 required to fetch and verify the pinned OpenRigLogic source.
 
