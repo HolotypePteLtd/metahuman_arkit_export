@@ -2,8 +2,11 @@
 #include "config.h"
 #include <iostream>
 #ifdef _WIN32
-#include <shellapi.h>
+// shellapi.h requires the Windows SDK types from windows.h first.
+// clang-format off
 #include <windows.h>
+#include <shellapi.h>
+// clang-format on
 #endif
 static int run(const std::vector<std::string> &args) {
   using namespace arkit;
