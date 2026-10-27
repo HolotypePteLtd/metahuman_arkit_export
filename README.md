@@ -19,17 +19,52 @@ This repository exists to fill this gap with two tools, both to "bake" a set of 
 
 ## CLI
 
-Download the binary for you OS/CPU architecture:
+Download and extract the binary for your OS and CPU architecture from
+[Releases](https://github.com/HolotypePteLtd/metahuman_arkit_export/releases).
+Python, Unreal, Blender, and a compiler are not required.
+
+### Bake to DNA
+
+Choose an output filename ending in `.dna` to create a new DNA file containing
+all 52 baked ARKit blendshapes. For example, on macOS or Linux:
+
+```bash
+./bake-arkit-dna head.dna --output head_arkit.dna
+```
+
+On Windows PowerShell:
+
+```powershell
+.\bake-arkit-dna.exe head.dna --output head_arkit.dna
+```
+
+The output preserves the LOD0 head meshes, neutral skeleton, skin weights,
+UVs, and topology. Facial joint motion and corrective shapes are baked into
+the blendshapes, and the original facial solvers are replaced with 52
+pass-through controls. With RigLogic, drive a GUI control such as
+`EyeBlinkLeft` or its raw control `CTRL_expressions.eyeBlinkLeft` to apply
+that shape; the skeleton stays in its neutral pose.
+
+The source `head.dna` is kept intact. The baker reloads and verifies the new
+DNA before installing the output, and writes `head_arkit.report.json` beside
+it with target statistics and verification results. Omit `--body-dna` for DNA
+output; that option is supported only for GLB output.
+
+### Bake to GLB
+
+Use a `.glb` output filename to export geometry with ARKit morph targets,
+optionally including the matching body in its neutral pose:
 
 ```bash
 bake-arkit-dna head.dna --body-dna body.dna --output character.glb
-bake-arkit-dna --self-test
 ```
 
-Recipients do not need Python, Unreal, Blender, or a compiler. The optional
-body is neutral geometry without a skeleton; materials and textures are not
-exported. The CLI's GUI expression recipes have not been numerically matched
-against Unreal's animation mapping assets.
+The optional body is neutral geometry without a skeleton. Materials and
+textures are not exported. The CLI's GUI expression recipes have not been
+numerically matched against Unreal's animation mapping assets.
+
+Run `bake-arkit-dna --self-test` to check the executable without supplying any
+character files.
 
 ### Baking a Poly Hammer export
 
@@ -40,8 +75,13 @@ DNA, grooms, clothing, props, textures, and an export manifest. The DNA files
 in that folder are standard MetaHuman DNA, so the CLI can bake them directly.
 Unreal, Blender, and the rest of the bundle are not required. Verified against
 a real Interchange export: the folder held `head.dna`, `body.dna`, textures,
-and `ExportManifest.json`, and the command below baked all 52 ARKit morph
-targets plus the neutral body.
+and `ExportManifest.json`. To bake its head DNA to a new DNA file:
+
+```bash
+bake-arkit-dna /path/to/bundle/head.dna -o head_arkit.dna
+```
+
+To export GLB with all 52 ARKit morph targets plus the neutral body:
 
 ```bash
 bake-arkit-dna /path/to/bundle/head.dna --body-dna /path/to/bundle/body.dna -o character.glb
