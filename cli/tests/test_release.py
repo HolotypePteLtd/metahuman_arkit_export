@@ -220,9 +220,13 @@ class ReleaseTest(unittest.TestCase):
                 build.build(args)
 
     def test_windows_records_msvc_instead_of_an_unrelated_mingw_compiler(self):
+        def locate(name):
+            if name == 'vswhere':
+                return r'C:\ProgramData\chocolatey\bin\vswhere.exe'
+            raise AssertionError('Do not use MinGW: ' + str(name))
         with (patch.object(build.platform, 'system', return_value='Windows'),
               patch.object(build.Path, 'is_file', return_value=True),
-              patch.object(build.shutil, 'which', side_effect=AssertionError('Do not use MinGW')),
+              patch.object(build.shutil, 'which', side_effect=locate),
               patch.object(build.subprocess, 'check_output', return_value='[{"installationVersion":"17.14"}]') as query):
             self.assertIn('17.14', build.compiler_identity())
         self.assertIn('[17.0,18.0)', query.call_args.args[0])

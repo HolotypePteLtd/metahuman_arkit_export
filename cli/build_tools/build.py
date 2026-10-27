@@ -65,12 +65,22 @@ def clean_environment():
 
 def compiler_identity():
     if platform.system() == 'Windows':
-        vswhere = Path(os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)')) / 'Microsoft Visual Studio/Installer/vswhere.exe'
-        if vswhere.is_file():
-            result = subprocess.check_output([str(vswhere), '-version', '[17.0,18.0)',
-                                               '-latest', '-products', '*', '-format', 'json'], text=True)
-            if json.loads(result):
-                return result
+        # GitHub's windows-11-arm image exposes vswhere on PATH (Chocolatey
+        # shim) but not under the 32-bit installer directory, so query the
+        # PATH copy first and keep the classic locations as fallbacks.
+        candidates = []
+        found = shutil.which('vswhere')
+        if found:
+            candidates.append(Path(found))
+        for base in (os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'),
+                     os.environ.get('ProgramFiles', r'C:\Program Files')):
+            candidates.append(Path(base) / 'Microsoft Visual Studio/Installer/vswhere.exe')
+        for vswhere in candidates:
+            if vswhere.is_file():
+                result = subprocess.check_output([str(vswhere), '-version', '[17.0,18.0)',
+                                                   '-latest', '-products', '*', '-format', 'json'], text=True)
+                if json.loads(result):
+                    return result
         raise ValueError('Visual Studio 2022 C++ Build Tools are required')
     compiler = shutil.which(os.environ.get('CXX', 'c++'))
     if compiler:
