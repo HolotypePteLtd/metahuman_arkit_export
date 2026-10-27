@@ -15,7 +15,13 @@ At runtime (either inside or outside Unreal Engine), Epic's open source Rig Logi
 
 However, Unreal Engine (and other related plugins like Polyhammer) do not automatically export MetaHumans with ARKit-compatible blendshapes in their DNA descriptions.
 
-This repository exists to fill this gap with two tools, both to "bake" a set of ARKit blendshapes onto an exported MetaHuman. The first is a UE plugin to export a glTF file from within UE itself, the second is to bake the blendshapes directly from/to the exported .dna files.  
+This repository exists to fill this gap.
+
+It contains two tools for "baking" a set of ARKit blendshapes onto an exported MetaHuman.
+
+The first is a CLI tool for baking blendshapes directly from/to the exported .dna files (or optionally exporting as a glTF file).  
+
+The second is a UE plugin for exporting a glTF file with baked ARKit blendshapes from within UE itself.
 
 ## CLI
 
@@ -93,11 +99,7 @@ and are not exported. If the character was customized in Blender with Poly
 Hammer's Character DNA addon, bake the DNA file exported from that addon
 instead.
 
-
-
-| --- | --- | --- | --- |
-| [Unreal plugin](plugins/ue) | MetaHuman project assets | Unreal Editor 5.7 | [Plugin guide](plugins/ue/Docs/README.md) |
-| [Standalone CLI](cli) | Complete head DNA, optional body DNA | Bundled executable | [CLI guide](cli/README.md), [baking guide](cli/docs/BAKING.md) |
+## Repository Structure
 
 ```text
 plugins/ue/                 Unreal plugin and its own tooling
@@ -119,7 +121,6 @@ BUILD.md                  Build, test, and release instructions
 ```
 
 See [BUILD.md](BUILD.md) for build prerequisites, packaging, tests, and release instructions.
-
 
 ## Unreal plugin
 
