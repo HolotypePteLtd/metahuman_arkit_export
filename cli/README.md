@@ -1,16 +1,16 @@
-# Standalone MH ARKit Export releases
+# bake-arkit-dna releases
 
 The C++ DNA baker builds into a single native command-line executable.
-Each download contains `mh-arkit-export` (or `.exe`), usage instructions,
+Each download contains `bake-arkit-dna` (or `.exe`), usage instructions,
 dependency licenses, and a manifest. The executable runs on its own, without
 an `_internal` directory or temporary extraction of runtime libraries. Users
 extract the complete archive and run the executable; Python, Unreal, Blender,
 NumPy installations, and compilers are not required on their machines.
 
 ```text
-mh-arkit-export head.dna --body-dna body.dna -o character.glb
-mh-arkit-export head.dna -o character_arkit.dna
-mh-arkit-export --self-test
+bake-arkit-dna head.dna --body-dna body.dna -o character.glb
+bake-arkit-dna head.dna -o character_arkit.dna
+bake-arkit-dna --self-test
 ```
 
 Both formats include 52 baked facial morph targets. GLB can include optional

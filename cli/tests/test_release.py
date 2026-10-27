@@ -31,7 +31,7 @@ class ReleaseTest(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
-        self.bundle = self.root / 'mh-arkit-export-0.1.0-linux-x64'
+        self.bundle = self.root / 'bake-arkit-dna-0.1.0-linux-x64'
         self.bundle.mkdir()
         (self.bundle / common.PRODUCT).write_bytes(elf())
         (self.bundle / common.PRODUCT).chmod(0o755)
@@ -145,7 +145,7 @@ class ReleaseTest(unittest.TestCase):
         artifact_root.mkdir()
         sidecars = []
         for target in common.PLATFORMS:
-            bundle = self.root / ('mh-arkit-export-0.1.0-' + target)
+            bundle = self.root / ('bake-arkit-dna-0.1.0-' + target)
             bundle.mkdir(exist_ok=True)
             extension = '.exe' if target.startswith('windows-') else ''
             binary = bundle / (common.PRODUCT + extension)

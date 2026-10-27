@@ -9,7 +9,7 @@ import sys
 
 def build_info():
     root = Path(__file__).resolve().parents[1]
-    return {"schema": 1, "application": "mh-arkit-export",
+    return {"schema": 1, "application": "bake-arkit-dna",
             "version": (root / "VERSION").read_text().strip(),
             "openriglogic": json.loads((root / "runtime.json").read_text())}
 
@@ -17,7 +17,7 @@ def build_info():
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     if argv == ["--version"]:
-        print("mh-arkit-export " + build_info()["version"])
+        print("bake-arkit-dna " + build_info()["version"])
         return 0
     if argv == ["--build-info"]:
         print(json.dumps(build_info(), sort_keys=True))

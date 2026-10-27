@@ -167,6 +167,6 @@ jobs:
           if gh release view "$tag" --json isDraft > state.json 2>/dev/null; then
             python3 -c 'import json,sys; sys.exit(0 if json.load(open("state.json"))["isDraft"] else "Refusing to overwrite a published release")'
           else
-            gh release create "$tag" --draft --verify-tag --title "MH ARKit Export $ARKIT_VERSION" --notes-file release/RELEASE_NOTES.md
+            gh release create "$tag" --draft --verify-tag --title "bake-arkit-dna $ARKIT_VERSION" --notes-file release/RELEASE_NOTES.md
           fi
           gh release upload "$tag" release/* --clobber

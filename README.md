@@ -22,8 +22,8 @@ This repository exists to fill this gap with two tools, both to "bake" a set of 
 Download the binary for you OS/CPU architecture:
 
 ```bash
-mh-arkit-export head.dna --body-dna body.dna --output character.glb
-mh-arkit-export --self-test
+bake-arkit-dna head.dna --body-dna body.dna --output character.glb
+bake-arkit-dna --self-test
 ```
 
 Recipients do not need Python, Unreal, Blender, or a compiler. The optional
@@ -44,7 +44,7 @@ and `ExportManifest.json`, and the command below baked all 52 ARKit morph
 targets plus the neutral body.
 
 ```bash
-mh-arkit-export /path/to/bundle/head.dna --body-dna /path/to/bundle/body.dna -o character.glb
+bake-arkit-dna /path/to/bundle/head.dna --body-dna /path/to/bundle/body.dna -o character.glb
 ```
 
 Use the actual DNA file names found in the bundle (typically `head.dna` and

@@ -14,7 +14,7 @@ static int run(const std::vector<std::string> &args) {
     auto info = Json::parse(build_info_text);
     if (args.size() == 1) {
       if (args[0] == "--version") {
-        std::cout << "mh-arkit-export " << info.at("version").get<std::string>()
+        std::cout << "bake-arkit-dna " << info.at("version").get<std::string>()
                   << '\n';
         return 0;
       }
@@ -39,7 +39,7 @@ static int run(const std::vector<std::string> &args) {
       };
       if (arg == "--help" || arg == "-h") {
         std::cout
-            << "Usage: mh-arkit-export head.dna -o output.glb|output.dna "
+            << "Usage: bake-arkit-dna head.dna -o output.glb|output.dna "
                "[options]\nBake 52 ARKit facial shapes from head DNA "
                "(LOD0).\n\nOptions:\n  -o, --output PATH   Output .glb or "
                ".dna\n  --body-dna PATH      Include neutral body geometry "
@@ -66,7 +66,7 @@ static int run(const std::vector<std::string> &args) {
         throw std::runtime_error("Unexpected argument: " + arg);
     }
     if (o.input.empty() || o.output.empty())
-      throw std::runtime_error("Usage: mh-arkit-export head.dna -o "
+      throw std::runtime_error("Usage: bake-arkit-dna head.dna -o "
                                "output.glb|output.dna; see --help");
     bake(o);
     return 0;

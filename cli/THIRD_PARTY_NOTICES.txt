@@ -1,4 +1,4 @@
-MH ARKit Export standalone baker
+bake-arkit-dna standalone baker
 
 Application code: Copyright 2026 Holotype Pte Ltd. MIT License.
 This bundle does not grant rights to third-party DNA files or character assets.

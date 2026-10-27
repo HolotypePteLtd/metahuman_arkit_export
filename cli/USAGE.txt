@@ -1,16 +1,16 @@
-MH ARKit Export - standalone DNA baker
+bake-arkit-dna - standalone DNA baker
 
 Extract the download, then open a terminal in its directory.
 The native executable can also be moved and run on its own.
 Python, Unreal Engine, Blender and compiler installations are not required.
 
 Linux / macOS:
-  ./mh-arkit-export head.dna --body-dna body.dna -o character.glb
-  ./mh-arkit-export head.dna -o character_arkit.dna
+  ./bake-arkit-dna head.dna --body-dna body.dna -o character.glb
+  ./bake-arkit-dna head.dna -o character_arkit.dna
 
 Windows PowerShell:
-  .\mh-arkit-export.exe head.dna --body-dna body.dna -o character.glb
-  .\mh-arkit-export.exe head.dna -o character_arkit.dna
+  .\bake-arkit-dna.exe head.dna --body-dna body.dna -o character.glb
+  .\bake-arkit-dna.exe head.dna -o character_arkit.dna
 
 Quote paths containing spaces. Omit --body-dna for a head-only export.
 DNA output supports LOD0 head meshes, retaining the neutral skeleton and skin
@@ -22,9 +22,9 @@ The output includes geometry, UVs, and 52 facial morph targets. Textures and
 materials are not included. Use head and body DNA from the same character.
 
 Diagnostics:
-  mh-arkit-export --version
-  mh-arkit-export --build-info
-  mh-arkit-export --self-test
+  bake-arkit-dna --version
+  bake-arkit-dna --build-info
+  bake-arkit-dna --self-test
 
 The self-test generates a tiny synthetic rig and verifies DNA loading,
 RigLogic, joint skinning, corrective shapes, GLB, and baked DNA output. It needs no

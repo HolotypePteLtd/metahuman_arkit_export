@@ -63,7 +63,7 @@ void write_glb(const fs::path &path, const std::vector<Mesh> &meshes,
   std::vector<unsigned char> blob;
   Json doc = {{"asset",
                {{"version", "2.0"},
-                {"generator", "mh-arkit-export C++ / OpenRigLogic"}}},
+                {"generator", "bake-arkit-dna C++ / OpenRigLogic"}}},
               {"scene", 0},
               {"scenes", Json::array({{{"nodes", Json::array()}}})},
               {"nodes", Json::array()},

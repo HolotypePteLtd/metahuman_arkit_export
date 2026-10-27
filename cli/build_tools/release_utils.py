@@ -9,7 +9,7 @@ import struct
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-PRODUCT = 'mh-arkit-export'
+PRODUCT = 'bake-arkit-dna'
 PLATFORMS = json.loads((ROOT / 'platforms.json').read_text())
 
 

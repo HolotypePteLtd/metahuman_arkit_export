@@ -57,12 +57,12 @@ Check out the pinned OpenRigLogic revision from `cli/runtime.json`:
 git clone https://github.com/EpicGames/OpenRigLogic.git /path/to/OpenRigLogic
 git -C /path/to/OpenRigLogic checkout d3d329bbd6992ac38adc1c1b24203ceb998f75c0
 cmake -S cli -B /tmp/mh-arkit-cpp -DOPENRIGLOGIC_SOURCE=/path/to/OpenRigLogic -DCMAKE_BUILD_TYPE=Release
-cmake --build /tmp/mh-arkit-cpp --config Release --target mh-arkit-export --parallel 4
+cmake --build /tmp/mh-arkit-cpp --config Release --target bake-arkit-dna --parallel 4
 ctest --test-dir /tmp/mh-arkit-cpp -C Release --output-on-failure
 ```
 
-The executable is `/tmp/mh-arkit-cpp/mh-arkit-export`; Visual Studio puts
-`mh-arkit-export.exe` under the build directory's `Release` subdirectory.
+The executable is `/tmp/mh-arkit-cpp/bake-arkit-dna`; Visual Studio puts
+`bake-arkit-dna.exe` under the build directory's `Release` subdirectory.
 On Windows, use a writable Windows path for the build directory and specify
 `-A x64` or `-A ARM64` when configuring Visual Studio. On macOS, add
 `-DCMAKE_OSX_DEPLOYMENT_TARGET=14.0` to retain the published compatibility
@@ -106,7 +106,7 @@ required to fetch and verify the pinned OpenRigLogic source.
 
 ```bash
 python3 cli/build_tools/run.py --prepare
-python3 cli/build_tools/run.py python cli/build_tools/build.py --version 0.1.0
+python3 cli/build_tools/run.py python cli/build_tools/build.py --version 0.1.1
 ```
 
 On Windows, use `python` if `python3` is not available. The platform is detected
@@ -121,8 +121,8 @@ Make aliases are available:
 Build Linux publication artifacts through Docker:
 
 ```bash
-python3 cli/build_tools/docker_build.py --platform linux-x64 --version 0.1.0
-python3 cli/build_tools/docker_build.py --platform linux-arm64 --version 0.1.0
+python3 cli/build_tools/docker_build.py --platform linux-x64 --version 0.1.1
+python3 cli/build_tools/docker_build.py --platform linux-arm64 --version 0.1.1
 ```
 
 The container contains the same locked release tools as local builds. Its
@@ -135,9 +135,9 @@ requires Docker's binfmt/QEMU support; CI uses native runners for both.
 Artifacts appear under `cli/dist/arkit/`, named, for example:
 
 ```text
-mh-arkit-export-0.1.0-linux-x64.tar.gz
-mh-arkit-export-0.1.0-linux-x64.tar.gz.json
-mh-arkit-export-0.1.0-linux-x64.tar.gz.sha256
+bake-arkit-dna-0.1.1-linux-x64.tar.gz
+bake-arkit-dna-0.1.1-linux-x64.tar.gz.json
+bake-arkit-dna-0.1.1-linux-x64.tar.gz.sha256
 ```
 
 `--build-dir` selects a native compilation cache; `--dist-dir` selects the
@@ -179,7 +179,7 @@ Those probes run with empty `PATH` and no inherited Python or library paths.
 Verify a finished archive independently:
 
 ```bash
-python3 cli/build_tools/verify.py cli/dist/arkit/mh-arkit-export-0.1.0-linux-x64.tar.gz
+python3 cli/build_tools/verify.py cli/dist/arkit/bake-arkit-dna-0.1.1-linux-x64.tar.gz
 ```
 
 Run this on its matching platform. `--integrity-only` allows inspection of a
@@ -199,7 +199,7 @@ the matrix. A failed platform prevents release assembly.
    workflow. Release assembly requires a clean checkout.
 2. Push to `main` to build and test all six platform archives continuously;
    inspect the workflow artifacts for checksums, manifests, and verification logs.
-3. Push a matching tag, for example `arkit-v0.1.0`. The workflow builds and
+3. Push a matching tag, for example `arkit-v0.1.1`. The workflow builds and
    verifies the complete matrix, then creates a **draft** GitHub release.
 4. Review the draft downloads and publish it when ready.
 
@@ -213,7 +213,7 @@ declared compatibility baseline, and intact archive and file checksums.
 It produces `SHA256SUMS`, `RELEASE_MANIFEST.json`, and release notes:
 
 ```bash
-python3 cli/build_tools/release.py --artifacts cli/dist/arkit --output cli/dist/release-0.1.0 --version 0.1.0
+python3 cli/build_tools/release.py --artifacts cli/dist/arkit --output cli/dist/release-0.1.1 --version 0.1.1
 ```
 
 ### Signing

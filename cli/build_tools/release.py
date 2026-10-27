@@ -84,11 +84,13 @@ def assemble(directory, destination, release_version, targets):
     (destination / 'RELEASE_MANIFEST.json').write_text(json.dumps(release, sort_keys=True, indent=2) + '\n')
     (destination / 'SHA256SUMS').write_text(''.join(row['sha256'] + '  ' + row['filename'] + '\n' for row in artifacts))
     (destination / 'RELEASE_NOTES.md').write_text(
-        f'MH ARKit Export {release_version}\n\n'
-        'Standalone DNA-to-GLB baker. Choose the download matching your OS and CPU.\n'
-        'Extract the complete archive; no Python, Unreal, Blender, or compiler is required.\n\n'
+        f'{PRODUCT} {release_version}\n\n'
+        'Native C++ MetaHuman DNA baker. Choose the download matching your OS and CPU.\n'
+        'Extract the archive and run bake-arkit-dna (bake-arkit-dna.exe on Windows).\n'
+        'The executable runs on its own; no Python runtime, _internal directory, Unreal, Blender, or compiler is required.\n\n'
+        'This release renames the CLI and archives from mh-arkit-export to bake-arkit-dna.\n\n'
         'Bake a complete character:\n\n'
-        '```text\nmh-arkit-export head.dna --body-dna body.dna -o character.glb\n```\n\n'
+        '```text\nbake-arkit-dna head.dna --body-dna body.dna -o character.glb\n```\n\n'
         'Includes 52 facial morph targets and optional neutral body geometry. '
         'Textures, materials, and skeletal animation are not exported. '
         'Exact Unreal expression-mapping parity is not yet verified.\n\n'
