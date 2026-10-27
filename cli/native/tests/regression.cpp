@@ -19,7 +19,7 @@ template <class F> void rejects(F function, const std::string &message) {
   }
   throw std::runtime_error(message);
 }
-void near(double actual, double expected, double tolerance,
+void check_close(double actual, double expected, double tolerance,
           const std::string &message) {
   require(std::isfinite(actual) && std::abs(actual - expected) <= tolerance,
           message + ": actual=" + std::to_string(actual) +
@@ -52,7 +52,7 @@ void compare(const Pose &actual, const Pose &expected, double tolerance) {
     require(actual[m].size() == expected[m].size(),
             "Pose vertex count changed");
     for (std::size_t v = 0; v < actual[m].size(); ++v)
-      near(norm(actual[m][v] - expected[m][v]), 0, tolerance,
+      check_close(norm(actual[m][v] - expected[m][v]), 0, tolerance,
            "Evaluated geometry differs from reference");
   }
 }
@@ -120,7 +120,7 @@ void joint_composition(Context &) {
   std::vector<float> delta = {1, 0, 0, 0, 0, 0, 1, 0, 0, 0};
   auto world = joint_world({neutral.data(), neutral.size()}, {0},
                            {delta.data(), delta.size()});
-  near(norm(transform(world[0], {0, 0, 0}) - Vec3{11, 20, 30}), 0, 1e-12,
+  check_close(norm(transform(world[0], {0, 0, 0}) - Vec3{11, 20, 30}), 0, 1e-12,
        "Joint translation rotated incorrectly");
   std::vector<float> n;
   for (auto position : {Vec3{1, 0, 0}, Vec3{0, 2, 0}, Vec3{0, 0, 3}}) {
@@ -129,7 +129,7 @@ void joint_composition(Context &) {
     n.insert(n.end(), {0, 0, 0, 1, 1, 1, 1});
   }
   auto w = joint_world({n.data(), n.size()}, {2, 1, 1});
-  near(norm(transform(w[0], {0, 0, 0}) - Vec3{1, 2, 3}), 0, 1e-12,
+  check_close(norm(transform(w[0], {0, 0, 0}) - Vec3{1, 2, 3}), 0, 1e-12,
        "Non-topological hierarchy failed");
   rejects([&] { joint_world({n.data(), n.size()}, {1, 2, 0}); },
           "Cycle accepted");
@@ -215,7 +215,7 @@ void serialized_glb(Context &c) {
       auto uv = glb.accessor(p["attributes"]["TEXCOORD_0"], 2);
       for (std::size_t v = 0; v < 4; ++v)
         for (int a = 0; a < 2; ++a)
-          near(uv[v * 2 + a], frozen["uvs"][v][a], 0, "UV seam changed");
+          check_close(uv[v * 2 + a], frozen["uvs"][v][a], 0, "UV seam changed");
       for (int t = -1; t < 52; ++t) {
         auto positions =
             glb.accessor(t < 0 ? p["attributes"]["POSITION"].get<std::size_t>()
@@ -228,7 +228,7 @@ void serialized_glb(Context &c) {
             double value =
                 t < 0 ? c.expected["neutral"][i][source][a].get<double>()
                       : c.expected["targets"][t][i][source][a].get<double>();
-            near(positions[v * 3 + a], value, 1e-7,
+            check_close(positions[v * 3 + a], value, 1e-7,
                  "Serialized vertex differs from reference");
           }
         }
@@ -242,7 +242,7 @@ void serialized_glb(Context &c) {
         glb.accessor(body["primitives"][0]["attributes"]["POSITION"], 3);
     for (int v = 0; v < 3; ++v)
       for (int a = 0; a < 3; ++a)
-        near(positions[v * 3 + a], c.expected["body_neutral"][0][v][a], 1e-7,
+        check_close(positions[v * 3 + a], c.expected["body_neutral"][0][v][a], 1e-7,
              "Body neutral geometry changed");
     require(report["zero_targets"] == Json::array({"TongueOut", "MouthClose"}),
             "Zero target reporting changed");
@@ -271,7 +271,7 @@ void serialized_dna(Context &c) {
   require(actual.parents == source.parents, "Joint hierarchy changed");
   auto joints = actual.logic->getNeutralJointValues();
   for (std::size_t i = 0; i < joints.size(); ++i)
-    near(joints[i], c.expected["neutral_joints"][i / 10][i % 10], 1e-6,
+    check_close(joints[i], c.expected["neutral_joints"][i / 10][i % 10], 1e-6,
          "Neutral joints changed");
   for (std::uint16_t m = 0; m < 2; ++m) {
     require(r.getBlendShapeTargetCount(m) == 52, "DNA lost named targets");
