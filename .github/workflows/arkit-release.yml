@@ -86,6 +86,9 @@ jobs:
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
+    env:
+      MACOS_SIGNING_ENABLED: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.MACOS_SIGNING_P12 != '' && secrets.MACOS_SIGNING_IDENTITY != '' }}
+      MACOS_NOTARY_ENABLED: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.NOTARY_API_KEY != '' && secrets.NOTARY_KEY_ID != '' && secrets.NOTARY_ISSUER_ID != '' }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -105,6 +108,20 @@ jobs:
         run: |
           (Get-Command python).Source
           python -c "import platform, sys; assert 'ARM64' in platform.machine().upper(), platform.machine(); print(sys.version)"
+      - name: Require Developer ID signing and notarization for macOS releases
+        if: startsWith(matrix.platform, 'macos-') && (startsWith(github.ref, 'refs/tags/arkit-v') || inputs.draft_release == true)
+        shell: bash
+        run: |
+          if [[ "$MACOS_SIGNING_ENABLED" != true || "$MACOS_NOTARY_ENABLED" != true ]]; then
+            echo '::error::macOS releases require MACOS_SIGNING_P12, MACOS_SIGNING_P12_PASSWORD, MACOS_SIGNING_IDENTITY, NOTARY_API_KEY, NOTARY_KEY_ID, and NOTARY_ISSUER_ID secrets.'
+            exit 1
+          fi
+      - name: Import temporary macOS signing keychain
+        if: env.MACOS_SIGNING_ENABLED == 'true'
+        env:
+          MACOS_SIGNING_P12: ${{ secrets.MACOS_SIGNING_P12 }}
+          MACOS_SIGNING_P12_PASSWORD: ${{ secrets.MACOS_SIGNING_P12_PASSWORD }}
+        run: python cli/build_tools/macos_signing.py prepare
       - name: Linux C++ build, Python parity tests, and archive verification
         if: startsWith(matrix.platform, 'linux-')
         env:
@@ -116,8 +133,23 @@ jobs:
         env:
           ARKIT_VERSION: ${{ needs.plan.outputs.version }}
           ARKIT_PLATFORM: ${{ matrix.platform }}
+          MACOS_SIGNING_IDENTITY: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.MACOS_SIGNING_IDENTITY || '' }}
+          NOTARY_API_KEY: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.NOTARY_API_KEY || '' }}
+          NOTARY_KEY_ID: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.NOTARY_KEY_ID || '' }}
+          NOTARY_ISSUER_ID: ${{ startsWith(matrix.platform, 'macos-') && github.event_name != 'pull_request' && secrets.NOTARY_ISSUER_ID || '' }}
         shell: bash
-        run: python cli/build_tools/run.py python cli/build_tools/build.py --platform "$ARKIT_PLATFORM" --version "$ARKIT_VERSION" --jobs 4
+        run: |
+          args=(--platform "$ARKIT_PLATFORM" --version "$ARKIT_VERSION" --jobs 4)
+          if [[ "$MACOS_SIGNING_ENABLED" == true ]]; then
+            args+=(--codesign-identity "$MACOS_SIGNING_IDENTITY")
+            if [[ "$MACOS_NOTARY_ENABLED" == true ]]; then
+              args+=(--notarize)
+            fi
+          fi
+          python cli/build_tools/run.py python cli/build_tools/build.py "${args[@]}"
+      - name: Remove temporary macOS signing keychain
+        if: always() && startsWith(matrix.platform, 'macos-')
+        run: python cli/build_tools/macos_signing.py cleanup
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: arkit-${{ matrix.platform }}
@@ -169,4 +201,10 @@ jobs:
           else
             gh release create "$tag" --draft --verify-tag --title "bake-arkit-dna $ARKIT_VERSION" --notes-file release/RELEASE_NOTES.md
           fi
-          gh release upload "$tag" release/* --clobber
+          # Provenance JSON stays in CI artifacts and inside the archives.
+          # Public downloads contain the platform archives, checksums and notes.
+          gh release upload "$tag" release/*.tar.gz release/*.zip release/SHA256SUMS release/RELEASE_NOTES.md --clobber
+          gh release view "$tag" --json assets --jq '.assets[].name | select(endswith(".json"))' > json-assets.txt
+          while IFS= read -r asset; do
+            gh release delete-asset "$tag" "$asset" --yes
+          done < json-assets.txt

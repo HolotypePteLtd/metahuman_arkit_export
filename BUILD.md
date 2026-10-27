@@ -210,7 +210,12 @@ is created by running local build or assembly commands.
 Release assembly requires each requested platform exactly once, matching
 version/source/runtime/toolchain pins, successful native smoke tests, the
 declared compatibility baseline, and intact archive and file checksums.
-It produces `SHA256SUMS`, `RELEASE_MANIFEST.json`, and release notes:
+CI retains the provenance sidecars and `RELEASE_MANIFEST.json` for verification.
+Public release attachments contain the six platform archives, `SHA256SUMS`,
+and release notes; the JSON metadata is not attached separately. Each archive
+still contains its own `MANIFEST.json`.
+
+Assemble the verified CI artifacts locally:
 
 ```bash
 python3 cli/build_tools/release.py --artifacts cli/dist/arkit --output cli/dist/release-0.1.1 --version 0.1.1
@@ -218,21 +223,59 @@ python3 cli/build_tools/release.py --artifacts cli/dist/arkit --output cli/dist/
 
 ### Signing
 
-Default CI artifacts are unsigned on Windows and ad-hoc signed on macOS.
-For trusted public downloads, use your publisher certificates and notarization
-process; credentials stay outside the repository and artifacts.
+macOS CI uses the same Developer ID and App Store Connect API-key setup as
+Tina. Configure these **repository Actions secrets** in
+[GitHub settings](https://github.com/HolotypePteLtd/metahuman_arkit_export/settings/secrets/actions):
 
-- macOS: `build.py --codesign-identity "Developer ID Application: ..."`
-  signs the native executable using `codesign`. The builder verifies the resulting signature. Submit the
-  signed distribution to Apple's notarization service before public release.
-- Windows: `build.py --windows-certificate CERTIFICATE_SHA1` signs and verifies
-  the EXE/DLL/PYD files using `signtool` and a certificate already installed
-  in the builder's certificate store. The Windows SDK signing tools must be
-  on the builder's `PATH`.
+| Secret | Value |
+| --- | --- |
+| `MACOS_SIGNING_P12` | Base64-encoded Developer ID Application `.p12`, including its private key |
+| `MACOS_SIGNING_P12_PASSWORD` | The `.p12` export password |
+| `MACOS_SIGNING_IDENTITY` | Exact certificate identity, e.g. `Developer ID Application: Company (TEAMID)` |
+| `NOTARY_API_KEY` | Base64-encoded App Store Connect team API private key (`.p8`) |
+| `NOTARY_KEY_ID` | App Store Connect API key ID |
+| `NOTARY_ISSUER_ID` | App Store Connect API issuer ID |
 
-Signing happens before inventory hashing, archive verification, and checksums.
-Post-build changes require regenerating and re-verifying those records.
-Default GitHub-hosted builds do not have signing credentials.
+Use the original signing files from Tina's setup; GitHub cannot reveal or
+export the existing secret values. On macOS, copy each encoded file to the
+clipboard separately, then paste it into its corresponding secret:
+
+```bash
+base64 -i /path/to/signing.p12 | pbcopy
+base64 -i /path/to/AuthKey_KEYID.p8 | pbcopy
+```
+
+CI imports the certificate into a temporary keychain, enables hardened
+runtime and a secure timestamp, verifies the signature, and executes the
+signed CLI's self-test. It then submits a temporary ZIP to Apple and requires
+an `Accepted` notarization response before creating the final archive and
+checksums. The keychain and temporary credential files are removed afterward.
+Pull requests do not receive signing credentials. Local and development
+builds can use ad-hoc signing; macOS tag releases and draft-release dispatches
+require both signing and notarization to be configured.
+
+A standalone executable cannot have a notarization ticket stapled to it;
+Gatekeeper retrieves the ticket online. The temporary submission ZIP contains
+the same signed executable bytes as the published `.tar.gz`. See
+[Apple's notarization workflow](https://developer.apple.com/documentation/security/customizing-the-notarization-workflow).
+
+For a local signed and notarized build, first install the Developer ID
+certificate in your keychain and export the `NOTARY_API_KEY`, `NOTARY_KEY_ID`,
+and `NOTARY_ISSUER_ID` environment variables, then run:
+
+```bash
+python3 cli/build_tools/run.py python cli/build_tools/build.py \
+  --codesign-identity "Developer ID Application: Company (TEAMID)" --notarize
+```
+
+Windows artifacts remain unsigned by default. To sign locally,
+`build.py --windows-certificate CERTIFICATE_SHA1` signs and verifies the
+EXE/DLL/PYD files using `signtool` and a certificate already installed in the
+builder's certificate store. The Windows SDK signing tools must be on `PATH`.
+
+Signing and notarization finish before inventory hashing, archive verification,
+and checksums. Post-build changes require regenerating and re-verifying those
+records. Published releases are not overwritten by the draft workflow.
 
 ## Tests
 

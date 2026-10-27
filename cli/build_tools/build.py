@@ -330,6 +330,10 @@ def build(args):
         raise ValueError('Standalone bundles must be built on their matching host/interpreter')
     if args.jobs < 1:
         raise ValueError('--jobs must be positive')
+    if args.notarize and (not args.platform.startswith('macos-') or not args.codesign_identity):
+        raise ValueError('--notarize requires macOS and --codesign-identity')
+    if args.codesign_identity and not args.platform.startswith('macos-'):
+        raise ValueError('--codesign-identity requires macOS')
     tools = runpy.run_path(str(ROOT / 'build_tools/run.py'))
     tool_identity = tools['fingerprint']()
     pin = read_json(ROOT / 'runtime.json')
@@ -383,16 +387,16 @@ def build(args):
                     run(['signtool', 'sign', '/sha1', args.windows_certificate, '/fd', 'SHA256',
                          '/tr', 'http://timestamp.digicert.com', '/td', 'SHA256', path])
                     run(['signtool', 'verify', '/pa', path])
+        notarization = None
         if args.platform.startswith('macos-'):
-            run(['codesign', '--force', '--sign', args.codesign_identity or '-', bundle / PRODUCT])
-        if args.codesign_identity:
-            if not args.platform.startswith('macos-'):
-                raise ValueError('--codesign-identity requires macOS')
-            run(['codesign', '--verify', '--deep', '--strict', bundle / PRODUCT])
+            from macos_signing import sign_and_notarize
+            notarization = sign_and_notarize(bundle, bundle / PRODUCT,
+                                            args.codesign_identity, args.notarize)
         manifest = {'schema': 1, 'application': PRODUCT, 'version': args.version, 'platform': args.platform,
                     'openriglogic': pin, 'build_info': info, 'native_build': native_identity,
                     'compatibility': compatibility, 'release_eligible': release_eligible,
                     'signing': {'macos_identity': args.codesign_identity,
+                                'notarization': notarization,
                                 'windows_certificate': args.windows_certificate}}
         write_json(bundle / 'MANIFEST.json', manifest)
         test = verify_execution(bundle, args.version)
@@ -428,6 +432,8 @@ def main():
     parser.add_argument('--native-only', action='store_true')
     parser.add_argument('--allow-newer-linux', action='store_true', help='Permit a local test artifact that release assembly will reject')
     parser.add_argument('--codesign-identity', help='macOS Developer ID signing identity')
+    parser.add_argument('--notarize', action='store_true',
+                        help='Submit the signed macOS executable to Apple using NOTARY_* environment credentials')
     parser.add_argument('--windows-certificate', help='Windows certificate-store SHA1 thumbprint')
     args = parser.parse_args()
     args.build_dir, args.dist_dir = args.build_dir.resolve(), args.dist_dir.resolve()
