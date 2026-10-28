@@ -107,7 +107,8 @@ jobs:
           (Get-Command python).Source
           python -c "import platform, sys; assert 'ARM64' in platform.machine().upper(), platform.machine(); print(sys.version)"
       - name: Require Developer ID signing and notarization for macOS releases
-        if: startsWith(matrix.platform, 'macos-') && (startsWith(github.ref, 'refs/tags/arkit-v') || inputs.draft_release == true)
+        # 0.1.2 is approved for unsigned publication while credentials are unavailable.
+        if: startsWith(matrix.platform, 'macos-') && (startsWith(github.ref, 'refs/tags/arkit-v') || inputs.draft_release == true) && needs.plan.outputs.version != '0.1.2'
         shell: bash
         run: |
           if [[ "$MACOS_SIGNING_ENABLED" != true || "$MACOS_NOTARY_ENABLED" != true ]]; then

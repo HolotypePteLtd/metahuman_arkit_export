@@ -254,7 +254,9 @@ an `Accepted` notarization response before creating the final archive and
 checksums. The keychain and temporary credential files are removed afterward.
 Pull requests do not receive signing credentials. Local and development
 builds can use ad-hoc signing; macOS tag releases and draft-release dispatches
-require both signing and notarization to be configured.
+require both signing and notarization to be configured. Version 0.1.2 explicitly
+permits unsigned macOS publication while these credentials are unavailable;
+its release notes disclose the absence of Developer ID signing and notarization.
 
 A standalone executable cannot have a notarization ticket stapled to it;
 Gatekeeper retrieves the ticket online. The temporary submission ZIP contains
