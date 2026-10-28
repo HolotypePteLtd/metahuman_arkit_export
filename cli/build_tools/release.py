@@ -88,7 +88,7 @@ def assemble(directory, destination, release_version, targets):
         'Native C++ MetaHuman DNA baker. Choose the download matching your OS and CPU.\n'
         'Extract the archive and run bake-arkit-dna (bake-arkit-dna.exe on Windows).\n'
         'The executable runs on its own; no Python runtime, _internal directory, Unreal, Blender, or compiler is required.\n\n'
-        'The macOS downloads in 0.1.2 are not Developer ID signed or Apple notarized.\n\n'
+        'See MANIFEST.json in each download for signing and notarization status.\n\n'
         'Safety fixes in 0.1.2:\n\n'
         '- Validate DNA behavior indices and array lengths before RigLogic evaluation.\n'
         '- Reject output and report paths that alias inputs or use symlinks.\n'
