@@ -1,0 +1,8 @@
+# Scratch harnesses and dumps — keep sources, drop big staged assets.
+ueproj/MyProject/Content/
+ueproj/MyProject/Saved/
+*.uasset
+*.umap
+*.glb
+*.dna
+*.bin

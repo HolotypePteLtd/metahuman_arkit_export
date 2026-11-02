@@ -1,0 +1,35 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.7",
+	"Category": "",
+	"Description": "Minimal project for headless CR graph dump",
+	"Modules": [
+		{
+			"Name": "MyProjectEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [ "Editor" ]
+		},
+		{
+			"Name": "RigLogic",
+			"Enabled": true
+		},
+		{
+			"Name": "ControlRig",
+			"Enabled": true
+		},
+		{
+			"Name": "MetaHumanCharacter",
+			"Enabled": true
+		}
+	],
+	"AdditionalDependencies": [
+		"Engine"
+	]
+}

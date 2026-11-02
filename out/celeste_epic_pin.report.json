@@ -1,0 +1,1195 @@
+{
+  "blend_shape_channel_count": 0,
+  "coordinate_system": "right / up / back; metres; CCW",
+  "dna_version": [
+    2,
+    5
+  ],
+  "gui_control_count": 174,
+  "joint_count": 870,
+  "mapping": {
+    "control_space": "raw",
+    "targets": {
+      "BrowDownLeft": {
+        "controls": {
+          "CTRL_expressions.browDownL": 1.0,
+          "CTRL_expressions.browLateralL": 0.031
+        }
+      },
+      "BrowDownRight": {
+        "controls": {
+          "CTRL_expressions.browDownR": 1.0,
+          "CTRL_expressions.browLateralL": 0.030999
+        }
+      },
+      "BrowInnerUp": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 1.0,
+          "CTRL_expressions.browLateralR": 1.0,
+          "CTRL_expressions.browRaiseInL": 0.999999,
+          "CTRL_expressions.browRaiseInR": 1.0
+        }
+      },
+      "BrowOuterUpLeft": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031001,
+          "CTRL_expressions.browRaiseInL": 1.000001,
+          "CTRL_expressions.browRaiseOuterL": 1.0
+        }
+      },
+      "BrowOuterUpRight": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.browRaiseInR": 1.0,
+          "CTRL_expressions.browRaiseOuterR": 1.0
+        }
+      },
+      "CheekPuff": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.mouthCheekBlowL": 1.0,
+          "CTRL_expressions.mouthCheekBlowR": 1.0,
+          "CTRL_expressions.mouthLipsBlowL": 1.0,
+          "CTRL_expressions.mouthLipsBlowR": 1.0
+        }
+      },
+      "CheekSquintLeft": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.eyeCheekRaiseL": 1.0
+        }
+      },
+      "CheekSquintRight": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.eyeCheekRaiseR": 1.0
+        }
+      },
+      "EyeBlinkLeft": {
+        "controls": {
+          "CTRL_expressions.eyeBlinkL": 1.0
+        }
+      },
+      "EyeBlinkRight": {
+        "controls": {
+          "CTRL_expressions.eyeBlinkR": 1.0
+        }
+      },
+      "EyeLookDownLeft": {
+        "controls": {
+          "CTRL_expressions.eyeLookDownL": 1.0
+        }
+      },
+      "EyeLookDownRight": {
+        "controls": {
+          "CTRL_expressions.eyeLookDownR": 1.0
+        }
+      },
+      "EyeLookInLeft": {
+        "controls": {
+          "CTRL_expressions.eyeLookRightL": 1.0
+        }
+      },
+      "EyeLookInRight": {
+        "controls": {
+          "CTRL_expressions.eyeLookLeftR": 1.0
+        }
+      },
+      "EyeLookOutLeft": {
+        "controls": {
+          "CTRL_expressions.eyeLookLeftL": 1.0
+        }
+      },
+      "EyeLookOutRight": {
+        "controls": {
+          "CTRL_expressions.eyeLookRightR": 1.0
+        }
+      },
+      "EyeLookUpLeft": {
+        "controls": {
+          "CTRL_expressions.eyeLookUpL": 1.0
+        }
+      },
+      "EyeLookUpRight": {
+        "controls": {
+          "CTRL_expressions.eyeLookUpR": 1.0
+        }
+      },
+      "EyeSquintLeft": {
+        "controls": {
+          "CTRL_expressions.eyeSquintInnerL": 1.0
+        }
+      },
+      "EyeSquintRight": {
+        "controls": {
+          "CTRL_expressions.eyeSquintInnerR": 1.0
+        }
+      },
+      "EyeWideLeft": {
+        "controls": {
+          "CTRL_expressions.eyeWidenL": 1.0
+        }
+      },
+      "EyeWideRight": {
+        "controls": {
+          "CTRL_expressions.eyeWidenR": 1.0
+        }
+      },
+      "JawForward": {
+        "controls": {
+          "CTRL_expressions.jawFwd": 0.999
+        }
+      },
+      "JawLeft": {
+        "controls": {
+          "CTRL_expressions.jawLeft": 1.0
+        }
+      },
+      "JawOpen": {
+        "controls": {
+          "CTRL_expressions.jawOpen": 1.0
+        }
+      },
+      "JawRight": {
+        "controls": {
+          "CTRL_expressions.jawRight": 1.0
+        }
+      },
+      "MouthClose": {
+        "controls": {
+          "CTRL_expressions.jawOpen": 1.0,
+          "CTRL_expressions.mouthLipsTogetherDL": 1.0,
+          "CTRL_expressions.mouthLipsTogetherDR": 1.0,
+          "CTRL_expressions.mouthLipsTogetherUL": 1.0,
+          "CTRL_expressions.mouthLipsTogetherUR": 1.0
+        },
+        "subtract": {
+          "CTRL_expressions.jawOpen": 1.0
+        }
+      },
+      "MouthDimpleLeft": {
+        "controls": {
+          "CTRL_expressions.mouthDimpleL": 1.0
+        }
+      },
+      "MouthDimpleRight": {
+        "controls": {
+          "CTRL_expressions.mouthDimpleR": 1.0
+        }
+      },
+      "MouthFrownLeft": {
+        "controls": {
+          "CTRL_expressions.mouthCornerDepressL": 1.0
+        }
+      },
+      "MouthFrownRight": {
+        "controls": {
+          "CTRL_expressions.mouthCornerDepressR": 1.0
+        }
+      },
+      "MouthFunnel": {
+        "controls": {
+          "CTRL_expressions.mouthFunnelDL": 1.0,
+          "CTRL_expressions.mouthFunnelDR": 1.0,
+          "CTRL_expressions.mouthFunnelUL": 1.0,
+          "CTRL_expressions.mouthFunnelUR": 1.0
+        }
+      },
+      "MouthLeft": {
+        "controls": {
+          "CTRL_expressions.mouthLeft": 1.0
+        }
+      },
+      "MouthLowerDownLeft": {
+        "controls": {
+          "CTRL_expressions.mouthLowerLipDepressL": 1.0
+        }
+      },
+      "MouthLowerDownRight": {
+        "controls": {
+          "CTRL_expressions.mouthLowerLipDepressR": 1.0
+        }
+      },
+      "MouthPressLeft": {
+        "controls": {
+          "CTRL_expressions.mouthPressDL": 1.0,
+          "CTRL_expressions.mouthPressUL": 1.0
+        }
+      },
+      "MouthPressRight": {
+        "controls": {
+          "CTRL_expressions.mouthPressDR": 1.0,
+          "CTRL_expressions.mouthPressUR": 1.0
+        }
+      },
+      "MouthPucker": {
+        "controls": {
+          "CTRL_expressions.mouthFunnelDL": 0.752001,
+          "CTRL_expressions.mouthFunnelDR": 0.752001,
+          "CTRL_expressions.mouthFunnelUL": 0.752001,
+          "CTRL_expressions.mouthFunnelUR": 0.752001,
+          "CTRL_expressions.mouthLipsPurseDL": 1.0,
+          "CTRL_expressions.mouthLipsPurseDR": 1.0,
+          "CTRL_expressions.mouthLipsPurseUL": 1.0,
+          "CTRL_expressions.mouthLipsPurseUR": 1.0,
+          "CTRL_expressions.mouthLipsTowardsDL": 0.412,
+          "CTRL_expressions.mouthLipsTowardsDR": 0.412,
+          "CTRL_expressions.mouthLipsTowardsUL": 0.412,
+          "CTRL_expressions.mouthLipsTowardsUR": 0.412
+        }
+      },
+      "MouthRight": {
+        "controls": {
+          "CTRL_expressions.mouthRight": 1.0
+        }
+      },
+      "MouthRollLower": {
+        "controls": {
+          "CTRL_expressions.mouthLowerLipRollInL": 1.0,
+          "CTRL_expressions.mouthLowerLipRollInR": 1.0,
+          "CTRL_expressions.mouthUpperLipRollInL": 0.499,
+          "CTRL_expressions.mouthUpperLipRollInR": 0.499
+        }
+      },
+      "MouthRollUpper": {
+        "controls": {
+          "CTRL_expressions.mouthUpperLipRollInL": 0.998001,
+          "CTRL_expressions.mouthUpperLipRollInR": 0.998001
+        }
+      },
+      "MouthShrugLower": {
+        "controls": {
+          "CTRL_expressions.jawChinRaiseDL": 1.0,
+          "CTRL_expressions.jawChinRaiseDR": 1.0
+        }
+      },
+      "MouthShrugUpper": {
+        "controls": {
+          "CTRL_expressions.jawChinRaiseUL": 1.0,
+          "CTRL_expressions.jawChinRaiseUR": 1.0
+        }
+      },
+      "MouthSmileLeft": {
+        "controls": {
+          "CTRL_expressions.mouthCornerPullL": 1.0
+        }
+      },
+      "MouthSmileRight": {
+        "controls": {
+          "CTRL_expressions.mouthCornerPullR": 1.0,
+          "CTRL_expressions.mouthDimpleR": 0.003
+        }
+      },
+      "MouthStretchLeft": {
+        "controls": {
+          "CTRL_expressions.mouthStretchL": 1.0
+        }
+      },
+      "MouthStretchRight": {
+        "controls": {
+          "CTRL_expressions.mouthStretchR": 1.0
+        }
+      },
+      "MouthUpperUpLeft": {
+        "controls": {
+          "CTRL_expressions.mouthUpperLipRaiseL": 1.0
+        }
+      },
+      "MouthUpperUpRight": {
+        "controls": {
+          "CTRL_expressions.mouthUpperLipRaiseR": 1.0
+        }
+      },
+      "NoseSneerLeft": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.eyeCheekRaiseR": 3e-06,
+          "CTRL_expressions.noseWrinkleL": 1.0,
+          "CTRL_expressions.noseWrinkleR": -3e-06,
+          "CTRL_expressions.tongueRoll": -0.00489
+        }
+      },
+      "NoseSneerRight": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.noseWrinkleR": 1.0
+        }
+      },
+      "TongueOut": {
+        "controls": {
+          "CTRL_expressions.browLateralL": 0.031,
+          "CTRL_expressions.noseWrinkleR": 3e-06,
+          "CTRL_expressions.tongueDown": 0.825998,
+          "CTRL_expressions.tongueOut": 0.768998,
+          "CTRL_expressions.tongueRight": 0.07,
+          "CTRL_expressions.tongueRoll": 0.247319,
+          "CTRL_expressions.tongueWide": 0.627998
+        }
+      }
+    }
+  },
+  "mapping_source": "/mnt/sdd_1tb/mh_arkit_export/mappings/epic_arkit.json",
+  "meshes": [
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 24408,
+      "name": "head_lod0_mesh",
+      "positions": 24049,
+      "triangles": 48004
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 4595,
+      "name": "teeth_lod0_mesh",
+      "positions": 4246,
+      "triangles": 8350
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 660,
+      "name": "saliva_lod0_mesh",
+      "positions": 660,
+      "triangles": 1004
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 802,
+      "name": "eyeLeft_lod0_mesh",
+      "positions": 770,
+      "triangles": 1536
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 802,
+      "name": "eyeRight_lod0_mesh",
+      "positions": 770,
+      "triangles": 1536
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 552,
+      "name": "eyeshell_lod0_mesh",
+      "positions": 552,
+      "triangles": 980
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 2144,
+      "name": "eyelashes_lod0_mesh",
+      "positions": 2144,
+      "triangles": 1722
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 276,
+      "name": "eyeEdge_lod0_mesh",
+      "positions": 268,
+      "triangles": 386
+    },
+    {
+      "dna_corrective_targets": 0,
+      "glb_vertices": 386,
+      "name": "cartilage_lod0_mesh",
+      "positions": 386,
+      "triangles": 576
+    }
+  ],
+  "openriglogic_version": "13.2.9",
+  "pinned_joints": [
+    "head",
+    "neck_02"
+  ],
+  "raw_control_count": 263,
+  "reader_dna_version": [
+    2,
+    8
+  ],
+  "source_dna": "/mnt/sdd_1tb/metahuman_automation/datasets_new/dna/MH_Celeste_0015.dna",
+  "source_sha256": "f10325ab2fece878727e5e20f6d8b5d77a99cbda43afc61ff8515c9e718706e3",
+  "target_names": [
+    "EyeBlinkLeft",
+    "EyeLookDownLeft",
+    "EyeLookInLeft",
+    "EyeLookOutLeft",
+    "EyeLookUpLeft",
+    "EyeSquintLeft",
+    "EyeWideLeft",
+    "EyeBlinkRight",
+    "EyeLookDownRight",
+    "EyeLookInRight",
+    "EyeLookOutRight",
+    "EyeLookUpRight",
+    "EyeSquintRight",
+    "EyeWideRight",
+    "JawForward",
+    "JawLeft",
+    "JawRight",
+    "JawOpen",
+    "MouthFunnel",
+    "MouthPucker",
+    "MouthLeft",
+    "MouthRight",
+    "MouthSmileLeft",
+    "MouthSmileRight",
+    "MouthFrownLeft",
+    "MouthFrownRight",
+    "MouthDimpleLeft",
+    "MouthDimpleRight",
+    "MouthStretchLeft",
+    "MouthStretchRight",
+    "MouthRollLower",
+    "MouthRollUpper",
+    "MouthShrugLower",
+    "MouthShrugUpper",
+    "MouthPressLeft",
+    "MouthPressRight",
+    "MouthLowerDownLeft",
+    "MouthLowerDownRight",
+    "MouthUpperUpLeft",
+    "MouthUpperUpRight",
+    "BrowDownLeft",
+    "BrowDownRight",
+    "BrowInnerUp",
+    "BrowOuterUpLeft",
+    "BrowOuterUpRight",
+    "CheekPuff",
+    "CheekSquintLeft",
+    "CheekSquintRight",
+    "NoseSneerLeft",
+    "NoseSneerRight",
+    "TongueOut",
+    "MouthClose"
+  ],
+  "targets": {
+    "BrowDownLeft": {
+      "max_displacement_m": 0.006668112180075271,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00010115890871782971,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.006668112180075271,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "BrowDownRight": {
+      "max_displacement_m": 0.006437928397758725,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00015305502030614414,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.006437928397758725,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "BrowInnerUp": {
+      "max_displacement_m": 0.008751273214233508,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00028608442595996997,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.008751273214233508,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "BrowOuterUpLeft": {
+      "max_displacement_m": 0.011538587953915942,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0004031539535494187,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.011538587953915942,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "BrowOuterUpRight": {
+      "max_displacement_m": 0.011123565582716164,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00035857979972804977,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.011123565582716164,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "CheekPuff": {
+      "max_displacement_m": 0.018447240681805473,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.9551947883640976e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.018447240681805473,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "CheekSquintLeft": {
+      "max_displacement_m": 0.005912255764536151,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0039054324008035626,
+        "eyeEdge_lod0_mesh": 0.0036477269090339918,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.004953925275206176,
+        "eyeshell_lod0_mesh": 0.003792093512631624,
+        "head_lod0_mesh": 0.005912255764536151,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "CheekSquintRight": {
+      "max_displacement_m": 0.005925476142933314,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0036616192503772446,
+        "eyeEdge_lod0_mesh": 0.0034313975312450203,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.00460203657624648,
+        "eyeshell_lod0_mesh": 0.0035631556252822224,
+        "head_lod0_mesh": 0.005925476142933314,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeBlinkLeft": {
+      "max_displacement_m": 0.01641282731659159,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.011174447861632,
+        "eyeEdge_lod0_mesh": 0.01076588547004974,
+        "eyeLeft_lod0_mesh": 0.0009294369237574922,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.01641282731659159,
+        "eyeshell_lod0_mesh": 0.01121871260311963,
+        "head_lod0_mesh": 0.011294277558111932,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeBlinkRight": {
+      "max_displacement_m": 0.01662497607893888,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.011311517787662918,
+        "eyeEdge_lod0_mesh": 0.010770100641999184,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.001030714373620886,
+        "eyelashes_lod0_mesh": 0.01662497607893888,
+        "eyeshell_lod0_mesh": 0.011392873824985165,
+        "head_lod0_mesh": 0.011476592873782521,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookDownLeft": {
+      "max_displacement_m": 0.015509761912215649,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.010416202341093281,
+        "eyeEdge_lod0_mesh": 0.009981619232483488,
+        "eyeLeft_lod0_mesh": 0.010830883199097438,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.015509761912215649,
+        "eyeshell_lod0_mesh": 0.01035698955945532,
+        "head_lod0_mesh": 0.010416572899662224,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookDownRight": {
+      "max_displacement_m": 0.015748313086965317,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.010836918316081749,
+        "eyeEdge_lod0_mesh": 0.010261552868294046,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0107937662692946,
+        "eyelashes_lod0_mesh": 0.015748313086965317,
+        "eyeshell_lod0_mesh": 0.010828033295484152,
+        "head_lod0_mesh": 0.010899379077976942,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookInLeft": {
+      "max_displacement_m": 0.010290739250692996,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0026194541279584978,
+        "eyeEdge_lod0_mesh": 0.0025740442914645454,
+        "eyeLeft_lod0_mesh": 0.010290739250692996,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.003378629618868117,
+        "eyeshell_lod0_mesh": 0.0026236665661938706,
+        "head_lod0_mesh": 0.002630725612323356,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookInRight": {
+      "max_displacement_m": 0.010354708552101037,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00228521303924829,
+        "eyeEdge_lod0_mesh": 0.0022131579817322084,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.010354708552101037,
+        "eyelashes_lod0_mesh": 0.0027723287481463865,
+        "eyeshell_lod0_mesh": 0.002288849838625877,
+        "head_lod0_mesh": 0.002304672237579385,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookOutLeft": {
+      "max_displacement_m": 0.011179548573714155,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0021185934696542163,
+        "eyeEdge_lod0_mesh": 0.0020810407909666174,
+        "eyeLeft_lod0_mesh": 0.011179548573714155,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0029172257113476386,
+        "eyeshell_lod0_mesh": 0.002119473319120208,
+        "head_lod0_mesh": 0.0021263237930427012,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookOutRight": {
+      "max_displacement_m": 0.011229154585789056,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0024665829587725368,
+        "eyeEdge_lod0_mesh": 0.0023759432880716704,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.011229154585789056,
+        "eyelashes_lod0_mesh": 0.003335218971901099,
+        "eyeshell_lod0_mesh": 0.0024682933349588457,
+        "head_lod0_mesh": 0.0024748473832357167,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookUpLeft": {
+      "max_displacement_m": 0.008836232129293468,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.006222433295683762,
+        "eyeEdge_lod0_mesh": 0.006017714476832078,
+        "eyeLeft_lod0_mesh": 0.00794370729521695,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.008836232129293468,
+        "eyeshell_lod0_mesh": 0.006222715503153616,
+        "head_lod0_mesh": 0.006228732618729708,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeLookUpRight": {
+      "max_displacement_m": 0.00860261979210221,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.006163537782920476,
+        "eyeEdge_lod0_mesh": 0.005900822739063053,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.008093970099249954,
+        "eyelashes_lod0_mesh": 0.00860261979210221,
+        "eyeshell_lod0_mesh": 0.0061612581955008934,
+        "head_lod0_mesh": 0.00616310281264699,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeSquintLeft": {
+      "max_displacement_m": 0.006286479980967133,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.004782218568298017,
+        "eyeEdge_lod0_mesh": 0.004584239916104764,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.006286479980967133,
+        "eyeshell_lod0_mesh": 0.004774357404494477,
+        "head_lod0_mesh": 0.005113759234205758,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeSquintRight": {
+      "max_displacement_m": 0.005753491445863429,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.004433821181835327,
+        "eyeEdge_lod0_mesh": 0.004206324466258843,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.005753491445863429,
+        "eyeshell_lod0_mesh": 0.004390391904469503,
+        "head_lod0_mesh": 0.005206670759400838,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeWideLeft": {
+      "max_displacement_m": 0.00619554547035349,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.004309866308794236,
+        "eyeEdge_lod0_mesh": 0.004164653604780011,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.00619554547035349,
+        "eyeshell_lod0_mesh": 0.0043107176224345374,
+        "head_lod0_mesh": 0.004319361527896858,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "EyeWideRight": {
+      "max_displacement_m": 0.006127769494239485,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.004320470459816586,
+        "eyeEdge_lod0_mesh": 0.00411007092668177,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.006127769494239485,
+        "eyeshell_lod0_mesh": 0.004320457516756908,
+        "head_lod0_mesh": 0.004323520026331767,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "JawForward": {
+      "max_displacement_m": 0.009206738585908324,
+      "meshes": {
+        "cartilage_lod0_mesh": 2.5630180887038956e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.009206738585908324,
+        "saliva_lod0_mesh": 0.008223051428794873,
+        "teeth_lod0_mesh": 0.008223051428794901
+      }
+    },
+    "JawLeft": {
+      "max_displacement_m": 0.015517899956218459,
+      "meshes": {
+        "cartilage_lod0_mesh": 6.960109261232431e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.015517899956218459,
+        "saliva_lod0_mesh": 0.013548667531336437,
+        "teeth_lod0_mesh": 0.01390691498487167
+      }
+    },
+    "JawOpen": {
+      "max_displacement_m": 0.030775835625587403,
+      "meshes": {
+        "cartilage_lod0_mesh": 2.670156120646149e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.03036305957444936,
+        "saliva_lod0_mesh": 0.03044639099646698,
+        "teeth_lod0_mesh": 0.030775835625587403
+      }
+    },
+    "JawRight": {
+      "max_displacement_m": 0.013973753229326976,
+      "meshes": {
+        "cartilage_lod0_mesh": 3.966985050431095e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.013056099935817104,
+        "saliva_lod0_mesh": 0.013598372516202231,
+        "teeth_lod0_mesh": 0.013973753229326976
+      }
+    },
+    "MouthClose": {
+      "max_displacement_m": 0.016189678012420765,
+      "meshes": {
+        "cartilage_lod0_mesh": 3.9654509498708865e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.016189678012420765,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthDimpleLeft": {
+      "max_displacement_m": 0.01284441700891487,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.3289616868506057e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.01284441700891487,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthDimpleRight": {
+      "max_displacement_m": 0.013408874786477266,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.2465025168743458e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.013408874786477266,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthFrownLeft": {
+      "max_displacement_m": 0.0077539569105114226,
+      "meshes": {
+        "cartilage_lod0_mesh": 2.0095141128740494e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.0077539569105114226,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthFrownRight": {
+      "max_displacement_m": 0.00739539411743336,
+      "meshes": {
+        "cartilage_lod0_mesh": 2.135288289838053e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.00739539411743336,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthFunnel": {
+      "max_displacement_m": 0.011110092666700749,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.2973744607860453e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.011110092666700749,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthLeft": {
+      "max_displacement_m": 0.021939537415314916,
+      "meshes": {
+        "cartilage_lod0_mesh": 4.754336742745078e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.021939537415314916,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthLowerDownLeft": {
+      "max_displacement_m": 0.007807136543554985,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.007807136543554985,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthLowerDownRight": {
+      "max_displacement_m": 0.0075088631530978766,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.0075088631530978766,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthPressLeft": {
+      "max_displacement_m": 0.007685250291940707,
+      "meshes": {
+        "cartilage_lod0_mesh": 9.541744113376913e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.007685250291940707,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthPressRight": {
+      "max_displacement_m": 0.007845255799616393,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.109917989569177e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.007845255799616393,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthPucker": {
+      "max_displacement_m": 0.012591701061316315,
+      "meshes": {
+        "cartilage_lod0_mesh": 5.490528804777762e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.012591701061316315,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthRight": {
+      "max_displacement_m": 0.023631559336451086,
+      "meshes": {
+        "cartilage_lod0_mesh": 4.997807915450948e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.023631559336451086,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthRollLower": {
+      "max_displacement_m": 0.0070990436270211,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.0070990436270211,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthRollUpper": {
+      "max_displacement_m": 0.005954540395729573,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.005954540395729573,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthShrugLower": {
+      "max_displacement_m": 0.011773496708678867,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.0,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.011773496708678867,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthShrugUpper": {
+      "max_displacement_m": 0.009229080574470784,
+      "meshes": {
+        "cartilage_lod0_mesh": 2.9213209387760434e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.009229080574470784,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthSmileLeft": {
+      "max_displacement_m": 0.017738113144983404,
+      "meshes": {
+        "cartilage_lod0_mesh": 5.914143367736186e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.017738113144983404,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthSmileRight": {
+      "max_displacement_m": 0.018533488226998105,
+      "meshes": {
+        "cartilage_lod0_mesh": 6.429324443374827e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.018533488226998105,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthStretchLeft": {
+      "max_displacement_m": 0.015012624622172725,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.2329916541098612e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.015012624622172725,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthStretchRight": {
+      "max_displacement_m": 0.014863861923073141,
+      "meshes": {
+        "cartilage_lod0_mesh": 9.602569403883687e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.014863861923073141,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthUpperUpLeft": {
+      "max_displacement_m": 0.010255195133274162,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.8544902089024584e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.010255195133274162,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "MouthUpperUpRight": {
+      "max_displacement_m": 0.010481514147847528,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.799172099959926e-05,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.010481514147847528,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "NoseSneerLeft": {
+      "max_displacement_m": 0.011227903797605715,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00010923198764843547,
+        "eyeEdge_lod0_mesh": 1.034748205266345e-08,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 1.3877117238804244e-08,
+        "eyeshell_lod0_mesh": 1.0750604569054837e-08,
+        "head_lod0_mesh": 0.011227903797605715,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 8.943702634810866e-05
+      }
+    },
+    "NoseSneerRight": {
+      "max_displacement_m": 0.011350013859929273,
+      "meshes": {
+        "cartilage_lod0_mesh": 0.00011686005376526865,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.011350013859929273,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.0
+      }
+    },
+    "TongueOut": {
+      "max_displacement_m": 0.026572540519652972,
+      "meshes": {
+        "cartilage_lod0_mesh": 1.94558726227575e-06,
+        "eyeEdge_lod0_mesh": 0.0,
+        "eyeLeft_lod0_mesh": 0.0,
+        "eyeRight_lod0_mesh": 0.0,
+        "eyelashes_lod0_mesh": 0.0,
+        "eyeshell_lod0_mesh": 0.0,
+        "head_lod0_mesh": 0.00019069560274039815,
+        "saliva_lod0_mesh": 0.0,
+        "teeth_lod0_mesh": 0.026572540519652972
+      }
+    }
+  },
+  "unreal_plugin_parity_verified": false,
+  "zero_targets": []
+}

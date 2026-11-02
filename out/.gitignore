@@ -1,0 +1,5 @@
+# Bake outputs and comparison artifacts — too big for git.
+*.glb
+*.blend
+*.blend1
+heatmaps/

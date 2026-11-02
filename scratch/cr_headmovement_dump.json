@@ -1,0 +1,4553 @@
+{
+ "asset": "/Game/MetaHumans/Common/Face/CR_MetaHuman_HeadMovement_IK_Proc",
+ "nodes": [
+  {
+   "name": "PrepareForExecution",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_PrepareForExecution",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_BeginExecution",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_BeginExecution",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_2_2",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "false"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "node_class": "RigVMAggregateNode",
+   "pins": [
+    {
+     "name": "A",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "B",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "Result",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "C"
+    }
+   ]
+  },
+  {
+   "name": "Absolute",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathDoubleAbs",
+   "pins": [
+    {
+     "name": "Value",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "Result",
+     "default_value": "0.000000"
+    }
+   ]
+  },
+  {
+   "name": "EdGraphNode_Comment_0_1",
+   "node_class": "RigVMCommentNode",
+   "pins": []
+  },
+  {
+   "name": "Absolute_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathDoubleAbs",
+   "pins": [
+    {
+     "name": "Value",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "Result",
+     "default_value": "0.000000"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_SetTransform_5",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_SetTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"root\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "root"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "False"
+    },
+    {
+     "name": "Value",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Weight",
+     "default_value": "1.000000"
+    },
+    {
+     "name": "bPropagateToChildren",
+     "default_value": "True"
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Key=(Type=None,Name=\"None\"),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=None,Name=\"None\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "None"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_4",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "PBIK_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/PBIK.RigUnit_PBIK",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Root",
+     "default_value": "spine_05"
+    },
+    {
+     "name": "Effectors",
+     "default_value": "((Bone=\"head\",Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),PositionAlpha=1.000000,RotationAlpha=1.000000,StrengthAlpha=1.000000,PinRotation=1.000000,ChainDepth=0),(Bone=\"neck_02\",Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),PositionAlpha=1.000000,RotationAlpha=1.000000,StrengthAlpha=1.000000,PinRotation=1.000000,ChainDepth=0))",
+     "pins": [
+      {
+       "name": "0",
+       "default_value": "(Bone=\"head\",Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),PositionAlpha=1.000000,RotationAlpha=1.000000,StrengthAlpha=1.000000,PinRotation=1.000000,ChainDepth=0)",
+       "pins": [
+        {
+         "name": "Bone",
+         "default_value": "head"
+        },
+        {
+         "name": "Transform",
+         "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "1.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "PositionAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "RotationAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "StrengthAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PullChainAlpha"
+        },
+        {
+         "name": "PinRotation",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "ChainDepth",
+         "default_value": "0"
+        }
+       ]
+      },
+      {
+       "name": "1",
+       "default_value": "(Bone=\"neck_02\",Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),PositionAlpha=1.000000,RotationAlpha=1.000000,StrengthAlpha=1.000000,PinRotation=1.000000,ChainDepth=0)",
+       "pins": [
+        {
+         "name": "Bone",
+         "default_value": "neck_02"
+        },
+        {
+         "name": "Transform",
+         "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "1.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "PositionAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "RotationAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "StrengthAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PullChainAlpha"
+        },
+        {
+         "name": "PinRotation",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "ChainDepth",
+         "default_value": "0"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "EffectorSolverIndices",
+     "default_value": "()"
+    },
+    {
+     "name": "BoneSettings",
+     "default_value": "()"
+    },
+    {
+     "name": "ExcludedBones",
+     "default_value": "()"
+    },
+    {
+     "name": "Settings",
+     "default_value": "(Iterations=20,MassMultiplier=1.000000,RootBehavior=PinToInput,PrePullRootSettings=(RotationAlphaX=1.000000,RotationAlphaY=1.000000,RotationAlphaZ=1.000000,PositionAlpha=1.000000,PositionAlphaX=1.000000,PositionAlphaY=1.000000,PositionAlphaZ=1.000000),GlobalPullChainAlpha=1.000000,MaxAngle=30.000000,OverRelaxation=1.300000,SubIterations=0)",
+     "pins": [
+      {
+       "name": "Iterations",
+       "default_value": "20"
+      },
+      {
+       "name": "MassMultiplier",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "bAllowStretch"
+      },
+      {
+       "name": "RootBehavior",
+       "default_value": "PinToInput"
+      },
+      {
+       "name": "PrePullRootSettings",
+       "default_value": "(RotationAlphaX=1.000000,RotationAlphaY=1.000000,RotationAlphaZ=1.000000,PositionAlpha=1.000000,PositionAlphaX=1.000000,PositionAlphaY=1.000000,PositionAlphaZ=1.000000)",
+       "pins": [
+        {
+         "name": "RotationAlpha"
+        },
+        {
+         "name": "RotationAlphaX",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "RotationAlphaY",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "RotationAlphaZ",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PositionAlpha",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PositionAlphaX",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PositionAlphaY",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "PositionAlphaZ",
+         "default_value": "1.000000"
+        }
+       ]
+      },
+      {
+       "name": "GlobalPullChainAlpha",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "MaxAngle",
+       "default_value": "30.000000"
+      },
+      {
+       "name": "OverRelaxation",
+       "default_value": "1.300000"
+      },
+      {
+       "name": "SubIterations",
+       "default_value": "0"
+      }
+     ]
+    },
+    {
+     "name": "Debug",
+     "default_value": "(DrawScale=1.000000)",
+     "pins": [
+      {
+       "name": "DrawScale",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "bDrawDebug"
+      }
+     ]
+    },
+    {
+     "name": "WorkData",
+     "default_value": "(bNeedsInit=True,HashInitializedWith=4294967295)",
+     "pins": [
+      {
+       "name": "bNeedsInit",
+       "default_value": "True"
+      },
+      {
+       "name": "HashInitializedWith",
+       "default_value": "4294967295"
+      },
+      {
+       "name": "BoneSettingToSolverBoneIndex",
+       "default_value": "()"
+      },
+      {
+       "name": "SolverBoneToElementIndex",
+       "default_value": "()"
+      },
+      {
+       "name": "Solver",
+       "default_value": "()"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_1_2",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "AimConstraintLocalSpaceOffset_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_AimConstraintLocalSpaceOffset",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Child",
+     "default_value": "(Type=Bone,Name=\"root\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "root"
+      }
+     ]
+    },
+    {
+     "name": "bMaintainOffset",
+     "default_value": "True"
+    },
+    {
+     "name": "Filter",
+     "default_value": "(bX=True,bY=True,bZ=True)",
+     "pins": [
+      {
+       "name": "bX",
+       "default_value": "True"
+      },
+      {
+       "name": "bY",
+       "default_value": "True"
+      },
+      {
+       "name": "bZ",
+       "default_value": "True"
+      }
+     ]
+    },
+    {
+     "name": "AimAxis",
+     "default_value": "(X=1.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    },
+    {
+     "name": "UpAxis",
+     "default_value": "(X=0.000000,Y=1.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    },
+    {
+     "name": "WorldUp",
+     "default_value": "(Target=(X=0.000000,Y=1.000000,Z=0.000000),Kind=Location,Space=(Type=Control,Name=\"BodyAim\"))",
+     "pins": [
+      {
+       "name": "Target",
+       "default_value": "(X=0.000000,Y=1.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Kind",
+       "default_value": "Location"
+      },
+      {
+       "name": "Space",
+       "default_value": "(Type=Control,Name=\"BodyAim\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Control"
+        },
+        {
+         "name": "Name",
+         "default_value": "BodyAim"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Parents",
+     "default_value": "((Item=(Type=Control,Name=\"NeckControl\"),Weight=1.000000))",
+     "pins": [
+      {
+       "name": "0",
+       "default_value": "(Item=(Type=Control,Name=\"NeckControl\"),Weight=1.000000)",
+       "pins": [
+        {
+         "name": "Item",
+         "default_value": "(Type=Control,Name=\"NeckControl\")",
+         "pins": [
+          {
+           "name": "Type",
+           "default_value": "Control"
+          },
+          {
+           "name": "Name",
+           "default_value": "NeckControl"
+          }
+         ]
+        },
+        {
+         "name": "Weight",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "AdvancedSettings",
+     "default_value": "(DebugSettings=(Scale=10.000000,WorldOffset=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))),RotationOrderForFilter=XZY)",
+     "pins": [
+      {
+       "name": "DebugSettings",
+       "default_value": "(Scale=10.000000,WorldOffset=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)))",
+       "pins": [
+        {
+         "name": "bEnabled"
+        },
+        {
+         "name": "Scale",
+         "default_value": "10.000000"
+        },
+        {
+         "name": "WorldOffset",
+         "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "1.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "1.000000"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "RotationOrderForFilter",
+       "default_value": "XZY"
+      }
+     ]
+    },
+    {
+     "name": "Weight",
+     "default_value": "1.000000"
+    },
+    {
+     "name": "WorldUpSpaceCache",
+     "default_value": "(Key=(Type=None,Name=\"None\"),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=None,Name=\"None\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "None"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    },
+    {
+     "name": "ChildCache",
+     "default_value": "(Key=(Type=None,Name=\"None\"),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=None,Name=\"None\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "None"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    },
+    {
+     "name": "ParentCaches",
+     "default_value": "()"
+    },
+    {
+     "name": "bIsInitialized"
+    }
+   ]
+  },
+  {
+   "name": "SpawnControl_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_HierarchyAddControlTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Parent",
+     "default_value": "(Type=None,Name=\"HeadRootControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "None"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadRootControl"
+      }
+     ]
+    },
+    {
+     "name": "Name",
+     "default_value": "HeadControl"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"None\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "None"
+      }
+     ]
+    },
+    {
+     "name": "OffsetTransform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "OffsetSpace",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "InitialValue",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Settings",
+     "default_value": "(DisplayName=\"None\",Shape=(bVisible=false,Name=\"None\",Color=(R=0.000000,G=0.000000,B=1.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=-0.707107,Z=0.000000,W=0.707107),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.600000,Y=0.600000,Z=0.600000))),Proxy=(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection),InitialSpace=LocalSpace,bUsePreferredRotationOrder=False,PreferredRotationOrder=YZX,Limits=(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True),bSelectable=True)",
+     "pins": [
+      {
+       "name": "DisplayName",
+       "default_value": "None"
+      },
+      {
+       "name": "Shape",
+       "default_value": "(bVisible=false,Name=\"None\",Color=(R=0.000000,G=0.000000,B=1.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=-0.707107,Z=0.000000,W=0.707107),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.600000,Y=0.600000,Z=0.600000)))",
+       "pins": [
+        {
+         "name": "bVisible",
+         "default_value": "false"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        },
+        {
+         "name": "Color",
+         "default_value": "(R=0.000000,G=0.000000,B=1.000000,A=1.000000)",
+         "pins": [
+          {
+           "name": "R",
+           "default_value": "0.000000"
+          },
+          {
+           "name": "G",
+           "default_value": "0.000000"
+          },
+          {
+           "name": "B",
+           "default_value": "1.000000"
+          },
+          {
+           "name": "A",
+           "default_value": "1.000000"
+          }
+         ]
+        },
+        {
+         "name": "Transform",
+         "default_value": "(Rotation=(X=0.000000,Y=-0.707107,Z=0.000000,W=0.707107),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.600000,Y=0.600000,Z=0.600000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=-0.707107,Z=0.000000,W=0.707107)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=0.600000,Y=0.600000,Z=0.600000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.600000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.600000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.600000"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Proxy",
+       "default_value": "(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection)",
+       "pins": [
+        {
+         "name": "bIsProxy",
+         "default_value": "False"
+        },
+        {
+         "name": "DrivenControls",
+         "default_value": "((Type=None,Name=\"None\"))",
+         "pins": [
+          {
+           "name": "0",
+           "default_value": "(Type=None,Name=\"None\")",
+           "pins": [
+            {
+             "name": "Type",
+             "default_value": "None"
+            },
+            {
+             "name": "Name",
+             "default_value": "None"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "ShapeVisibility",
+         "default_value": "BasedOnSelection"
+        }
+       ]
+      },
+      {
+       "name": "FilteredChannels",
+       "default_value": "()"
+      },
+      {
+       "name": "InitialSpace",
+       "default_value": "LocalSpace"
+      },
+      {
+       "name": "bUsePreferredRotationOrder",
+       "default_value": "False"
+      },
+      {
+       "name": "PreferredRotationOrder",
+       "default_value": "YZX"
+      },
+      {
+       "name": "Limits",
+       "default_value": "(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True)",
+       "pins": [
+        {
+         "name": "LimitTranslationX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitPitch",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitYaw",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitRoll",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "MinValue",
+         "default_value": "(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=-100.000000,Y=-100.000000,Z=-100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "-100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "-180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "MaxValue",
+         "default_value": "(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=100.000000,Y=100.000000,Z=100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=180.000000,Yaw=180.000000,Roll=180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=10.000000,Y=10.000000,Z=10.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "10.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "bDrawLimits",
+         "default_value": "True"
+        }
+       ]
+      },
+      {
+       "name": "bSelectable",
+       "default_value": "True"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_4_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"head\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "head"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "SpawnControl_2",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_HierarchyAddControlTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Parent",
+     "default_value": "(Type=Bone,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Name",
+     "default_value": "NeckControl"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"None\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "None"
+      }
+     ]
+    },
+    {
+     "name": "OffsetTransform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "OffsetSpace",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "InitialValue",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Settings",
+     "default_value": "(Shape=(bVisible=false,Name=\"None\",Color=(R=1.000000,G=1.000000,B=0.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000))),Proxy=(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection),InitialSpace=LocalSpace,bUsePreferredRotationOrder=False,PreferredRotationOrder=YZX,Limits=(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True),bSelectable=True)",
+     "pins": [
+      {
+       "name": "DisplayName"
+      },
+      {
+       "name": "Shape",
+       "default_value": "(bVisible=false,Name=\"None\",Color=(R=1.000000,G=1.000000,B=0.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000)))",
+       "pins": [
+        {
+         "name": "bVisible",
+         "default_value": "false"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        },
+        {
+         "name": "Color",
+         "default_value": "(R=1.000000,G=1.000000,B=0.000000,A=1.000000)",
+         "pins": [
+          {
+           "name": "R",
+           "default_value": "1.000000"
+          },
+          {
+           "name": "G",
+           "default_value": "1.000000"
+          },
+          {
+           "name": "B",
+           "default_value": "0.000000"
+          },
+          {
+           "name": "A",
+           "default_value": "1.000000"
+          }
+         ]
+        },
+        {
+         "name": "Transform",
+         "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=0.300000,Y=0.300000,Z=0.300000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.300000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.300000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.300000"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Proxy",
+       "default_value": "(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection)",
+       "pins": [
+        {
+         "name": "bIsProxy",
+         "default_value": "False"
+        },
+        {
+         "name": "DrivenControls",
+         "default_value": "((Type=None,Name=\"None\"))",
+         "pins": [
+          {
+           "name": "0",
+           "default_value": "(Type=None,Name=\"None\")",
+           "pins": [
+            {
+             "name": "Type",
+             "default_value": "None"
+            },
+            {
+             "name": "Name",
+             "default_value": "None"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "ShapeVisibility",
+         "default_value": "BasedOnSelection"
+        }
+       ]
+      },
+      {
+       "name": "FilteredChannels",
+       "default_value": "()"
+      },
+      {
+       "name": "InitialSpace",
+       "default_value": "LocalSpace"
+      },
+      {
+       "name": "bUsePreferredRotationOrder",
+       "default_value": "False"
+      },
+      {
+       "name": "PreferredRotationOrder",
+       "default_value": "YZX"
+      },
+      {
+       "name": "Limits",
+       "default_value": "(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True)",
+       "pins": [
+        {
+         "name": "LimitTranslationX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitPitch",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitYaw",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitRoll",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "MinValue",
+         "default_value": "(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=-100.000000,Y=-100.000000,Z=-100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "-100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "-180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "MaxValue",
+         "default_value": "(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=100.000000,Y=100.000000,Z=100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=180.000000,Yaw=180.000000,Roll=180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=10.000000,Y=10.000000,Z=10.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "10.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "bDrawLimits",
+         "default_value": "True"
+        }
+       ]
+      },
+      {
+       "name": "bSelectable",
+       "default_value": "True"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "EdGraphNode_Comment_1_2",
+   "node_class": "RigVMCommentNode",
+   "pins": []
+  },
+  {
+   "name": "RigUnit_GetTransform_6",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"neck_02\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "neck_02"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "SetDefaultParent",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_SetDefaultParent",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Child",
+     "default_value": "(Type=Control,Name=\"NeckControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "NeckControl"
+      }
+     ]
+    },
+    {
+     "name": "Parent",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "SpawnControl_2_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_HierarchyAddControlTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Parent",
+     "default_value": "(Type=Bone,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Name",
+     "default_value": "BodyAim"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"None\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "None"
+      }
+     ]
+    },
+    {
+     "name": "OffsetTransform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "OffsetSpace",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "InitialValue",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Settings",
+     "default_value": "(Shape=(bVisible=false,Name=\"None\",Color=(R=1.000000,G=1.000000,B=0.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000))),Proxy=(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection),InitialSpace=LocalSpace,bUsePreferredRotationOrder=False,PreferredRotationOrder=YZX,Limits=(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True),bSelectable=True)",
+     "pins": [
+      {
+       "name": "DisplayName"
+      },
+      {
+       "name": "Shape",
+       "default_value": "(bVisible=false,Name=\"None\",Color=(R=1.000000,G=1.000000,B=0.000000,A=1.000000),Transform=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000)))",
+       "pins": [
+        {
+         "name": "bVisible",
+         "default_value": "false"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        },
+        {
+         "name": "Color",
+         "default_value": "(R=1.000000,G=1.000000,B=0.000000,A=1.000000)",
+         "pins": [
+          {
+           "name": "R",
+           "default_value": "1.000000"
+          },
+          {
+           "name": "G",
+           "default_value": "1.000000"
+          },
+          {
+           "name": "B",
+           "default_value": "0.000000"
+          },
+          {
+           "name": "A",
+           "default_value": "1.000000"
+          }
+         ]
+        },
+        {
+         "name": "Transform",
+         "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=0.300000,Y=0.300000,Z=0.300000))",
+         "pins": [
+          {
+           "name": "Rotation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+          },
+          {
+           "name": "Translation",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale3D",
+           "default_value": "(X=0.300000,Y=0.300000,Z=0.300000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.300000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.300000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.300000"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Proxy",
+       "default_value": "(bIsProxy=False,DrivenControls=((Type=None,Name=\"None\")),ShapeVisibility=BasedOnSelection)",
+       "pins": [
+        {
+         "name": "bIsProxy",
+         "default_value": "False"
+        },
+        {
+         "name": "DrivenControls",
+         "default_value": "((Type=None,Name=\"None\"))",
+         "pins": [
+          {
+           "name": "0",
+           "default_value": "(Type=None,Name=\"None\")",
+           "pins": [
+            {
+             "name": "Type",
+             "default_value": "None"
+            },
+            {
+             "name": "Name",
+             "default_value": "None"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "ShapeVisibility",
+         "default_value": "BasedOnSelection"
+        }
+       ]
+      },
+      {
+       "name": "FilteredChannels",
+       "default_value": "()"
+      },
+      {
+       "name": "InitialSpace",
+       "default_value": "LocalSpace"
+      },
+      {
+       "name": "bUsePreferredRotationOrder",
+       "default_value": "False"
+      },
+      {
+       "name": "PreferredRotationOrder",
+       "default_value": "YZX"
+      },
+      {
+       "name": "Limits",
+       "default_value": "(LimitTranslationX=(bMinimum=False,bMaximum=False),LimitTranslationY=(bMinimum=False,bMaximum=False),LimitTranslationZ=(bMinimum=False,bMaximum=False),LimitPitch=(bMinimum=False,bMaximum=False),LimitYaw=(bMinimum=False,bMaximum=False),LimitRoll=(bMinimum=False,bMaximum=False),LimitScaleX=(bMinimum=False,bMaximum=False),LimitScaleY=(bMinimum=False,bMaximum=False),LimitScaleZ=(bMinimum=False,bMaximum=False),MinValue=(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000)),MaxValue=(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000)),bDrawLimits=True)",
+       "pins": [
+        {
+         "name": "LimitTranslationX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitTranslationZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitPitch",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitYaw",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitRoll",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleX",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleY",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "LimitScaleZ",
+         "default_value": "(bMinimum=False,bMaximum=False)",
+         "pins": [
+          {
+           "name": "bMinimum",
+           "default_value": "False"
+          },
+          {
+           "name": "bMaximum",
+           "default_value": "False"
+          }
+         ]
+        },
+        {
+         "name": "MinValue",
+         "default_value": "(Location=(X=-100.000000,Y=-100.000000,Z=-100.000000),Rotation=(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000),Scale=(X=0.000000,Y=0.000000,Z=0.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=-100.000000,Y=-100.000000,Z=-100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "-100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "-100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=-180.000000,Yaw=-180.000000,Roll=-180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "-180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "-180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "0.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "0.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "MaxValue",
+         "default_value": "(Location=(X=100.000000,Y=100.000000,Z=100.000000),Rotation=(Pitch=180.000000,Yaw=180.000000,Roll=180.000000),Scale=(X=10.000000,Y=10.000000,Z=10.000000))",
+         "pins": [
+          {
+           "name": "Location",
+           "default_value": "(X=100.000000,Y=100.000000,Z=100.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "100.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "100.000000"
+            }
+           ]
+          },
+          {
+           "name": "Rotation",
+           "default_value": "(Pitch=180.000000,Yaw=180.000000,Roll=180.000000)",
+           "pins": [
+            {
+             "name": "Pitch",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Yaw",
+             "default_value": "180.000000"
+            },
+            {
+             "name": "Roll",
+             "default_value": "180.000000"
+            }
+           ]
+          },
+          {
+           "name": "Scale",
+           "default_value": "(X=10.000000,Y=10.000000,Z=10.000000)",
+           "pins": [
+            {
+             "name": "X",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Y",
+             "default_value": "10.000000"
+            },
+            {
+             "name": "Z",
+             "default_value": "10.000000"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "bDrawLimits",
+         "default_value": "True"
+        }
+       ]
+      },
+      {
+       "name": "bSelectable",
+       "default_value": "True"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_6_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Bone,Name=\"root\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Bone"
+      },
+      {
+       "name": "Name",
+       "default_value": "root"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Add_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathDoubleAdd",
+   "pins": [
+    {
+     "name": "A",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "B",
+     "default_value": "50.000000"
+    },
+    {
+     "name": "Result",
+     "default_value": "0.000000"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"NeckControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "NeckControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "EdGraphNode_Comment_62",
+   "node_class": "RigVMCommentNode",
+   "pins": []
+  },
+  {
+   "name": "GetCurveValue_3_3_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadRoll"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue_1_1_1_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadPitch"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue_2_1_1_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadYaw"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue_3_1_2_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadTranslationX"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue_3_1_1_1_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadTranslationY"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue_3_2_1_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadTranslationZ"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_SetTransform_3_1_2",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_SetTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "False"
+    },
+    {
+     "name": "Value",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Weight",
+     "default_value": "1.000000"
+    },
+    {
+     "name": "bPropagateToChildren",
+     "default_value": "True"
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Key=(Type=None,Name=\"None\"),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=None,Name=\"None\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "None"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Cast_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathQuaternionFromRotatorV2",
+   "pins": [
+    {
+     "name": "Value",
+     "default_value": "(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)",
+     "pins": [
+      {
+       "name": "Pitch",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Yaw",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Roll",
+       "default_value": "0.000000"
+      }
+     ]
+    },
+    {
+     "name": "Result",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+    }
+   ]
+  },
+  {
+   "name": "Subtract_3",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathVectorSub",
+   "pins": [
+    {
+     "name": "A",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    },
+    {
+     "name": "B",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    },
+    {
+     "name": "Result",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Multiply_2",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathVectorMul",
+   "pins": [
+    {
+     "name": "A",
+     "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "1.000000"
+      }
+     ]
+    },
+    {
+     "name": "B",
+     "default_value": "(X=0.400000,Y=0.200000,Z=1.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.400000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.200000"
+      },
+      {
+       "name": "Z",
+       "default_value": "1.000000"
+      }
+     ]
+    },
+    {
+     "name": "Result",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Multiply",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathVectorMul",
+   "pins": [
+    {
+     "name": "A",
+     "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "1.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "1.000000"
+      }
+     ]
+    },
+    {
+     "name": "B",
+     "default_value": "(X=0.200000,Y=0.200000,Z=1.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.200000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.200000"
+      },
+      {
+       "name": "Z",
+       "default_value": "1.000000"
+      }
+     ]
+    },
+    {
+     "name": "Result",
+     "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+     "pins": [
+      {
+       "name": "X",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Y",
+       "default_value": "0.000000"
+      },
+      {
+       "name": "Z",
+       "default_value": "0.000000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "EdGraphNode_Comment_0",
+   "node_class": "RigVMCommentNode",
+   "pins": []
+  },
+  {
+   "name": "EdGraphNode_Comment_1",
+   "node_class": "RigVMCommentNode",
+   "pins": []
+  },
+  {
+   "name": "RerouteNode_1",
+   "node_class": "RigVMRerouteNode",
+   "pins": [
+    {
+     "name": "Value"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_GetTransform",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "LocalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Make Absolute",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathTransformMakeAbsolute",
+   "pins": [
+    {
+     "name": "Local",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Parent",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Global",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetCurveValue",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetCurveValue",
+   "pins": [
+    {
+     "name": "Curve",
+     "default_value": "HeadControlSwitch"
+    },
+    {
+     "name": "Valid",
+     "default_value": "True"
+    },
+    {
+     "name": "Value"
+    },
+    {
+     "name": "CachedCurveIndex",
+     "default_value": "(Key=(Type=Curve),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=Curve)",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "Curve"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "RigVMFunction_MathFloatToInt",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/RigVM.RigVMFunction_MathFloatToInt",
+   "pins": [
+    {
+     "name": "Value",
+     "default_value": "0.000000"
+    },
+    {
+     "name": "Result",
+     "default_value": "0"
+    }
+   ]
+  },
+  {
+   "name": "DISPATCH_RigVMDispatch_SwitchInt32",
+   "node_class": "RigVMDispatchNode",
+   "pins": [
+    {
+     "name": "ExecuteContext",
+     "default_value": "()"
+    },
+    {
+     "name": "Index",
+     "default_value": "0"
+    },
+    {
+     "name": "BlockToRun",
+     "default_value": "None"
+    },
+    {
+     "name": "Cases",
+     "default_value": "((),())",
+     "pins": [
+      {
+       "name": "0",
+       "default_value": "()"
+      },
+      {
+       "name": "1",
+       "default_value": "()"
+      }
+     ]
+    },
+    {
+     "name": "Completed",
+     "default_value": "()"
+    }
+   ]
+  },
+  {
+   "name": "RigUnit_SetTransform_3_1_2_1",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_SetTransform",
+   "pins": [
+    {
+     "name": "ExecutePin",
+     "default_value": "()"
+    },
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "False"
+    },
+    {
+     "name": "Value",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Weight",
+     "default_value": "1.000000"
+    },
+    {
+     "name": "bPropagateToChildren",
+     "default_value": "True"
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Key=(Type=None,Name=\"None\"),Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "(Type=None,Name=\"None\")",
+       "pins": [
+        {
+         "name": "Type",
+         "default_value": "None"
+        },
+        {
+         "name": "Name",
+         "default_value": "None"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "GetTransform",
+   "node_class": "RigVMUnitNode",
+   "script_struct": "/Script/ControlRig.RigUnit_GetTransform",
+   "pins": [
+    {
+     "name": "Item",
+     "default_value": "(Type=Control,Name=\"HeadControl\")",
+     "pins": [
+      {
+       "name": "Type",
+       "default_value": "Control"
+      },
+      {
+       "name": "Name",
+       "default_value": "HeadControl"
+      }
+     ]
+    },
+    {
+     "name": "Space",
+     "default_value": "GlobalSpace"
+    },
+    {
+     "name": "bInitial",
+     "default_value": "true"
+    },
+    {
+     "name": "Transform",
+     "default_value": "(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000))",
+     "pins": [
+      {
+       "name": "Rotation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000)"
+      },
+      {
+       "name": "Translation",
+       "default_value": "(X=0.000000,Y=0.000000,Z=0.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "0.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "0.000000"
+        }
+       ]
+      },
+      {
+       "name": "Scale3D",
+       "default_value": "(X=1.000000,Y=1.000000,Z=1.000000)",
+       "pins": [
+        {
+         "name": "X",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Y",
+         "default_value": "1.000000"
+        },
+        {
+         "name": "Z",
+         "default_value": "1.000000"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "CachedIndex",
+     "default_value": "(Index=65535,ContainerVersion=-1)",
+     "pins": [
+      {
+       "name": "Key",
+       "default_value": "()",
+       "pins": [
+        {
+         "name": "Type"
+        },
+        {
+         "name": "Name"
+        }
+       ]
+      },
+      {
+       "name": "Index",
+       "default_value": "65535"
+      },
+      {
+       "name": "ContainerVersion",
+       "default_value": "-1"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "from": "Add.Result",
+   "to": "RigUnit_SetTransform_5.Z"
+  },
+  {
+   "from": "Absolute.Result",
+   "to": "Add.A"
+  },
+  {
+   "from": "Absolute_1.Result",
+   "to": "Add.B"
+  },
+  {
+   "from": "RigUnit_GetTransform_6.Transform",
+   "to": "SpawnControl_2.InitialValue"
+  },
+  {
+   "from": "SpawnControl_2.ExecutePin",
+   "to": "SetDefaultParent.ExecutePin"
+  },
+  {
+   "from": "RigUnit_GetTransform_6_1.Rotation",
+   "to": "SpawnControl_2_1.Rotation"
+  },
+  {
+   "from": "RigUnit_GetTransform_6_1.Scale3D",
+   "to": "SpawnControl_2_1.Scale3D"
+  },
+  {
+   "from": "RigUnit_GetTransform_6_1.X",
+   "to": "SpawnControl_2_1.X"
+  },
+  {
+   "from": "RigUnit_GetTransform_6_1.Z",
+   "to": "SpawnControl_2_1.Z"
+  },
+  {
+   "from": "RigUnit_GetTransform_6_1.Y",
+   "to": "Add_1.A"
+  },
+  {
+   "from": "Add_1.Result",
+   "to": "SpawnControl_2_1.Y"
+  },
+  {
+   "from": "SetDefaultParent.ExecutePin",
+   "to": "SpawnControl_2_1.ExecutePin"
+  },
+  {
+   "from": "GetCurveValue_3_3_1.Value",
+   "to": "Cast_1.Roll"
+  },
+  {
+   "from": "GetCurveValue_1_1_1_1.Value",
+   "to": "Cast_1.Pitch"
+  },
+  {
+   "from": "GetCurveValue_2_1_1_1.Value",
+   "to": "Cast_1.Yaw"
+  },
+  {
+   "from": "RigUnit_GetTransform_1.Transform",
+   "to": "PBIK_1.Transform"
+  },
+  {
+   "from": "RigUnit_GetTransform_1_2.Transform",
+   "to": "PBIK_1.Transform"
+  },
+  {
+   "from": "RigUnit_SetTransform_5.ExecutePin",
+   "to": "AimConstraintLocalSpaceOffset_1.ExecutePin"
+  },
+  {
+   "from": "AimConstraintLocalSpaceOffset_1.ExecutePin",
+   "to": "PBIK_1.ExecutePin"
+  },
+  {
+   "from": "RigUnit_GetTransform_2_2.Translation",
+   "to": "Subtract_3.A"
+  },
+  {
+   "from": "RigUnit_GetTransform_4.Translation",
+   "to": "Subtract_3.B"
+  },
+  {
+   "from": "Subtract_3.Result",
+   "to": "Multiply_2.A"
+  },
+  {
+   "from": "Multiply_2.X",
+   "to": "RigUnit_SetTransform_5.X"
+  },
+  {
+   "from": "Multiply_2.Y",
+   "to": "RigUnit_SetTransform_5.Y"
+  },
+  {
+   "from": "Multiply_2.Result",
+   "to": "Multiply.A"
+  },
+  {
+   "from": "Multiply.X",
+   "to": "Absolute.Value"
+  },
+  {
+   "from": "Multiply.Y",
+   "to": "Absolute_1.Value"
+  },
+  {
+   "from": "RerouteNode_1.Value",
+   "to": "Add.C"
+  },
+  {
+   "from": "Multiply.Z",
+   "to": "RerouteNode_1.Value"
+  },
+  {
+   "from": "Make Absolute.Rotation",
+   "to": "RigUnit_SetTransform_3_1_2.Rotation"
+  },
+  {
+   "from": "Make Absolute.Translation",
+   "to": "RigUnit_SetTransform_3_1_2.Translation"
+  },
+  {
+   "from": "RigUnit_GetTransform.Transform",
+   "to": "Make Absolute.Parent"
+  },
+  {
+   "from": "Cast_1.Result",
+   "to": "Make Absolute.Rotation"
+  },
+  {
+   "from": "GetCurveValue_3_1_2_1.Value",
+   "to": "Make Absolute.X"
+  },
+  {
+   "from": "GetCurveValue_3_1_1_1_1.Value",
+   "to": "Make Absolute.Y"
+  },
+  {
+   "from": "GetCurveValue_3_2_1_1.Value",
+   "to": "Make Absolute.Z"
+  },
+  {
+   "from": "SpawnControl_1.ExecutePin",
+   "to": "SpawnControl_2.ExecutePin"
+  },
+  {
+   "from": "PrepareForExecution.ExecutePin",
+   "to": "SpawnControl_1.ExecutePin"
+  },
+  {
+   "from": "GetCurveValue.Value",
+   "to": "RigVMFunction_MathFloatToInt.Value"
+  },
+  {
+   "from": "RigVMFunction_MathFloatToInt.Result",
+   "to": "DISPATCH_RigVMDispatch_SwitchInt32.Index"
+  },
+  {
+   "from": "DISPATCH_RigVMDispatch_SwitchInt32.1",
+   "to": "RigUnit_SetTransform_3_1_2.ExecutePin"
+  },
+  {
+   "from": "GetTransform.Transform",
+   "to": "RigUnit_SetTransform_3_1_2_1.Value"
+  },
+  {
+   "from": "DISPATCH_RigVMDispatch_SwitchInt32.0",
+   "to": "RigUnit_SetTransform_3_1_2_1.ExecutePin"
+  },
+  {
+   "from": "RigUnit_SetTransform_3_1_2.ExecutePin",
+   "to": "RigUnit_SetTransform_5.ExecutePin"
+  },
+  {
+   "from": "RigUnit_BeginExecution.ExecutePin",
+   "to": "DISPATCH_RigVMDispatch_SwitchInt32.ExecuteContext"
+  },
+  {
+   "from": "RigUnit_GetTransform_4_1.Transform",
+   "to": "SpawnControl_1.InitialValue"
+  }
+ ],
+ "variables": [],
+ "errors": [
+  "script_struct(Add): 'NoneType' object has no attribute 'get_path_name'",
+  "script_struct(DISPATCH_RigVMDispatch_SwitchInt32): 'NoneType' object has no attribute 'get_path_name'",
+  "member_vars: ControlRigBlueprint: Failed to find property 'member_vars' for attribute 'member_vars' on 'ControlRigBlueprint'"
+ ]
+}

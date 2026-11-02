@@ -1,0 +1,321 @@
+{
+  "control_space": "raw",
+  "targets": {
+    "EyeBlinkLeft": {
+      "controls": {
+        "CTRL_expressions.eyeBlinkL": 1.0
+      }
+    },
+    "EyeLookDownLeft": {
+      "controls": {
+        "CTRL_expressions.eyeLookDownL": 1.0
+      }
+    },
+    "EyeLookInLeft": {
+      "controls": {
+        "CTRL_expressions.eyeLookRightL": 1.0
+      }
+    },
+    "EyeLookOutLeft": {
+      "controls": {
+        "CTRL_expressions.eyeLookLeftL": 1.0
+      }
+    },
+    "EyeLookUpLeft": {
+      "controls": {
+        "CTRL_expressions.eyeLookUpL": 1.0
+      }
+    },
+    "EyeSquintLeft": {
+      "controls": {
+        "CTRL_expressions.eyeSquintInnerL": 1.0
+      }
+    },
+    "EyeWideLeft": {
+      "controls": {
+        "CTRL_expressions.eyeWidenL": 1.0
+      }
+    },
+    "EyeBlinkRight": {
+      "controls": {
+        "CTRL_expressions.eyeBlinkR": 1.0
+      }
+    },
+    "EyeLookDownRight": {
+      "controls": {
+        "CTRL_expressions.eyeLookDownR": 1.0
+      }
+    },
+    "EyeLookInRight": {
+      "controls": {
+        "CTRL_expressions.eyeLookLeftR": 1.0
+      }
+    },
+    "EyeLookOutRight": {
+      "controls": {
+        "CTRL_expressions.eyeLookRightR": 1.0
+      }
+    },
+    "EyeLookUpRight": {
+      "controls": {
+        "CTRL_expressions.eyeLookUpR": 1.0
+      }
+    },
+    "EyeSquintRight": {
+      "controls": {
+        "CTRL_expressions.eyeSquintInnerR": 1.0
+      }
+    },
+    "EyeWideRight": {
+      "controls": {
+        "CTRL_expressions.eyeWidenR": 1.0
+      }
+    },
+    "JawForward": {
+      "controls": {
+        "CTRL_expressions.jawFwd": 0.999
+      }
+    },
+    "JawLeft": {
+      "controls": {
+        "CTRL_expressions.jawLeft": 1.0
+      }
+    },
+    "JawRight": {
+      "controls": {
+        "CTRL_expressions.jawRight": 1.0
+      }
+    },
+    "JawOpen": {
+      "controls": {
+        "CTRL_expressions.jawOpen": 1.0
+      }
+    },
+    "MouthFunnel": {
+      "controls": {
+        "CTRL_expressions.mouthFunnelUL": 1.0,
+        "CTRL_expressions.mouthFunnelUR": 1.0,
+        "CTRL_expressions.mouthFunnelDL": 1.0,
+        "CTRL_expressions.mouthFunnelDR": 1.0
+      }
+    },
+    "MouthPucker": {
+      "controls": {
+        "CTRL_expressions.mouthLipsPurseUL": 1.0,
+        "CTRL_expressions.mouthLipsPurseUR": 1.0,
+        "CTRL_expressions.mouthLipsPurseDL": 1.0,
+        "CTRL_expressions.mouthLipsPurseDR": 1.0,
+        "CTRL_expressions.mouthLipsTowardsUL": 0.412,
+        "CTRL_expressions.mouthLipsTowardsUR": 0.412,
+        "CTRL_expressions.mouthLipsTowardsDL": 0.412,
+        "CTRL_expressions.mouthLipsTowardsDR": 0.412,
+        "CTRL_expressions.mouthFunnelUL": 0.752001,
+        "CTRL_expressions.mouthFunnelUR": 0.752001,
+        "CTRL_expressions.mouthFunnelDL": 0.752001,
+        "CTRL_expressions.mouthFunnelDR": 0.752001
+      }
+    },
+    "MouthLeft": {
+      "controls": {
+        "CTRL_expressions.mouthLeft": 1.0
+      }
+    },
+    "MouthRight": {
+      "controls": {
+        "CTRL_expressions.mouthRight": 1.0
+      }
+    },
+    "MouthSmileLeft": {
+      "controls": {
+        "CTRL_expressions.mouthCornerPullL": 1.0
+      }
+    },
+    "MouthSmileRight": {
+      "controls": {
+        "CTRL_expressions.mouthCornerPullR": 1.0,
+        "CTRL_expressions.mouthDimpleR": 0.003
+      }
+    },
+    "MouthFrownLeft": {
+      "controls": {
+        "CTRL_expressions.mouthCornerDepressL": 1.0
+      }
+    },
+    "MouthFrownRight": {
+      "controls": {
+        "CTRL_expressions.mouthCornerDepressR": 1.0
+      }
+    },
+    "MouthDimpleLeft": {
+      "controls": {
+        "CTRL_expressions.mouthDimpleL": 1.0
+      }
+    },
+    "MouthDimpleRight": {
+      "controls": {
+        "CTRL_expressions.mouthDimpleR": 1.0
+      }
+    },
+    "MouthStretchLeft": {
+      "controls": {
+        "CTRL_expressions.mouthStretchL": 1.0
+      }
+    },
+    "MouthStretchRight": {
+      "controls": {
+        "CTRL_expressions.mouthStretchR": 1.0
+      }
+    },
+    "MouthRollLower": {
+      "controls": {
+        "CTRL_expressions.mouthUpperLipRollInL": 0.499,
+        "CTRL_expressions.mouthUpperLipRollInR": 0.499,
+        "CTRL_expressions.mouthLowerLipRollInL": 1.0,
+        "CTRL_expressions.mouthLowerLipRollInR": 1.0
+      }
+    },
+    "MouthRollUpper": {
+      "controls": {
+        "CTRL_expressions.mouthUpperLipRollInL": 0.998001,
+        "CTRL_expressions.mouthUpperLipRollInR": 0.998001
+      }
+    },
+    "MouthShrugLower": {
+      "controls": {
+        "CTRL_expressions.jawChinRaiseDL": 1.0,
+        "CTRL_expressions.jawChinRaiseDR": 1.0
+      }
+    },
+    "MouthShrugUpper": {
+      "controls": {
+        "CTRL_expressions.jawChinRaiseUL": 1.0,
+        "CTRL_expressions.jawChinRaiseUR": 1.0
+      }
+    },
+    "MouthPressLeft": {
+      "controls": {
+        "CTRL_expressions.mouthPressUL": 1.0,
+        "CTRL_expressions.mouthPressDL": 1.0
+      }
+    },
+    "MouthPressRight": {
+      "controls": {
+        "CTRL_expressions.mouthPressUR": 1.0,
+        "CTRL_expressions.mouthPressDR": 1.0
+      }
+    },
+    "MouthLowerDownLeft": {
+      "controls": {
+        "CTRL_expressions.mouthLowerLipDepressL": 1.0
+      }
+    },
+    "MouthLowerDownRight": {
+      "controls": {
+        "CTRL_expressions.mouthLowerLipDepressR": 1.0
+      }
+    },
+    "MouthUpperUpLeft": {
+      "controls": {
+        "CTRL_expressions.mouthUpperLipRaiseL": 1.0
+      }
+    },
+    "MouthUpperUpRight": {
+      "controls": {
+        "CTRL_expressions.mouthUpperLipRaiseR": 1.0
+      }
+    },
+    "BrowDownLeft": {
+      "controls": {
+        "CTRL_expressions.browDownL": 1.0,
+        "CTRL_expressions.browLateralL": 0.031
+      }
+    },
+    "BrowDownRight": {
+      "controls": {
+        "CTRL_expressions.browDownR": 1.0,
+        "CTRL_expressions.browLateralL": 0.030999
+      }
+    },
+    "BrowInnerUp": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 1.0,
+        "CTRL_expressions.browLateralR": 1.0,
+        "CTRL_expressions.browRaiseInL": 0.999999,
+        "CTRL_expressions.browRaiseInR": 1.0
+      }
+    },
+    "BrowOuterUpLeft": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031001,
+        "CTRL_expressions.browRaiseInL": 1.000001,
+        "CTRL_expressions.browRaiseOuterL": 1.0
+      }
+    },
+    "BrowOuterUpRight": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.browRaiseInR": 1.0,
+        "CTRL_expressions.browRaiseOuterR": 1.0
+      }
+    },
+    "CheekPuff": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.mouthCheekBlowL": 1.0,
+        "CTRL_expressions.mouthCheekBlowR": 1.0,
+        "CTRL_expressions.mouthLipsBlowL": 1.0,
+        "CTRL_expressions.mouthLipsBlowR": 1.0
+      }
+    },
+    "CheekSquintLeft": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.eyeCheekRaiseL": 1.0
+      }
+    },
+    "CheekSquintRight": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.eyeCheekRaiseR": 1.0
+      }
+    },
+    "NoseSneerLeft": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.eyeCheekRaiseR": 3e-06,
+        "CTRL_expressions.noseWrinkleL": 1.0,
+        "CTRL_expressions.noseWrinkleR": -3e-06,
+        "CTRL_expressions.tongueRoll": -0.00489
+      }
+    },
+    "NoseSneerRight": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.noseWrinkleR": 1.0
+      }
+    },
+    "TongueOut": {
+      "controls": {
+        "CTRL_expressions.browLateralL": 0.031,
+        "CTRL_expressions.noseWrinkleR": 3e-06,
+        "CTRL_expressions.tongueDown": 0.825998,
+        "CTRL_expressions.tongueRight": 0.07,
+        "CTRL_expressions.tongueOut": 0.768998,
+        "CTRL_expressions.tongueWide": 0.627998,
+        "CTRL_expressions.tongueRoll": 0.247319
+      }
+    },
+    "MouthClose": {
+      "controls": {
+        "CTRL_expressions.jawOpen": 1.0,
+        "CTRL_expressions.mouthLipsTogetherUL": 1.0,
+        "CTRL_expressions.mouthLipsTogetherUR": 1.0,
+        "CTRL_expressions.mouthLipsTogetherDL": 1.0,
+        "CTRL_expressions.mouthLipsTogetherDR": 1.0
+      },
+      "subtract": {
+        "CTRL_expressions.jawOpen": 1.0
+      }
+    }
+  }
+}
