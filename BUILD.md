@@ -51,11 +51,24 @@ product. Baking tests run entirely in C++ against saved reference outputs.
 
 For the native executable and its C++ tests, install
 CMake 3.24+ (4.2+ for Visual Studio 2026), Git, and the platform C++ toolchain.
-Check out the pinned OpenRigLogic revision from `cli/runtime.json`:
+Get the pinned OpenRigLogic revision (`d3d329b`, RigLogic 13.2.9) either by
+cloning from Epic's repository, as recorded in `cli/runtime.json`:
 
 ```bash
 git clone https://github.com/EpicGames/OpenRigLogic.git /path/to/OpenRigLogic
 git -C /path/to/OpenRigLogic checkout d3d329bbd6992ac38adc1c1b24203ceb998f75c0
+```
+
+or by initializing this repository's `scratch/OpenRigLogic` submodule, which
+points at the same upstream revision:
+
+```bash
+git submodule update --init scratch/OpenRigLogic
+```
+
+then configure against that checkout:
+
+```bash
 cmake -S cli -B /tmp/mh-arkit-cpp -DOPENRIGLOGIC_SOURCE=/path/to/OpenRigLogic -DCMAKE_BUILD_TYPE=Release
 cmake --build /tmp/mh-arkit-cpp --config Release --target bake-arkit-dna bake-arkit-dna-tests --parallel 4
 ctest --test-dir /tmp/mh-arkit-cpp -C Release --output-on-failure
