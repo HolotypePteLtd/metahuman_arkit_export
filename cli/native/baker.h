@@ -42,8 +42,15 @@ struct Rig {
   std::vector<std::uint16_t> parents;
   std::vector<Mat4> bind_inverse;
   std::vector<std::string> gui_names, raw_names;
+  // Joints whose RigLogic deltas are zeroed after evaluation, reproducing the
+  // ControlRig post-process in ABP_Face_PostProcess: CR_MetaHuman_HeadMovement_
+  // IK_Proc reads no animated Head* curves for ARKit frames, so its PBIK pins
+  // the head and neck_02 effectors to their neutral transforms.
+  std::vector<std::uint16_t> pinned_joints;
   double scale;
   explicit Rig(const fs::path &path);
+  // Resolve joint names against the DNA definition; unknown names throw.
+  void set_pinned_joints(const std::vector<std::string> &names);
   Pose evaluate(const std::vector<Mesh> &meshes, const Json &controls,
                 const std::string &space) const;
 };
@@ -63,6 +70,8 @@ Json write_dna(const fs::path &path, const Rig &rig,
 struct Options {
   fs::path input, output, body, mapping;
   std::vector<std::string> meshes;
+  // Empty: no post-pass. {"head","neck_02"} when --pin-head-chain is set.
+  std::vector<std::string> pin_joints;
 };
 Json bake(const Options &options, bool quiet = false);
 Json self_test();

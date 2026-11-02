@@ -1,5 +1,6 @@
 #include "baker.h"
 #include "config.h"
+#include <algorithm>
 #include <iostream>
 #ifdef _WIN32
 // shellapi.h requires the Windows SDK types from windows.h first.
@@ -45,7 +46,10 @@ static int run(const std::vector<std::string> &args) {
                ".dna\n  --body-dna PATH      Include neutral body geometry "
                "(GLB only)\n  --mapping PATH       JSON GUI/raw expression "
                "recipes\n  --mesh NAME          Select an LOD0 mesh "
-               "(repeatable)\n  --version            Application version\n  "
+               "(repeatable)\n  --pin-head-chain     Pin head+neck_02 joints "
+               "to neutral after evaluation (mirrors UE ABP post-process)\n  "
+               "--pin-joint NAME      Pin one joint to neutral (repeatable; "
+               "expert)\n  --version            Application version\n  "
                "--build-info         Build provenance as JSON\n  --self-test   "
                "       Verify synthetic DNA, skinning, GLB and baked DNA\n";
         return 0;
@@ -58,7 +62,17 @@ static int run(const std::vector<std::string> &args) {
         o.mapping = fs::u8path(value());
       else if (arg == "--mesh")
         o.meshes.push_back(value());
-      else if (!arg.empty() && arg[0] == '-')
+      else if (arg == "--pin-joint") {
+        o.pin_joints.push_back(value());
+      } else if (arg == "--pin-head-chain") {
+        // Reproduce the ABP_Face_PostProcess ControlRig post-pass: PBIK pins
+        // head and neck_02 to neutral when the ARKit sequence drives no Head*
+        // curves.
+        for (const char *name : {"head", "neck_02"})
+          if (std::find(o.pin_joints.begin(), o.pin_joints.end(), name) ==
+              o.pin_joints.end())
+            o.pin_joints.push_back(name);
+      } else if (!arg.empty() && arg[0] == '-')
         throw std::runtime_error("Unknown option: " + arg);
       else if (o.input.empty())
         o.input = fs::u8path(arg);

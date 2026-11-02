@@ -49,7 +49,12 @@ foreach(target arkit-baker bake-arkit-dna)
   endif()
 endforeach()
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  target_link_options(arkit-baker INTERFACE -static-libstdc++ -static-libgcc)
+  # Static libstdc++/libgcc is a release-packaging preference; hosts without
+  # libstdc++.a (e.g. this dev box) can opt out.
+  option(LINK_STATIC_STDLIB "Link libstdc++/libgcc statically" ON)
+  if(LINK_STATIC_STDLIB)
+    target_link_options(arkit-baker INTERFACE -static-libstdc++ -static-libgcc)
+  endif()
 endif()
 include(CTest)
 if(BUILD_TESTING)

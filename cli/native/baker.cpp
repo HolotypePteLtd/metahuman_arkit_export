@@ -87,6 +87,21 @@ Rig::Rig(const fs::path &path)
   for (std::uint16_t i = 0; i < reader->getRawControlCount(); ++i)
     raw_names.emplace_back(reader->getRawControlName(i).c_str());
 }
+void Rig::set_pinned_joints(const std::vector<std::string> &names) {
+  pinned_joints.clear();
+  for (const auto &name : names) {
+    bool found = false;
+    for (std::uint16_t i = 0; i < reader->getJointCount(); ++i) {
+      if (name == reader->getJointName(i).c_str()) {
+        pinned_joints.push_back(i);
+        found = true;
+        break;
+      }
+    }
+    if (!found)
+      throw std::runtime_error("Unknown pin joint: " + name);
+  }
+}
 Mesh read_mesh(const dna::Reader &r, std::uint16_t index) {
   Mesh m;
   m.name = r.getMeshName(index).c_str();
@@ -184,8 +199,28 @@ Pose Rig::evaluate(const std::vector<Mesh> &meshes, const Json &controls,
   if (space == "gui")
     logic->mapGUIToRawControls(instance.get());
   logic->calculate(instance.get());
+  auto joint_deltas = instance->getJointOutputs();
+  std::vector<float> pinned;
+  if (!pinned_joints.empty()) {
+    // Post-eval pass mirroring ABP_Face_PostProcess:
+    // CR_MetaHuman_HeadMovement_IK_Proc sees no animated Head* curves in the
+    // ARKit sequence, so its PBIK pins the head and neck_02 effectors to
+    // neutral. The RigLogic joint output is a flat per-joint delta array
+    // (tx..tz, qx..qw, sx..sz); zeroing a pinned joint's ten entries restores
+    // its neutral world transform in the joint_world composition below.
+    pinned.assign(joint_deltas.begin(), joint_deltas.end());
+    for (auto j : pinned_joints) {
+      auto d = pinned.data() + j * 10;
+      std::fill_n(d, 3, 0.f);            // translation
+      std::fill_n(d + 3, 4, 0.f);        // quaternion xyzw...
+      d[3 + 3] = 1.f;                    // ...to identity (RigLogic seeds
+                                          // non-animated joints the same way)
+      std::fill_n(d + 7, 3, 0.f);        // scale
+    }
+    joint_deltas = rl4::ConstArrayView<float>(pinned.data(), pinned.size());
+  }
   auto world = joint_world(logic->getNeutralJointValues(), parents,
-                           instance->getJointOutputs());
+                           joint_deltas);
   for (std::size_t i = 0; i < world.size(); ++i)
     world[i] = world[i] * bind_inverse[i];
   auto blends = instance->getBlendShapeOutputs();
@@ -266,6 +301,8 @@ Json bake(const Options &o, bool quiet) {
   }
   Rig rig(o.input);
   auto &r = *rig.reader;
+  if (!o.pin_joints.empty())
+    rig.set_pinned_joints(o.pin_joints);
   Json mapping = o.mapping.empty() ? Json::parse(default_mapping_text)
                                    : read_json(o.mapping);
   auto space = mapping.at("control_space").get<std::string>();
@@ -337,6 +374,7 @@ Json bake(const Options &o, bool quiet) {
                  {"gui_control_count", rig.gui_names.size()},
                  {"raw_control_count", rig.raw_names.size()},
                  {"blend_shape_channel_count", r.getBlendShapeChannelCount()},
+                 {"pinned_joints", o.pin_joints},
                  {"coordinate_system", "right / up / back; metres; CCW"},
                  {"target_names", target_names},
                  {"mapping", mapping},
