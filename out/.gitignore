@@ -2,4 +2,5 @@
 *.glb
 *.blend
 *.blend1
-heatmaps/
+heatmaps/*
+!heatmaps/*.png
